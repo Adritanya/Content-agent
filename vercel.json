@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/api/scrape", "destination": "/api/scrape.js" },
+    { "source": "/api/agents", "destination": "/api/agents.js" },
     { "source": "/", "destination": "/dashboard/index.html" },
     { "source": "/data.json", "destination": "/dashboard/data.json" }
   ]
