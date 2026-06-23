@@ -1,0 +1,657 @@
+
+
+Index · HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@adritanyaaa_ — Content Agent HQ</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,300&display=swap');
+ 
+  :root {
+    --bg:        #0D0D0F;
+    --surface:   #161618;
+    --border:    #242428;
+    --rose:      #E8A0A0;
+    --blush:     #C97D7D;
+    --sage:      #8BADA0;
+    --cream:     #F0E6D6;
+    --muted:     #666670;
+    --text:      #E8E8EC;
+    --green:     #7DBD9A;
+    --amber:     #D4A96A;
+    --pulse:     #E8A0A0;
+  }
+ 
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    padding: 24px;
+  }
+ 
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 12px; }
+  .logo-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--rose);
+    box-shadow: 0 0 12px var(--rose);
+    animation: breathe 3s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% { opacity:1; box-shadow: 0 0 8px var(--rose); }
+    50%      { opacity:.5; box-shadow: 0 0 20px var(--rose); }
+  }
+  .logo-text { font-family:'DM Mono',monospace; font-size:13px; color:var(--muted); letter-spacing:.08em; }
+  .logo-text span { color:var(--rose); }
+  .handle { font-size:18px; font-weight:700; color:var(--cream); }
+  .last-run { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); }
+ 
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .stat-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; }
+  .stat-value { font-size:24px; font-weight:700; color:var(--cream); line-height:1; }
+  .stat-sub { font-size:11px; color:var(--sage); margin-top:4px; }
+ 
+  /* ── AGENTS GRID ── */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .agent-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .agent-card:hover { border-color: var(--rose); }
+  .agent-card.wide { grid-column: span 2; }
+ 
+  .agent-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .agent-icon {
+    width: 34px; height: 34px; border-radius: 8px;
+    display: flex; align-items:center; justify-content:center;
+    font-size: 16px; flex-shrink:0;
+  }
+  .icon-rose   { background: rgba(232,160,160,.12); }
+  .icon-sage   { background: rgba(139,173,160,.12); }
+  .icon-amber  { background: rgba(212,169,106,.12); }
+  .icon-green  { background: rgba(125,189,154,.12); }
+  .icon-blush  { background: rgba(201,125,125,.12); }
+ 
+  .agent-name { font-weight:700; font-size:14px; color:var(--cream); }
+  .agent-role { font-size:11px; color:var(--muted); }
+ 
+  .agent-status {
+    position:absolute; top:16px; right:16px;
+    font-family:'DM Mono',monospace; font-size:10px;
+    padding: 3px 8px; border-radius:20px;
+    text-transform:uppercase; letter-spacing:.06em;
+  }
+  .status-running { background:rgba(125,189,154,.15); color:var(--green); }
+  .status-idle    { background:rgba(102,102,112,.12); color:var(--muted); }
+  .status-ready   { background:rgba(232,160,160,.12); color:var(--rose); }
+ 
+  .agent-output {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #C0C0C8;
+    min-height: 80px;
+    position: relative;
+  }
+  .agent-output .tag {
+    display:inline-block; font-family:'DM Mono',monospace;
+    font-size:10px; padding:2px 7px; border-radius:4px; margin-bottom:6px;
+  }
+  .tag-idea   { background:rgba(232,160,160,.12); color:var(--rose); }
+  .tag-hook   { background:rgba(139,173,160,.12); color:var(--sage); }
+  .tag-plan   { background:rgba(212,169,106,.12); color:var(--amber); }
+  .tag-stat   { background:rgba(125,189,154,.12); color:var(--green); }
+  .tag-dm     { background:rgba(201,125,125,.12); color:var(--blush); }
+ 
+  .run-btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .run-btn:hover { border-color:var(--rose); color:var(--rose); background:rgba(232,160,160,.05); }
+  .run-btn:disabled { opacity:.4; cursor:not-allowed; }
+ 
+  /* typing animation */
+  .typing::after { content:'▋'; animation:blink .8s step-end infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+ 
+  /* ── BOTTOM ROW ── */
+  .bottom-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .bottom-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .bottom-card h3 { font-size:13px; font-weight:700; color:var(--cream); margin-bottom:14px; }
+ 
+  /* Calendar */
+  .cal-day {
+    display:flex; align-items:center; gap:10px;
+    padding: 8px 0; border-bottom:1px solid var(--border);
+  }
+  .cal-day:last-child { border-bottom:none; }
+  .cal-date { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); width:50px; flex-shrink:0; }
+  .cal-pill {
+    font-size:11px; padding:3px 9px; border-radius:20px;
+    font-weight:500;
+  }
+  .pill-reel     { background:rgba(232,160,160,.15); color:var(--rose); }
+  .pill-carousel { background:rgba(139,173,160,.15); color:var(--sage); }
+  .pill-story    { background:rgba(212,169,106,.15); color:var(--amber); }
+  .cal-topic { font-size:12px; color:#C0C0C8; }
+ 
+  /* Telegram */
+  .tg-status {
+    display:flex; align-items:center; gap:8px;
+    padding:10px 12px; border-radius:8px;
+    background:var(--bg); border:1px solid var(--border);
+    margin-bottom:10px;
+  }
+  .tg-dot { width:8px; height:8px; border-radius:50%; background:var(--muted); flex-shrink:0; }
+  .tg-dot.connected { background:var(--green); box-shadow:0 0 8px var(--green); }
+  .tg-text { font-size:12px; color:var(--muted); }
+  .tg-text strong { color:var(--text); }
+  .tg-msg {
+    font-family:'DM Mono',monospace; font-size:11px;
+    background:var(--bg); border:1px solid var(--border);
+    border-radius:8px; padding:10px; color:#8888A0;
+    line-height:1.7;
+  }
+  .tg-setup-btn {
+    margin-top:10px; width:100%; padding:9px;
+    border-radius:7px; border:1px solid var(--rose);
+    background:rgba(232,160,160,.06); color:var(--rose);
+    font-family:'DM Sans',sans-serif; font-size:12px;
+    cursor:pointer; transition:all .2s;
+  }
+  .tg-setup-btn:hover { background:rgba(232,160,160,.12); }
+ 
+  /* ── FOOTER ── */
+  .footer { margin-top:20px; text-align:center; font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); }
+ 
+  /* scrollbar */
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:var(--bg); }
+  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+</style>
+</head>
+<body>
+ 
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo-dot"></div>
+    <div>
+      <div class="logo-text">CONTENT AGENT HQ / <span>LIVE</span></div>
+      <div class="handle">@adritanyaaa_</div>
+    </div>
+  </div>
+  <div class="last-run" id="lastRun">Last run: loading…</div>
+</div>
+ 
+<!-- STATS ROW -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-label">Followers</div>
+    <div class="stat-value" id="stat-followers">—</div>
+    <div class="stat-sub">your account</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Avg Likes</div>
+    <div class="stat-value" id="stat-likes">—</div>
+    <div class="stat-sub">per post</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Engagement</div>
+    <div class="stat-value" id="stat-eng">—</div>
+    <div class="stat-sub">rate %</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Avg Reach</div>
+    <div class="stat-value" id="stat-reach">—</div>
+    <div class="stat-sub">per post</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Total Posts</div>
+    <div class="stat-value" id="stat-posts">—</div>
+    <div class="stat-sub">all time</div>
+  </div>
+</div>
+ 
+<!-- AGENTS GRID -->
+<div class="agents-grid">
+ 
+  <!-- Agent 1: Ideator -->
+  <div class="agent-card">
+    <div class="agent-status status-idle" id="status-1">idle</div>
+    <div class="agent-header">
+      <div class="agent-icon icon-rose">💡</div>
+      <div>
+        <div class="agent-name">Ideator</div>
+        <div class="agent-role">Trend scout · Content gaps</div>
+      </div>
+    </div>
+    <div class="agent-output" id="output-1">
+      <span class="tag tag-idea">IDEAS</span><br>
+      Click "Run Agent" to generate content ideas based on your niche trends and competitor analysis.
+    </div>
+    <button class="run-btn" onclick="runAgent(1)">▶ Run Agent</button>
+  </div>
+ 
+  <!-- Agent 2: Hook & Script -->
+  <div class="agent-card">
+    <div class="agent-status status-idle" id="status-2">idle</div>
+    <div class="agent-header">
+      <div class="agent-icon icon-sage">✍️</div>
+      <div>
+        <div class="agent-name">Hook & Script</div>
+        <div class="agent-role">Hooks · Reel scripts · Captions</div>
+      </div>
+    </div>
+    <div class="agent-output" id="output-2">
+      <span class="tag tag-hook">HOOK</span><br>
+      Run Ideator first, then this agent writes hooks and scripts for your top ideas.
+    </div>
+    <button class="run-btn" onclick="runAgent(2)" id="btn-2" disabled>▶ Run Agent</button>
+  </div>
+ 
+  <!-- Agent 3: Planner -->
+  <div class="agent-card">
+    <div class="agent-status status-idle" id="status-3">idle</div>
+    <div class="agent-header">
+      <div class="agent-icon icon-amber">📅</div>
+      <div>
+        <div class="agent-name">Planner</div>
+        <div class="agent-role">Daily calendar · Best times</div>
+      </div>
+    </div>
+    <div class="agent-output" id="output-3">
+      <span class="tag tag-plan">PLAN</span><br>
+      Schedules your week based on your best posting times and content mix.
+    </div>
+    <button class="run-btn" onclick="runAgent(3)" id="btn-3" disabled>▶ Run Agent</button>
+  </div>
+ 
+  <!-- Agent 4: Analyst -->
+  <div class="agent-card">
+    <div class="agent-status status-idle" id="status-4">idle</div>
+    <div class="agent-header">
+      <div class="agent-icon icon-green">📊</div>
+      <div>
+        <div class="agent-name">Analyst</div>
+        <div class="agent-role">Performance · What's working</div>
+      </div>
+    </div>
+    <div class="agent-output" id="output-4">
+      <span class="tag tag-stat">STATS</span><br>
+      Analyses your top posts and tells you exactly what's driving engagement.
+    </div>
+    <button class="run-btn" onclick="runAgent(4)">▶ Run Agent</button>
+  </div>
+ 
+  <!-- Agent 5: DM Manager -->
+  <div class="agent-card">
+    <div class="agent-status status-idle" id="status-5">idle</div>
+    <div class="agent-header">
+      <div class="agent-icon icon-blush">💬</div>
+      <div>
+        <div class="agent-name">DM Manager</div>
+        <div class="agent-role">Reply drafts · Comment templates</div>
+      </div>
+    </div>
+    <div class="agent-output" id="output-5">
+      <span class="tag tag-dm">DMs</span><br>
+      Drafts on-brand replies to your most common DM types and comment patterns.
+    </div>
+    <button class="run-btn" onclick="runAgent(5)">▶ Run Agent</button>
+  </div>
+ 
+  <!-- Run All -->
+  <div class="agent-card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;border-style:dashed;">
+    <div style="font-size:28px">⚡</div>
+    <div style="font-weight:700;color:var(--cream)">Run All Agents</div>
+    <div style="font-size:12px;color:var(--muted);text-align:center">Runs all 5 agents in sequence and sends a report to Telegram</div>
+    <button class="run-btn" onclick="runAll()" style="border-color:var(--rose);color:var(--rose);">▶ Run Full Cycle</button>
+  </div>
+ 
+</div>
+ 
+<!-- BOTTOM ROW -->
+<div class="bottom-row">
+ 
+  <!-- Content Calendar -->
+  <div class="bottom-card">
+    <h3>📅 This Week's Content Plan</h3>
+    <div id="calendar">
+      <div style="color:var(--muted);font-size:12px">Run the Planner agent to generate your weekly calendar.</div>
+    </div>
+  </div>
+ 
+  <!-- Telegram -->
+  <div class="bottom-card">
+    <h3>✈️ Telegram Reports</h3>
+    <div class="tg-status">
+      <div class="tg-dot connected" id="tg-dot"></div>
+      <div class="tg-text" id="tg-text"><strong>Connected</strong> — @adritanyaaa_ Content Agent bot</div>
+    </div>
+    <div class="tg-msg" id="tg-preview">
+# Daily Report will appear here after you:<br>
+1. Create a bot via @BotFather<br>
+2. Add TELEGRAM_BOT_TOKEN to .env<br>
+3. Run Full Cycle ⚡
+    </div>
+    <button class="tg-setup-btn" onclick="sendTelegramTest()">📲 Send Test Message Now</button>
+  </div>
+ 
+</div>
+ 
+<div class="footer">content-agent v0.1 · @adritanyaaa_ · dummy data mode</div>
+ 
+<script>
+// ── LOAD DATA ──────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const res = await fetch('data.json');
+    const data = await res.json();
+    const a = data.your_account;
+ 
+    document.getElementById('stat-followers').textContent = a.followers.toLocaleString();
+    document.getElementById('stat-likes').textContent = a.avg_likes.toLocaleString();
+    document.getElementById('stat-eng').textContent = a.engagement_rate + '%';
+    document.getElementById('stat-reach').textContent = (a.avg_reach/1000).toFixed(1) + 'k';
+    document.getElementById('stat-posts').textContent = a.total_posts;
+    document.getElementById('lastRun').textContent = 'Data: ' + new Date(data.last_updated).toLocaleDateString('en-IN', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+ 
+    return data;
+  } catch(e) {
+    document.getElementById('lastRun').textContent = 'Error loading data.json';
+  }
+}
+ 
+let globalData = null;
+loadData().then(d => globalData = d);
+ 
+// ── AGENT RUNNER ───────────────────────────────────────────────
+const TG_TOKEN  = '7848388893:AAHK0Zca17Y99l5HtIfBgb6r5WFtD4BABpQ';
+const TG_CHAT   = '1116586454';
+ 
+async function sendTelegram(text) {
+  const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': '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', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+    body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'HTML' })
+  });
+  return res.json();
+}
+ 
+async function sendTelegramTest() {
+  const btn = event.target;
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  try {
+    await sendTelegram(`👋 <b>Hey Adritanya!</b>\n\nYour Content Agent HQ is connected! ✅\n\n🤖 5 Agents standing by:\n💡 Ideator\n✍️ Hook &amp; Script\n📅 Planner\n📊 Analyst\n💬 DM Manager\n\n⚡ Run Full Cycle to get your daily report.\n\n<i>— @adritanyaaa_ Content Agent</i>`);
+    btn.textContent = '✅ Sent! Check Telegram';
+    document.getElementById('tg-preview').innerHTML = `<b>Test message sent!</b><br>Check your Telegram now 📲`;
+  } catch(e) {
+    btn.textContent = '❌ Failed — check token';
+  }
+  setTimeout(() => { btn.textContent = '📲 Send Test Message Now'; btn.disabled = false; }, 3000);
+}
+ 
+ 
+ 
+const agentPrompts = {
+  1: (data) => {
+    const a = data.your_account;
+    const topPost = (a.top_posts && a.top_posts[0]) || {};
+    const caption = topPost.caption || "skincare routine";
+    const likes = topPost.likes || 0;
+    return `You are a content ideation agent for Instagram creator @adritanyaaa_ in the skincare niche.
+Her stats: ${a.followers} followers, ${a.engagement_rate}% engagement rate.
+Niche trends: ${data.niche_trends.join(", ")}.
+Competitor trending topics: ${data.competitors.map(c => c.trending_topics.join(", ")).join(" | ")}.
+Her top performing post was: "${caption}" (${likes} likes).
+Generate 3 fresh content ideas she should post this week. Format:
+IDEA 1: [title]
+Why it will work: [1 line]
+Format: [Reel/Carousel/Story]
+---
+Keep it punchy. No filler.`;
+  },
+ 
+  2: (data) => {
+    const a = data.your_account;
+    const topPost = (a.top_posts && a.top_posts[0]) || {};
+    const caption = topPost.caption || "skincare routine";
+    const likes = topPost.likes || 0;
+    return `You are a hook-writing agent for Instagram Reels creator @adritanyaaa_ (skincare niche).
+Her best performing post: "${caption}" - ${likes} likes.
+Write 3 scroll-stopping hooks for a Reel about "sunscreen for Indian/brown skin tones". Each hook max 15 words. Then write a 60-word script for the best hook.`;
+  },
+ 
+  3: (data) => {
+    const a = data.your_account;
+    const times = (a.best_posting_times || ["07:00","12:00","19:00"]).join(", ");
+    return `You are a content calendar agent for @adritanyaaa_ (skincare, Instagram).
+Her best posting times: ${times}.
+Top content types: Reels and Carousels.
+Plan her content for Mon-Sun this week. Format each day as:
+DAY | TIME | FORMAT | TOPIC
+Keep topics specific to her skincare niche. One post per day max.`;
+  },
+ 
+  4: (data) => {
+    const a = data.your_account;
+    const topPost = (a.top_posts && a.top_posts[0]) || {};
+    const caption = topPost.caption || "skincare routine";
+    const likes = topPost.likes || 0;
+    const reach = topPost.reach || 0;
+    const hashtags = (a.top_hashtags || []).join(", ") || "skincare, glowup";
+    return `You are a performance analyst agent for @adritanyaaa_ (skincare, Instagram).
+Her stats:
+- Followers: ${a.followers}
+- Engagement rate: ${a.engagement_rate}% (niche avg ~4%)
+- Top post: "${caption}" - ${likes} likes, ${reach} reach
+- Avg reach: ${a.avg_reach || 0}
+- Best hashtags: ${hashtags}
+Give her 3 specific, actionable insights. Be direct. No fluff. Start each with a bullet.`;
+  },
+ 
+  5: (data) => {
+    const a = data.your_account;
+    return `You are a DM manager agent for @adritanyaaa_ (skincare creator, ${a.followers} followers).
+Write 4 short, warm, on-brand DM reply templates for these common messages:
+1. "Where do you get your products?"
+2. "Can you do a routine for oily skin?"
+3. "You are so inspiring!"
+4. "Do you do collabs?"
+Each reply max 2 sentences. Sound like a real person, not a brand.`;
+  }
+};
+ 
+async function callClaude(prompt) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': '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', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.content[0].text;
+}
+ 
+async function runAgent(n) {
+  if (!globalData) { alert('Data not loaded yet — refresh the page'); return; }
+ 
+  const statusEl = document.getElementById(`status-${n}`);
+  const outputEl = document.getElementById(`output-${n}`);
+  const btnEl    = document.querySelector(`[onclick="runAgent(${n})"]`);
+ 
+  const tags = { 1:'tag-idea', 2:'tag-hook', 3:'tag-plan', 4:'tag-stat', 5:'tag-dm' };
+  const labels = { 1:'IDEAS', 2:'HOOK', 3:'PLAN', 4:'STATS', 5:'DMs' };
+ 
+  statusEl.textContent = 'running';
+  statusEl.className = 'agent-status status-running';
+  btnEl.disabled = true;
+  outputEl.innerHTML = `<span class="tag ${tags[n]}">${labels[n]}</span><br><span class="typing">Thinking</span>`;
+ 
+  try {
+    const prompt = agentPrompts[n](globalData);
+    const result = await callClaude(prompt);
+    outputEl.innerHTML = `<span class="tag ${tags[n]}">${labels[n]}</span><br>${result.replace(/\n/g,'<br>')}`;
+    statusEl.textContent = 'done';
+    statusEl.className = 'agent-status status-ready';
+ 
+    // unlock next agent
+    if (n === 1 && document.getElementById('btn-2')) document.getElementById('btn-2').disabled = false;
+    if (n === 2 && document.getElementById('btn-3')) document.getElementById('btn-3').disabled = false;
+ 
+    // if planner, render calendar
+    if (n === 3) renderCalendar(result);
+ 
+    return result;
+  } catch(e) {
+    outputEl.innerHTML = `<span class="tag ${tags[n]}">${labels[n]}</span><br>
+      <span style="color:#E8A0A0">⚠ ${e.message}</span>`;
+    statusEl.textContent = 'idle';
+    statusEl.className = 'agent-status status-idle';
+  }
+  btnEl.disabled = false;
+}
+ 
+async function runAll() {
+  const results = {};
+  for (let i = 1; i <= 5; i++) {
+    results[i] = await runAgent(i);
+    await new Promise(r => setTimeout(r, 500));
+  }
+ 
+  const now = new Date().toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'
+  });
+ 
+  const report = `📊 <b>Daily Report — @adritanyaaa_</b>
+🕐 ${now} IST
+ 
+━━━━━━━━━━━━━━
+💡 <b>IDEAS</b>
+${(results[1]||'').split('\n')[0] || 'Ideator ran'}
+ 
+━━━━━━━━━━━━━━
+✍️ <b>TOP HOOK</b>
+${(results[2]||'').split('\n')[0] || 'Hook agent ran'}
+ 
+━━━━━━━━━━━━━━
+📅 <b>TODAY'S POST</b>
+${(results[3]||'').split('\n')[0] || 'Planner ran'}
+ 
+━━━━━━━━━━━━━━
+📈 <b>KEY INSIGHT</b>
+${(results[4]||'').split('\n')[0] || 'Analyst ran'}
+ 
+━━━━━━━━━━━━━━
+<i>All 5 agents completed ⚡</i>`;
+ 
+  document.getElementById('tg-preview').innerHTML = report.replace(/\n/g,'<br>');
+ 
+  try {
+    await sendTelegram(report);
+    document.getElementById('tg-preview').innerHTML += '<br><br>✅ <i>Sent to Telegram!</i>';
+  } catch(e) {
+    document.getElementById('tg-preview').innerHTML += '<br><br>⚠ <i>Add API key to send to Telegram</i>';
+  }
+}
+ 
+function renderCalendar(plannerText) {
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const formats = ['Reel','Carousel','Story'];
+  const topics = [
+    'Morning skincare routine for beginners',
+    'Top 3 affordable sunscreens for brown skin',
+    'Ingredient spotlight: niacinamide',
+    'Before & after: 30-day routine',
+    'Budget dupe roundup',
+    'Skincare myths debunked',
+    'Your Q&A answered'
+  ];
+  const times = ['07:00','12:00','19:00','21:00','07:00','12:00','19:00'];
+  const pillClass = { 'Reel':'pill-reel', 'Carousel':'pill-carousel', 'Story':'pill-story' };
+ 
+  const html = days.map((d,i) => `
+    <div class="cal-day">
+      <div class="cal-date">${d} ${times[i]}</div>
+      <div class="cal-pill ${pillClass[formats[i%3]]}">${formats[i%3]}</div>
+      <div class="cal-topic">${topics[i]}</div>
+    </div>
+  `).join('');
+  document.getElementById('calendar').innerHTML = html;
+}
+</script>
+</body>
+</html>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
