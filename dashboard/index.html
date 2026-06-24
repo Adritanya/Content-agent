@@ -4,952 +4,810 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ContentIQ — AI Agents for Instagram Creators</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Inter',sans-serif;font-size:14px;}
+body{background:#F8F9FF;color:#111827;}
+
+/* ─── VARS ─── */
 :root{
   --blue:#1B3A8C;--blue2:#2D52B8;--blue3:#EEF2FF;--blue4:#C7D2FE;
-  --white:#ffffff;--bg:#F8F9FF;--bg2:#F4F6FB;
-  --text:#111827;--text2:#6B7280;--text3:#9CA3AF;
-  --border:#E5E7EB;--border2:#C7D2FE;
-  --green:#16A34A;--green2:#DCFCE7;--red:#EF4444;--amber:#F59E0B;
-  --sidebar:220px;
+  --white:#fff;--bg:#F8F9FF;--bg2:#F4F6FB;
+  --text:#111827;--t2:#6B7280;--t3:#9CA3AF;
+  --bdr:#E5E7EB;--bdr2:#C7D2FE;
+  --green:#16A34A;--green2:#DCFCE7;--red:#EF4444;
+  --sw:220px;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--white);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;}
-a{text-decoration:none;color:inherit;}
-textarea{resize:none;outline:none;font-family:'Inter',sans-serif;}
-input{outline:none;font-family:'Inter',sans-serif;}
-button{cursor:pointer;font-family:'Inter',sans-serif;border:none;}
 
-/* ── LANDING ── */
+/* ─── LANDING ─── */
 #landing{display:block;}
+#dashboard{display:none;}
 
 /* NAV */
-.l-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;background:var(--blue);border-bottom:1px solid rgba(255,255,255,.1);}
-.l-nav-logo{display:flex;align-items:center;gap:8px;}
-.l-nav-icon{width:28px;height:28px;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--blue);}
-.l-nav-name{font-size:16px;font-weight:800;color:#fff;}
-.l-nav-links{display:flex;gap:24px;align-items:center;}
-.l-nav-links a{font-size:13px;color:rgba(255,255,255,.7);transition:color .2s;}
-.l-nav-links a:hover{color:#fff;}
-.l-nav-cta{background:#fff;color:var(--blue);font-size:13px;font-weight:700;padding:8px 18px;border-radius:7px;transition:all .2s;}
-.l-nav-cta:hover{background:var(--blue3);}
-.l-nav-burger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;}
-.l-nav-burger span{width:18px;height:2px;background:#fff;border-radius:2px;display:block;}
-.l-mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--blue);z-index:99;padding:16px;border-bottom:1px solid rgba(255,255,255,.1);}
-.l-mobile-menu a{display:block;padding:10px 0;font-size:14px;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.08);}
-.l-mobile-menu .m-cta{display:block;margin-top:12px;background:#fff;color:var(--blue);font-size:14px;font-weight:700;padding:12px;border-radius:8px;text-align:center;}
+.ln{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 40px;}
+.ln-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.ln-icon{width:28px;height:28px;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--blue);}
+.ln-name{font-size:16px;font-weight:800;color:#fff;}
+.ln-links{display:flex;gap:24px;}
+.ln-links a{font-size:13px;color:rgba(255,255,255,.7);text-decoration:none;}
+.ln-links a:hover{color:#fff;}
+.ln-cta{background:#fff;color:var(--blue);font-size:13px;font-weight:700;padding:8px 18px;border-radius:7px;cursor:pointer;border:none;}
+.burger{display:none;flex-direction:column;gap:4px;cursor:pointer;border:none;background:none;padding:4px;}
+.burger span{width:18px;height:2px;background:#fff;border-radius:2px;display:block;}
+.mmenu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--blue);z-index:99;padding:16px;border-bottom:1px solid rgba(255,255,255,.1);}
+.mmenu a{display:block;padding:10px 0;color:rgba(255,255,255,.8);text-decoration:none;font-size:14px;border-bottom:1px solid rgba(255,255,255,.08);}
+.mmenu .mc{display:block;margin-top:12px;background:#fff;color:var(--blue);font-size:14px;font-weight:700;padding:12px;border-radius:8px;text-align:center;text-decoration:none;}
 
 /* HERO */
-.l-hero{padding:100px 40px 60px;background:linear-gradient(135deg,#EEF2FF 0%,#fff 70%);}
-.l-hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;}
-.l-hero-badge{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border2);padding:5px 12px;border-radius:20px;margin-bottom:18px;font-size:11px;color:var(--blue);font-weight:600;}
-.l-hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+.hero{padding:100px 40px 60px;background:linear-gradient(135deg,#EEF2FF 0%,#fff 70%);}
+.hero-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;}
+.badge{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--bdr2);padding:5px 12px;border-radius:20px;margin-bottom:18px;font-size:11px;color:var(--blue);font-weight:600;}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(22,163,74,.4)}50%{box-shadow:0 0 0 5px rgba(22,163,74,0)}}
-.l-hero-title{font-size:clamp(28px,4vw,48px);font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-.03em;margin-bottom:16px;}
-.l-hero-title span{color:var(--blue);}
-.l-hero-sub{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:24px;max-width:460px;}
-.l-hero-btns{display:flex;gap:10px;margin-bottom:28px;}
-.btn-primary{background:var(--blue);color:#fff;font-size:13px;font-weight:700;padding:11px 22px;border-radius:8px;transition:all .2s;}
-.btn-primary:hover{background:var(--blue2);box-shadow:0 4px 16px rgba(27,58,140,.3);}
-.btn-secondary{background:#fff;color:var(--text2);font-size:13px;font-weight:500;padding:11px 22px;border-radius:8px;border:1px solid var(--border);transition:all .2s;}
-.btn-secondary:hover{border-color:var(--blue);color:var(--blue);}
-.l-hero-stats{display:flex;gap:0;}
-.l-hstat{padding:0 20px;border-left:1px solid var(--border);}
-.l-hstat:first-child{padding-left:0;border-left:none;}
-.l-hstat-val{font-size:20px;font-weight:800;color:var(--blue);}
-.l-hstat-lab{font-size:11px;color:var(--text3);margin-top:2px;}
+.hero h1{font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px;}
+.hero h1 span{color:var(--blue);}
+.hero p{font-size:15px;color:var(--t2);line-height:1.8;margin-bottom:24px;max-width:460px;}
+.hero-btns{display:flex;gap:10px;margin-bottom:28px;}
+.btn-p{background:var(--blue);color:#fff;font-size:13px;font-weight:700;padding:11px 22px;border-radius:8px;cursor:pointer;border:none;transition:all .2s;}
+.btn-p:hover{background:var(--blue2);}
+.btn-s{background:#fff;color:var(--t2);font-size:13px;font-weight:500;padding:11px 22px;border-radius:8px;border:1px solid var(--bdr);cursor:pointer;transition:all .2s;}
+.btn-s:hover{border-color:var(--blue);color:var(--blue);}
+.hstats{display:flex;}
+.hs{padding:0 20px;border-left:1px solid var(--bdr);}
+.hs:first-child{padding-left:0;border-left:none;}
+.hs-v{font-size:20px;font-weight:800;color:var(--blue);}
+.hs-l{font-size:11px;color:var(--t3);margin-top:2px;}
 
 /* FORM CARD */
-.l-form-card{background:#fff;border-radius:14px;padding:24px;border:1px solid var(--border);box-shadow:0 4px 32px rgba(27,58,140,.1);}
-.l-form-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px;}
-.l-form-sub{font-size:12px;color:var(--text3);margin-bottom:18px;}
-.l-form-label{font-size:11px;font-weight:600;color:var(--blue);margin-bottom:5px;display:block;}
-.l-form-input{width:100%;padding:11px 14px;background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--text);transition:border-color .2s;}
-.l-form-input:focus{border-color:var(--blue);background:#fff;}
-.l-form-input::placeholder{color:var(--text3);}
-.l-form-btn{width:100%;padding:12px;background:var(--blue);color:#fff;font-size:14px;font-weight:700;border-radius:9px;margin-top:14px;transition:all .2s;}
-.l-form-btn:hover{background:var(--blue2);box-shadow:0 6px 20px rgba(27,58,140,.3);}
-.l-form-btn:disabled{opacity:.5;cursor:not-allowed;}
-.l-form-note{font-size:11px;color:var(--text3);text-align:center;margin-top:10px;}
-.l-form-err{font-size:12px;color:var(--red);background:#FEF2F2;border:1px solid #FECACA;border-radius:6px;padding:8px 12px;margin-top:10px;display:none;}
-.l-form-prices{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
-.l-form-price{text-align:center;}
-.l-form-price-val{font-size:14px;font-weight:800;color:var(--blue);}
-.l-form-price-lab{font-size:9px;color:var(--text3);margin-top:1px;}
+.fc{background:#fff;border-radius:14px;padding:24px;border:1px solid var(--bdr);box-shadow:0 4px 32px rgba(27,58,140,.1);}
+.fc h3{font-size:15px;font-weight:700;margin-bottom:3px;}
+.fc-sub{font-size:12px;color:var(--t3);margin-bottom:18px;}
+.fl{font-size:11px;font-weight:600;color:var(--blue);margin-bottom:5px;display:block;}
+.fi{width:100%;padding:11px 14px;background:var(--bg2);border:1.5px solid var(--bdr);border-radius:8px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;}
+.fi:focus{outline:none;border-color:var(--blue);background:#fff;}
+.fi::placeholder{color:var(--t3);}
+.fb{width:100%;padding:12px;background:var(--blue);color:#fff;font-size:14px;font-weight:700;border-radius:9px;margin-top:14px;cursor:pointer;border:none;transition:all .2s;font-family:'Inter',sans-serif;}
+.fb:hover{background:var(--blue2);}
+.fb:disabled{opacity:.5;cursor:not-allowed;}
+.fn{font-size:11px;color:var(--t3);text-align:center;margin-top:10px;}
+.fe{font-size:12px;color:var(--red);background:#FEF2F2;border:1px solid #FECACA;border-radius:6px;padding:8px 12px;margin-top:10px;display:none;}
+.fp{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid var(--bdr);text-align:center;}
+.fp-v{font-size:14px;font-weight:800;color:var(--blue);}
+.fp-l{font-size:9px;color:var(--t3);margin-top:1px;}
 
-/* TRUST BAR */
-.l-trust{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 40px;}
-.l-trust-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:28px;}
-.l-trust-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;white-space:nowrap;}
-.l-trust-sep{width:1px;height:12px;background:var(--border);}
-.l-trust-item{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.04em;}
-
-/* HOW IT WORKS */
-.l-section{max-width:1100px;margin:0 auto;padding:64px 40px;}
-.l-section-label{font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
-.l-section-title{font-size:clamp(22px,3vw,36px);font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1.15;margin-bottom:40px;}
-.l-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-.l-step{position:relative;}
-.l-step-num{width:36px;height:36px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;margin-bottom:12px;}
-.l-step-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px;}
-.l-step-desc{font-size:12px;color:var(--text2);line-height:1.7;}
-.l-step-arrow{position:absolute;top:18px;right:-14px;color:var(--border);font-size:16px;}
-
-/* AGENTS */
-.l-agents-bg{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.l-agents{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
-.l-agent{background:#fff;border-radius:12px;padding:18px;border:1px solid var(--border);transition:all .2s;}
-.l-agent:hover{border-color:var(--border2);box-shadow:0 4px 16px rgba(27,58,140,.08);transform:translateY(-2px);}
-.l-agent-icon{font-size:24px;margin-bottom:10px;}
-.l-agent-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;}
-.l-agent-desc{font-size:11px;color:var(--text2);line-height:1.65;}
-
-/* PRICING */
-.l-price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
-.l-price-card{background:#fff;border-radius:12px;padding:20px;border:1px solid var(--border);text-align:center;}
-.l-price-amt{font-size:36px;font-weight:800;color:var(--blue);line-height:1;}
-.l-price-name{font-size:13px;font-weight:700;color:var(--text);margin:6px 0 5px;}
-.l-price-desc{font-size:12px;color:var(--text2);line-height:1.6;}
-.l-price-note{background:var(--blue3);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--blue);text-align:center;line-height:1.7;}
-
-/* CTA */
-.l-cta-bg{background:var(--blue);}
-.l-cta{max-width:1100px;margin:0 auto;padding:64px 40px;text-align:center;}
-.l-cta-title{font-size:clamp(22px,3vw,36px);font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:10px;}
-.l-cta-sub{font-size:14px;color:rgba(255,255,255,.65);margin-bottom:24px;line-height:1.7;}
-.l-cta-row{display:flex;max-width:380px;margin:0 auto 12px;}
-.l-cta-input{flex:1;padding:12px 14px;background:#fff;border:none;border-radius:8px 0 0 8px;font-size:13px;color:var(--text);}
-.l-cta-input::placeholder{color:var(--text3);}
-.l-cta-btn{background:#FFC107;color:#111;font-size:13px;font-weight:700;padding:12px 18px;border-radius:0 8px 8px 0;white-space:nowrap;transition:all .2s;}
-.l-cta-btn:hover{background:#FFD54F;}
-.l-cta-note{font-size:11px;color:rgba(255,255,255,.4);}
-.l-footer{background:var(--bg2);border-top:1px solid var(--border);padding:18px 40px;display:flex;align-items:center;justify-content:space-between;}
-.l-footer-logo{font-size:14px;font-weight:800;color:var(--blue);}
-.l-footer-links{display:flex;gap:20px;}
-.l-footer-links a{font-size:12px;color:var(--text3);}
-.l-footer-note{font-size:11px;color:var(--text3);}
-
-/* ── LOADING ── */
-#loading{display:none;position:fixed;inset:0;background:rgba(255,255,255,.97);z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
-.loading-logo{font-size:18px;font-weight:800;color:var(--blue);}
-.loading-handle{font-size:13px;color:var(--text3);}
-.loading-bar{width:260px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
-.loading-fill{height:100%;background:var(--blue);border-radius:2px;width:0;transition:width .6s ease;}
-.loading-msg{font-size:12px;color:var(--text2);font-family:'JetBrains Mono',monospace;}
-
-/* ── DASHBOARD ── */
-#dashboard{display:none;}
-.d-layout{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:100vh;}
-
-/* SIDEBAR */
-.d-sidebar{background:var(--blue);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);z-index:50;transition:transform .3s;}
-.d-sidebar-top{padding:20px 16px;border-bottom:1px solid rgba(255,255,255,.1);}
-.d-sidebar-logo{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
-.d-sidebar-logo-icon{width:28px;height:28px;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--blue);}
-.d-sidebar-logo-name{font-size:15px;font-weight:800;color:#fff;}
-.d-sidebar-handle{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;}
-.d-sidebar-nav{padding:12px 8px;flex:1;}
-.d-nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:all .2s;margin-bottom:2px;}
-.d-nav-item:hover{background:rgba(255,255,255,.1);}
-.d-nav-item.active{background:rgba(255,255,255,.18);}
-.d-nav-icon{font-size:16px;width:20px;text-align:center;}
-.d-nav-label{font-size:13px;font-weight:600;color:#fff;}
-.d-nav-sub{font-size:10px;color:rgba(255,255,255,.45);}
-.d-sidebar-footer{padding:16px;border-top:1px solid rgba(255,255,255,.1);}
-.d-user{display:flex;align-items:center;gap:10px;}
-.d-user-avatar{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
-.d-user-name{font-size:12px;font-weight:600;color:#fff;}
-.d-user-handle{font-size:10px;color:rgba(255,255,255,.45);}
-.d-back-btn{display:block;margin-top:10px;font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.15);text-align:center;transition:all .2s;}
-.d-back-btn:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);}
-
-/* MAIN */
-.d-main{margin-left:var(--sidebar);background:var(--bg2);min-height:100vh;width:calc(100% - var(--sidebar));flex:1;}
-.d-topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;width:100%;gap:12px;}
-.d-topbar-title{font-size:15px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.d-topbar-right{display:flex;align-items:center;gap:10px;}
-.d-run-all-btn{background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:7px 16px;border-radius:7px;transition:all .2s;}
-.d-run-all-btn:hover{background:var(--blue2);}
-.d-body{padding:20px 24px;overflow-x:hidden;}
-
-/* SECTION TABS (mobile only) */
-.d-mobile-tabs{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);z-index:50;grid-template-columns:repeat(3,1fr);}
-.d-mobile-tab{display:flex;flex-direction:column;align-items:center;padding:8px 0;cursor:pointer;}
-.d-mobile-tab-icon{font-size:20px;}
-.d-mobile-tab-label{font-size:10px;color:var(--text3);margin-top:2px;}
-.d-mobile-tab.active .d-mobile-tab-label{color:var(--blue);font-weight:600;}
+/* TRUST */
+.trust{background:var(--bg2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:12px 40px;}
+.trust-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.tl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;white-space:nowrap;}
+.ts{width:1px;height:12px;background:var(--bdr);}
+.ti{font-size:11px;font-weight:700;color:var(--t3);letter-spacing:.04em;}
 
 /* SECTIONS */
-.d-section{display:none;}
-.d-section.active{display:block;}
+.sec{max-width:1100px;margin:0 auto;padding:60px 40px;}
+.sec-lbl{font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+.sec-title{font-size:clamp(22px,3vw,36px);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:40px;}
+.sec-bg{background:var(--bg2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.step-n{width:36px;height:36px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;margin-bottom:12px;}
+.step-t{font-size:14px;font-weight:700;margin-bottom:5px;}
+.step-d{font-size:12px;color:var(--t2);line-height:1.7;}
+.agents-g{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.ag{background:#fff;border-radius:12px;padding:18px;border:1px solid var(--bdr);transition:all .2s;}
+.ag:hover{border-color:var(--bdr2);transform:translateY(-2px);}
+.ag-i{font-size:24px;margin-bottom:10px;}
+.ag-n{font-size:13px;font-weight:700;margin-bottom:5px;}
+.ag-d{font-size:11px;color:var(--t2);line-height:1.65;}
+.price-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
+.pc{background:#fff;border-radius:12px;padding:20px;border:1px solid var(--bdr);text-align:center;}
+.pa{font-size:36px;font-weight:800;color:var(--blue);line-height:1;}
+.pn{font-size:13px;font-weight:700;margin:6px 0 5px;}
+.pd{font-size:12px;color:var(--t2);line-height:1.6;}
+.pnote{background:var(--blue3);border:1px solid var(--bdr2);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--blue);text-align:center;line-height:1.7;}
+.cta-bg{background:var(--blue);}
+.cta{max-width:1100px;margin:0 auto;padding:60px 40px;text-align:center;}
+.cta h2{font-size:clamp(22px,3vw,36px);font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:10px;}
+.cta p{font-size:14px;color:rgba(255,255,255,.65);margin-bottom:24px;line-height:1.7;}
+.cta-row{display:flex;max-width:380px;margin:0 auto 12px;}
+.cta-i{flex:1;padding:12px 14px;background:#fff;border:none;border-radius:8px 0 0 8px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;}
+.cta-i::placeholder{color:var(--t3);}
+.cta-b{background:#FFC107;color:#111;font-size:13px;font-weight:700;padding:12px 18px;border-radius:0 8px 8px 0;border:none;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;}
+.cta-n{font-size:11px;color:rgba(255,255,255,.4);}
+.foot{background:var(--bg2);border-top:1px solid var(--bdr);padding:18px 40px;display:flex;align-items:center;justify-content:space-between;}
+.foot-logo{font-size:14px;font-weight:800;color:var(--blue);}
+.foot-links{display:flex;gap:20px;}
+.foot-links a{font-size:12px;color:var(--t3);text-decoration:none;}
+.foot-note{font-size:11px;color:var(--t3);}
 
-/* CARDS */
-.card{background:#fff;border-radius:10px;border:1px solid var(--border);padding:16px;}
-.card-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:12px;}
+/* ─── LOADING ─── */
+#loading{display:none;position:fixed;inset:0;background:rgba(255,255,255,.97);z-index:500;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.ld-logo{font-size:18px;font-weight:800;color:var(--blue);}
+.ld-h{font-size:13px;color:var(--t3);}
+.ld-bar{width:260px;height:3px;background:var(--bdr);border-radius:2px;overflow:hidden;}
+.ld-fill{height:100%;background:var(--blue);border-radius:2px;width:0;transition:width .6s ease;}
+.ld-msg{font-size:12px;color:var(--t2);}
 
-/* SECTION 1: CREATE */
-.s1-niche-profile{background:#fff;border-radius:10px;border:1px solid var(--border);padding:20px;margin-bottom:14px;}
+/* ─── DASHBOARD ─── */
+/* Full page layout */
+.dash{display:flex;min-height:100vh;width:100%;}
 
-/* Niche row - ALWAYS horizontal */
-.s1-niche-row{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);}
-.s1-niche-inner{display:flex;align-items:flex-start;gap:12px;}
-.s1-niche-label{font-size:11px;font-weight:700;color:var(--text);white-space:nowrap;flex-shrink:0;}
-.niche-pills{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0;}
-.npill{font-size:11px;padding:5px 13px;border-radius:20px;border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .2s;background:#fff;white-space:nowrap;}
-.npill:hover{border-color:var(--blue);color:var(--blue);}
-.npill.active{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
+/* Sidebar — desktop only */
+.dsb{width:var(--sw);flex-shrink:0;background:var(--blue);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;}
+.dsb-top{padding:20px 16px;border-bottom:1px solid rgba(255,255,255,.1);}
+.dsb-logo{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.dsb-icon{width:28px;height:28px;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--blue);}
+.dsb-name{font-size:15px;font-weight:800;color:#fff;}
+.dsb-handle{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;}
+.dsb-nav{padding:12px 8px;flex:1;}
+.dni{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:all .2s;margin-bottom:2px;}
+.dni:hover{background:rgba(255,255,255,.1);}
+.dni.act{background:rgba(255,255,255,.18);}
+.dni-ic{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.dni-tx .dn-t{font-size:13px;font-weight:600;color:#fff;}
+.dni-tx .dn-s{font-size:10px;color:rgba(255,255,255,.45);}
+.dsb-foot{padding:16px;border-top:1px solid rgba(255,255,255,.1);}
+.dav{display:flex;align-items:center;gap:10px;}
+.dav-ic{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.dav-n{font-size:12px;font-weight:600;color:#fff;}
+.dav-h{font-size:10px;color:rgba(255,255,255,.45);}
+.d-back{display:block;margin-top:10px;font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.15);text-align:center;background:none;width:100%;font-family:'Inter',sans-serif;transition:all .2s;}
+.d-back:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);}
 
-/* Profile grid - 4 col desktop, 2 col tablet, 1 col mobile */
-.s1-profile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-.s1-profile-field label{display:block;font-size:10px;font-weight:600;color:var(--blue);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;}
-.s1-profile-textarea{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-size:12px;color:var(--text);line-height:1.5;height:80px;}
-.s1-profile-textarea:focus{border-color:var(--blue);background:#fff;}
-.s1-profile-textarea::placeholder{color:var(--text3);}
-.tone-pills{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;}
-.tpill{font-size:10px;padding:4px 9px;border-radius:20px;border:1px solid var(--border);color:var(--text2);cursor:pointer;background:#fff;transition:all .2s;}
-.tpill.active{background:var(--blue);color:#fff;border-color:var(--blue);}
-.s1-save-btn{width:100%;padding:8px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;border-radius:7px;transition:all .2s;}
-.s1-save-btn:hover{background:var(--blue2);}
-.s1-agents-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px;}
-.s1-prefs-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
-.pref-pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
-.ppill{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);color:var(--text2);cursor:pointer;background:#fff;transition:all .2s;}
-.ppill.active{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
-.ppill.best{background:var(--green2);color:var(--green);border-color:#86EFAC;font-weight:600;}
+/* Main content area */
+.dmain{margin-left:var(--sw);flex:1;min-height:100vh;display:flex;flex-direction:column;}
+.dtop{background:#fff;border-bottom:1px solid var(--bdr);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
+.dtop-t{font-size:15px;font-weight:700;white-space:nowrap;}
+.drun-all{background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:7px 16px;border-radius:7px;cursor:pointer;border:none;white-space:nowrap;font-family:'Inter',sans-serif;}
+.dbody{padding:20px;flex:1;}
 
-/* AGENT CARDS */
-.agent-card{background:#fff;border-radius:10px;border:1px solid var(--border);padding:14px;transition:border-color .2s;}
-.agent-card:hover{border-color:var(--border2);}
-.agent-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.agent-hdr-left{display:flex;align-items:center;gap:8px;}
-.agent-ico{width:30px;height:30px;background:var(--blue3);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
-.agent-name{font-size:12px;font-weight:700;color:var(--text);}
-.agent-role{font-size:10px;color:var(--text3);}
-.agent-status{font-size:10px;padding:3px 8px;border-radius:20px;}
-.s-idle{background:#F3F4F6;color:var(--text3);}
-.s-run{background:var(--blue3);color:var(--blue);font-weight:600;}
-.s-done{background:var(--green2);color:var(--green);font-weight:600;}
-.agent-out{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px;font-size:11px;line-height:1.7;color:var(--text2);min-height:68px;}
-.atag{display:inline-block;font-size:9px;padding:2px 7px;border-radius:4px;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
-.at1{background:var(--blue3);color:var(--blue);}
-.at2{background:#F3F4F6;color:#374151;}
-.run-btn{margin-top:10px;width:100%;padding:7px;border-radius:7px;border:1px solid var(--border);background:#fff;color:var(--text2);font-size:11px;font-weight:500;transition:all .2s;}
-.run-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue3);}
-.run-btn:disabled{opacity:.35;cursor:not-allowed;}
+/* Mobile bottom tabs */
+.mobtabs{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bdr);z-index:100;display:none;grid-template-columns:repeat(3,1fr);}
+.mobtab{display:flex;flex-direction:column;align-items:center;padding:8px 0;cursor:pointer;border:none;background:none;}
+.mobtab-i{font-size:20px;}
+.mobtab-l{font-size:10px;color:var(--t3);margin-top:2px;}
+.mobtab.act .mobtab-l{color:var(--blue);font-weight:600;}
+
+/* Sections */
+.dsec{display:none;}
+.dsec.act{display:block;}
+
+/* Cards */
+.card{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:16px;}
+.card-t{font-size:12px;font-weight:700;margin-bottom:12px;}
+
+/* ── SECTION 1 ── */
+.s1-box{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:20px;margin-bottom:16px;}
+
+/* Niche row */
+.niche-row{display:flex;align-items:center;gap:16px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--bdr);}
+.niche-lbl{font-size:12px;font-weight:700;color:var(--text);flex-shrink:0;}
+.niche-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.np{font-size:11px;padding:5px 13px;border-radius:20px;border:1px solid var(--bdr);color:var(--t2);cursor:pointer;background:#fff;white-space:nowrap;transition:all .2s;}
+.np:hover{border-color:var(--blue);color:var(--blue);}
+.np.act{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
+
+/* Profile 4 cols */
+.prof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.prof-lbl{font-size:10px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;display:block;}
+.prof-ta{width:100%;background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;padding:8px 10px;font-size:12px;color:var(--text);line-height:1.5;height:80px;font-family:'Inter',sans-serif;resize:none;}
+.prof-ta:focus{outline:none;border-color:var(--blue);background:#fff;}
+.prof-ta::placeholder{color:var(--t3);}
+.tone-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
+.tp{font-size:10px;padding:4px 9px;border-radius:20px;border:1px solid var(--bdr);color:var(--t2);cursor:pointer;background:#fff;transition:all .2s;}
+.tp.act{background:var(--blue);color:#fff;border-color:var(--blue);}
+.save-btn{width:100%;padding:8px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;border-radius:7px;cursor:pointer;border:none;font-family:'Inter',sans-serif;}
+
+/* Agents 2 col */
+.ag2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+
+/* Prefs 2 col */
+.pref2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.pp-pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.pp{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--bdr);color:var(--t2);cursor:pointer;background:#fff;transition:all .2s;}
+.pp.act{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
+.pp.best{background:var(--green2);color:var(--green);border-color:#86EFAC;font-weight:600;}
+
+/* Agent card */
+.ac{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:14px;}
+.ac-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.ac-left{display:flex;align-items:center;gap:8px;}
+.ac-ico{width:30px;height:30px;background:var(--blue3);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.ac-name{font-size:12px;font-weight:700;}
+.ac-role{font-size:10px;color:var(--t3);}
+.ast{font-size:10px;padding:3px 8px;border-radius:20px;white-space:nowrap;}
+.ast.idle{background:#F3F4F6;color:var(--t3);}
+.ast.run{background:var(--blue3);color:var(--blue);font-weight:600;}
+.ast.done{background:var(--green2);color:var(--green);font-weight:600;}
+.ac-out{background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;padding:10px;font-size:11px;line-height:1.7;color:var(--t2);min-height:68px;}
+.atg{display:inline-block;font-size:9px;padding:2px 7px;border-radius:4px;margin-bottom:4px;font-weight:600;text-transform:uppercase;}
+.atg.b{background:var(--blue3);color:var(--blue);}
+.atg.g{background:#F3F4F6;color:#374151;}
+.rbtn{margin-top:10px;width:100%;padding:7px;border-radius:7px;border:1px solid var(--bdr);background:#fff;color:var(--t2);font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;}
+.rbtn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue3);}
+.rbtn:disabled{opacity:.35;cursor:not-allowed;}
 .typing::after{content:'▋';animation:blink .8s step-end infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-/* SECTION 2: ANALYSE */
-.s2-stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:14px;}
-.stat-card{background:#fff;border-radius:10px;border:1px solid var(--border);padding:14px;text-align:center;}
-.stat-card.accent{background:var(--blue3);border-color:var(--border2);}
-.stat-lbl{font-size:10px;color:var(--text3);margin-bottom:5px;font-weight:500;}
-.stat-card.accent .stat-lbl{color:var(--blue);}
-.stat-val{font-size:20px;font-weight:800;color:var(--text);}
-.stat-card.accent .stat-val{color:var(--blue);}
-.stat-sub{font-size:10px;color:var(--text3);margin-top:2px;}
-.stat-up{color:var(--green)!important;}
-.s2-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+/* ── SECTION 2 ── */
+.s2-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px;}
+.sc{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:14px;text-align:center;}
+.sc.hl{background:var(--blue3);border-color:var(--bdr2);}
+.sc-l{font-size:10px;color:var(--t3);margin-bottom:5px;font-weight:500;}
+.sc.hl .sc-l{color:var(--blue);}
+.sc-v{font-size:20px;font-weight:800;}
+.sc.hl .sc-v{color:var(--blue);}
+.sc-s{font-size:10px;color:var(--t3);margin-top:2px;}
+.sc-s.up{color:var(--green);}
+.s2-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 
-/* BAR CHART */
-.bar-chart-wrap{position:relative;}
-.bar-chart-bars{display:flex;align-items:flex-end;gap:8px;height:100px;margin-bottom:8px;padding-left:30px;}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;}
-.bar-val{font-size:9px;font-weight:600;color:var(--blue);}
-.bar-fill{width:100%;border-radius:3px 3px 0 0;transition:height .3s;}
-.bar-xlbl{font-size:9px;color:var(--text3);}
-.bar-grid{position:absolute;top:0;left:0;right:0;bottom:20px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;}
-.bar-grid-line{border-top:1px dashed var(--border);position:relative;}
-.bar-grid-lbl{position:absolute;left:0;top:-7px;font-size:9px;color:var(--text3);}
-.bar-summary{display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border);}
-.bar-sum-item{font-size:10px;color:var(--text2);}
-.bar-sum-val{font-weight:600;color:var(--blue);}
+/* Bar chart */
+.bchart{position:relative;height:120px;margin-bottom:8px;padding-left:32px;}
+.bgrid{position:absolute;top:0;left:0;right:0;bottom:20px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;}
+.bgl{border-top:1px dashed var(--bdr);position:relative;}
+.bgl span{position:absolute;left:0;top:-7px;font-size:9px;color:var(--t3);}
+.bbars{position:absolute;bottom:20px;left:32px;right:0;top:0;display:flex;align-items:flex-end;gap:8px;}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;}
+.bc-v{font-size:9px;font-weight:600;color:var(--blue);}
+.bc-f{width:100%;border-radius:3px 3px 0 0;}
+.bc-l{font-size:9px;color:var(--t3);}
+.bsum{display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--bdr);font-size:10px;color:var(--t2);}
+.bsv{font-weight:600;color:var(--blue);}
 
-/* TOP POSTS */
-.post-item{padding:8px 0;border-bottom:1px solid var(--border);}
-.post-item:last-child{border-bottom:none;}
-.post-cap{font-size:11px;color:var(--text);margin-bottom:4px;line-height:1.5;}
-.post-meta{display:flex;gap:10px;font-size:10px;color:var(--text3);}
-.post-tag{background:var(--blue3);color:var(--blue);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:600;}
-.new-posts-note{margin-top:8px;font-size:10px;color:var(--green);background:#F0FDF4;padding:6px 8px;border-radius:6px;border:1px solid #BBF7D0;}
+/* Top posts */
+.pi{padding:8px 0;border-bottom:1px solid var(--bdr);}
+.pi:last-child{border-bottom:none;}
+.pi-cap{font-size:11px;color:var(--text);margin-bottom:4px;line-height:1.5;}
+.pi-meta{display:flex;gap:10px;font-size:10px;color:var(--t3);}
+.pi-tag{background:var(--blue3);color:var(--blue);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:600;}
+.new-note{margin-top:8px;font-size:10px;color:var(--green);background:#F0FDF4;padding:6px 8px;border-radius:6px;border:1px solid #BBF7D0;}
 
-/* SECTION 3: PLAN */
-.s3-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
-.cal-day{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
-.cal-day:last-child{border-bottom:none;}
-.cal-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);width:52px;flex-shrink:0;}
-.cal-pill{font-size:9px;padding:2px 8px;border-radius:20px;font-weight:600;flex-shrink:0;}
-.cp-reel{background:var(--blue3);color:var(--blue);}
-.cp-car{background:#F3F4F6;color:#374151;}
-.cp-story{background:#FEF9C3;color:#854D0E;}
-.cal-topic{font-size:11px;color:var(--text);}
-.cal-note{margin-top:8px;font-size:10px;color:var(--green);background:#F0FDF4;padding:5px 8px;border-radius:6px;border:1px solid #BBF7D0;}
-.plan-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;}
-.plan-regen{padding:7px;border-radius:7px;border:1px solid var(--border);background:#fff;color:var(--text2);font-size:11px;text-align:center;}
-.plan-export{padding:7px;border-radius:7px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;text-align:center;}
+/* ── SECTION 3 ── */
+.s3-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.cd{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--bdr);}
+.cd:last-child{border-bottom:none;}
+.cd-d{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);width:52px;flex-shrink:0;}
+.cd-p{font-size:9px;padding:2px 8px;border-radius:20px;font-weight:600;flex-shrink:0;white-space:nowrap;}
+.cp-r{background:var(--blue3);color:var(--blue);}
+.cp-c{background:#F3F4F6;color:#374151;}
+.cp-s{background:#FEF9C3;color:#854D0E;}
+.cd-t{font-size:11px;color:var(--text);}
+.cal-note{margin-top:8px;font-size:10px;color:var(--green);background:#F0FDF4;padding:5px 8px;border-radius:6px;border:1px solid #BBF7D0;display:none;}
+.plan-acts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;}
+.pregen{padding:7px;border-radius:7px;border:1px solid var(--bdr);background:#fff;color:var(--t2);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;}
+.pexp{padding:7px;border-radius:7px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:'Inter',sans-serif;}
 
-/* RESPONSIVE */
-@media(max-width:1100px){
-  .s1-profile-grid{grid-template-columns:1fr 1fr;}
-}
+/* ─── RESPONSIVE ─── */
 @media(max-width:768px){
   /* Landing */
-  .l-nav{padding:0 16px;}
-  .l-nav-links,.l-nav-cta{display:none;}
-  .l-nav-burger{display:flex;}
-  .l-hero{padding:80px 16px 40px;}
-  .l-hero-inner{grid-template-columns:1fr;}
-  .l-hero-sub{max-width:100%;}
-  .l-trust{padding:12px 16px;}
-  .l-trust-inner{flex-wrap:wrap;gap:10px;}
-  .l-section{padding:32px 16px;}
-  .l-steps{grid-template-columns:1fr 1fr;}
-  .l-step-arrow{display:none;}
-  .l-agents{grid-template-columns:1fr 1fr;}
-  .l-price-grid{grid-template-columns:1fr;}
-  .l-cta{padding:32px 16px;}
-  .l-cta-row{flex-direction:column;}
-  .l-cta-input{border-radius:8px 8px 0 0;}
-  .l-cta-btn{border-radius:0 0 8px 8px;text-align:center;}
-  .l-footer{flex-direction:column;gap:8px;text-align:center;padding:16px;}
-  .l-footer-links{justify-content:center;}
-  /* Dashboard — hide sidebar, show bottom tabs */
-  .d-sidebar{display:none!important;}
-  .d-main{margin-left:0!important;width:100%!important;}
-  .d-mobile-tabs{display:grid!important;}
-  .d-body{padding:12px 12px 80px;}
-  .d-topbar{padding:0 12px;}
-  .d-topbar-title{font-size:13px;}
+  .ln{padding:0 16px;}
+  .ln-links,.ln-cta{display:none;}
+  .burger{display:flex;}
+  .hero{padding:80px 16px 40px;}
+  .hero-in{grid-template-columns:1fr;}
+  .hero p{max-width:100%;}
+  .trust{padding:12px 16px;}
+  .trust-in{flex-wrap:wrap;gap:10px;}
+  .sec{padding:36px 16px;}
+  .steps{grid-template-columns:1fr 1fr;}
+  .agents-g{grid-template-columns:1fr 1fr;}
+  .price-g{grid-template-columns:1fr;}
+  .cta{padding:36px 16px;}
+  .cta-row{flex-direction:column;}
+  .cta-i{border-radius:8px 8px 0 0;}
+  .cta-b{border-radius:0 0 8px 8px;text-align:center;}
+  .foot{flex-direction:column;gap:8px;text-align:center;padding:16px;}
+  .foot-links{justify-content:center;}
+  /* Dashboard */
+  .dsb{display:none;}
+  .dmain{margin-left:0;width:100%;}
+  .mobtabs{display:grid;}
+  .dbody{padding:12px 12px 80px;}
+  .dtop{padding:0 12px;}
+  .dtop-t{font-size:13px;}
   /* Section 1 */
-  .s1-niche-profile{padding:12px;}
-  .s1-profile-grid{grid-template-columns:1fr;}
-  .s1-profile-textarea{height:56px;}
-  .s1-agents-row{grid-template-columns:1fr;}
-  .s1-prefs-row{grid-template-columns:1fr;}
+  .s1-box{padding:14px;}
+  .niche-row{flex-direction:column;align-items:flex-start;gap:8px;}
+  .prof-grid{grid-template-columns:1fr;}
+  .ag2{grid-template-columns:1fr;}
+  .pref2{grid-template-columns:1fr;}
   /* Section 2 */
   .s2-stats{grid-template-columns:1fr 1fr;}
-  .s2-grid{grid-template-columns:1fr;}
+  .s2-g{grid-template-columns:1fr;}
   /* Section 3 */
-  .s3-grid{grid-template-columns:1fr;}
-  /* Fix run all button */
-  .d-run-all-btn{font-size:11px;padding:6px 10px;}
+  .s3-g{grid-template-columns:1fr;}
 }
 @media(max-width:480px){
-  .l-hero-title{font-size:22px;}
-  .l-steps{grid-template-columns:1fr;}
-  .l-agents{grid-template-columns:1fr;}
+  .hero h1{font-size:24px;}
+  .steps{grid-template-columns:1fr;}
+  .agents-g{grid-template-columns:1fr;}
+  .drun-all{font-size:11px;padding:6px 10px;}
 }
 </style>
 </head>
 <body>
 
 <!-- LOADING -->
-<div id="loading" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;position:fixed;inset:0;background:rgba(255,255,255,.97);z-index:200;">
-  <div class="loading-logo">ContentIQ</div>
-  <div class="loading-handle" id="load-handle"></div>
-  <div class="loading-bar"><div class="loading-fill" id="load-fill"></div></div>
-  <div class="loading-msg" id="load-msg">Starting...</div>
+<div id="loading" style="display:none;position:fixed;inset:0;background:rgba(255,255,255,.97);z-index:500;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+  <div class="ld-logo">ContentIQ</div>
+  <div class="ld-h" id="ld-h"></div>
+  <div class="ld-bar"><div class="ld-fill" id="ld-fill"></div></div>
+  <div class="ld-msg" id="ld-msg">Starting...</div>
 </div>
 
 <!-- ══ LANDING ══ -->
 <div id="landing">
-  <nav class="l-nav">
-    <div class="l-nav-logo">
-      <div class="l-nav-icon">C</div>
-      <div class="l-nav-name">ContentIQ</div>
-    </div>
-    <div class="l-nav-links">
-      <a href="#how">How it works</a>
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-    </div>
-    <a class="l-nav-cta" href="#form-anchor" onclick="scrollToForm()">Try free →</a>
-    <div class="l-nav-burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  <nav class="ln">
+    <a class="ln-logo" href="#"><div class="ln-icon">C</div><div class="ln-name">ContentIQ</div></a>
+    <div class="ln-links"><a href="#how">How it works</a><a href="#features">Features</a><a href="#pricing">Pricing</a></div>
+    <button class="ln-cta" onclick="scrollF()">Try free →</button>
+    <button class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </nav>
-  <div class="l-mobile-menu" id="mobile-menu">
+  <div class="mmenu" id="mmenu">
     <a href="#how" onclick="toggleMenu()">How it works</a>
     <a href="#features" onclick="toggleMenu()">Features</a>
     <a href="#pricing" onclick="toggleMenu()">Pricing</a>
-    <a class="m-cta" href="#form-anchor" onclick="scrollToForm();toggleMenu()">⚡ Try free →</a>
+    <a class="mc" href="#" onclick="scrollF();toggleMenu()">⚡ Try free →</a>
   </div>
 
-  <!-- HERO -->
-  <div class="l-hero">
-    <div class="l-hero-inner">
+  <div class="hero">
+    <div class="hero-in">
       <div>
-        <div class="l-hero-badge"><div class="l-hero-badge-dot"></div>5 AI Agents · Instagram Native · Free</div>
-        <h1 class="l-hero-title">Your Instagram<br>Content Team,<br><span>Powered by AI.</span></h1>
-        <p class="l-hero-sub">Enter your handle. 5 AI agents instantly generate ideas, write hooks, plan your calendar, analyse your stats, and draft your DMs — all from your real Instagram data.</p>
-        <div class="l-hero-btns">
-          <button class="btn-primary" onclick="scrollToForm()">⚡ Launch free →</button>
-          <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it works</button>
+        <div class="badge"><div class="bdot"></div>5 AI Agents · Instagram Native · Free</div>
+        <h1>Your Instagram<br>Content Team,<br><span>Powered by AI.</span></h1>
+        <p>Enter your handle. 5 AI agents instantly generate ideas, write hooks, plan your calendar, analyse your stats, and draft your DMs — all from your real Instagram data.</p>
+        <div class="hero-btns">
+          <button class="btn-p" onclick="scrollF()">⚡ Launch free →</button>
+          <button class="btn-s" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it works</button>
         </div>
-        <div class="l-hero-stats">
-          <div class="l-hstat"><div class="l-hstat-val">5</div><div class="l-hstat-lab">AI Agents</div></div>
-          <div class="l-hstat"><div class="l-hstat-val">$0</div><div class="l-hstat-lab">Cost ever</div></div>
-          <div class="l-hstat"><div class="l-hstat-val">60s</div><div class="l-hstat-lab">To dashboard</div></div>
-          <div class="l-hstat"><div class="l-hstat-val">100%</div><div class="l-hstat-lab">Private</div></div>
+        <div class="hstats">
+          <div class="hs"><div class="hs-v">5</div><div class="hs-l">AI Agents</div></div>
+          <div class="hs"><div class="hs-v">$0</div><div class="hs-l">Cost ever</div></div>
+          <div class="hs"><div class="hs-v">60s</div><div class="hs-l">To dashboard</div></div>
+          <div class="hs"><div class="hs-v">100%</div><div class="hs-l">Private</div></div>
         </div>
       </div>
-      <div class="l-form-card" id="form-anchor">
-        <div class="l-form-title">Launch your dashboard</div>
-        <div class="l-form-sub">No password. No account. Just your handle.</div>
-        <label class="l-form-label">Instagram Handle</label>
-        <input class="l-form-input" type="text" id="inp-handle" placeholder="@yourhandle" />
-        <button class="l-form-btn" onclick="launch()" id="launch-btn">⚡ Launch free →</button>
-        <div class="l-form-note">🔒 Public data only · No passwords stored · Free forever</div>
-        <div class="l-form-err" id="form-err"></div>
-        <div class="l-form-prices">
-          <div class="l-form-price"><div class="l-form-price-val">$0</div><div class="l-form-price-lab">ContentIQ</div></div>
-          <div class="l-form-price" style="border-left:1px solid var(--border);border-right:1px solid var(--border);"><div class="l-form-price-val">$0</div><div class="l-form-price-lab">Scraping</div></div>
-          <div class="l-form-price"><div class="l-form-price-val">$0</div><div class="l-form-price-lab">AI Agents</div></div>
+      <div class="fc" id="fc">
+        <h3>Launch your dashboard</h3>
+        <div class="fc-sub">No password. No account. Just your handle.</div>
+        <label class="fl">Instagram Handle</label>
+        <input class="fi" type="text" id="inp" placeholder="@yourhandle" />
+        <button class="fb" onclick="launch()" id="lb">⚡ Launch free →</button>
+        <div class="fn">🔒 Public data only · No passwords · Free forever</div>
+        <div class="fe" id="fe"></div>
+        <div class="fp">
+          <div><div class="fp-v">$0</div><div class="fp-l">ContentIQ</div></div>
+          <div style="border-left:1px solid var(--bdr);border-right:1px solid var(--bdr);"><div class="fp-v">$0</div><div class="fp-l">Scraping</div></div>
+          <div><div class="fp-v">$0</div><div class="fp-l">AI Agents</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TRUST -->
-  <div class="l-trust">
-    <div class="l-trust-inner">
-      <span class="l-trust-label">Powered by</span>
-      <div class="l-trust-sep"></div><span class="l-trust-item">GROQ AI</span>
-      <div class="l-trust-sep"></div><span class="l-trust-item">APIFY</span>
-      <div class="l-trust-sep"></div><span class="l-trust-item">LLAMA 3</span>
-      <div class="l-trust-sep"></div><span class="l-trust-item">INSTAGRAM</span>
-    </div>
-  </div>
+  <div class="trust"><div class="trust-in">
+    <span class="tl">Powered by</span>
+    <div class="ts"></div><span class="ti">GROQ AI</span>
+    <div class="ts"></div><span class="ti">APIFY</span>
+    <div class="ts"></div><span class="ti">LLAMA 3</span>
+    <div class="ts"></div><span class="ti">INSTAGRAM</span>
+  </div></div>
 
-  <!-- HOW IT WORKS -->
-  <div id="how"><div class="l-section">
-    <div class="l-section-label">How it works</div>
-    <div class="l-section-title">From handle to dashboard<br>in 60 seconds.</div>
-    <div class="l-steps">
-      <div class="l-step"><div class="l-step-num">1</div><div class="l-step-title">Enter your handle</div><div class="l-step-desc">Just your Instagram username. No password, no login, no account needed.</div><div class="l-step-arrow">→</div></div>
-      <div class="l-step"><div class="l-step-num">2</div><div class="l-step-title">We scrape your data</div><div class="l-step-desc">Our servers fetch your public posts, likes, reach and follower stats automatically.</div><div class="l-step-arrow">→</div></div>
-      <div class="l-step"><div class="l-step-num">3</div><div class="l-step-title">AI reads your profile</div><div class="l-step-desc">5 specialised AI agents analyse your data, your niche, and trending topics.</div><div class="l-step-arrow">→</div></div>
-      <div class="l-step"><div class="l-step-num">4</div><div class="l-step-title">Dashboard ready</div><div class="l-step-desc">Ideas, hooks, calendar, insights, DM replies — all personalised to you.</div></div>
+  <div id="how"><div class="sec">
+    <div class="sec-lbl">How it works</div>
+    <div class="sec-title">From handle to dashboard in 60 seconds.</div>
+    <div class="steps">
+      <div><div class="step-n">1</div><div class="step-t">Enter your handle</div><div class="step-d">Just your Instagram username. No password, no login, no account needed.</div></div>
+      <div><div class="step-n">2</div><div class="step-t">We scrape your data</div><div class="step-d">Our servers fetch your public posts, likes, reach and follower stats automatically.</div></div>
+      <div><div class="step-n">3</div><div class="step-t">AI reads your profile</div><div class="step-d">5 specialised AI agents analyse your data, your niche, and trending topics.</div></div>
+      <div><div class="step-n">4</div><div class="step-t">Dashboard ready</div><div class="step-d">Ideas, hooks, calendar, insights, DM replies — all personalised to you.</div></div>
     </div>
   </div></div>
 
-  <!-- FEATURES -->
-  <div class="l-agents-bg" id="features"><div class="l-section">
-    <div class="l-section-label">The 5 agents</div>
-    <div class="l-section-title">Every agent has one job.<br>Together they run your content.</div>
-    <div class="l-agents">
-      <div class="l-agent"><div class="l-agent-icon">💡</div><div class="l-agent-name">Ideator</div><div class="l-agent-desc">Scouts trends and your own post history to surface your next viral idea.</div></div>
-      <div class="l-agent"><div class="l-agent-icon">✍️</div><div class="l-agent-name">Hook & Script</div><div class="l-agent-desc">Writes scroll-stopping hooks and full Reel scripts in your exact voice.</div></div>
-      <div class="l-agent"><div class="l-agent-icon">📅</div><div class="l-agent-name">Planner</div><div class="l-agent-desc">Builds your 7-day content calendar at your best posting times.</div></div>
-      <div class="l-agent"><div class="l-agent-icon">📊</div><div class="l-agent-name">Analyst</div><div class="l-agent-desc">Tells you what's working, what isn't, and what to do next.</div></div>
-      <div class="l-agent"><div class="l-agent-icon">💬</div><div class="l-agent-name">DM Manager</div><div class="l-agent-desc">Drafts warm on-brand replies for your most common DM types.</div></div>
+  <div class="sec-bg" id="features"><div class="sec">
+    <div class="sec-lbl">The 5 agents</div>
+    <div class="sec-title">Every agent has one job. Together they run your content.</div>
+    <div class="agents-g">
+      <div class="ag"><div class="ag-i">💡</div><div class="ag-n">Ideator</div><div class="ag-d">Scouts trends and your own post history to surface your next viral idea.</div></div>
+      <div class="ag"><div class="ag-i">✍️</div><div class="ag-n">Hook & Script</div><div class="ag-d">Writes scroll-stopping hooks and full Reel scripts in your exact voice.</div></div>
+      <div class="ag"><div class="ag-i">📅</div><div class="ag-n">Planner</div><div class="ag-d">Builds your 7-day content calendar at your best posting times.</div></div>
+      <div class="ag"><div class="ag-i">📊</div><div class="ag-n">Analyst</div><div class="ag-d">Tells you what's working, what isn't, and what to do next.</div></div>
+      <div class="ag"><div class="ag-i">💬</div><div class="ag-n">DM Manager</div><div class="ag-d">Drafts warm on-brand replies for your most common DM types.</div></div>
     </div>
   </div></div>
 
-  <!-- PRICING -->
-  <div id="pricing"><div class="l-section">
-    <div class="l-section-label">Pricing</div>
-    <div class="l-section-title">Completely free.<br>No hidden costs ever.</div>
-    <div class="l-price-grid">
-      <div class="l-price-card"><div class="l-price-amt">$0</div><div class="l-price-name">ContentIQ Platform</div><div class="l-price-desc">The dashboard, all 5 agents, every feature. Free forever. No account needed.</div></div>
-      <div class="l-price-card"><div class="l-price-amt">$0</div><div class="l-price-name">Data Scraping</div><div class="l-price-desc">We cover the cost of fetching your Instagram data using Apify. Nothing to pay.</div></div>
-      <div class="l-price-card"><div class="l-price-amt">$0</div><div class="l-price-name">AI Agents</div><div class="l-price-desc">All 5 agents powered by Groq AI and Llama 3. Included free, no credit card.</div></div>
+  <div id="pricing"><div class="sec">
+    <div class="sec-lbl">Pricing</div>
+    <div class="sec-title">Completely free. No hidden costs ever.</div>
+    <div class="price-g">
+      <div class="pc"><div class="pa">$0</div><div class="pn">ContentIQ Platform</div><div class="pd">The dashboard, all 5 agents, every feature. Free forever.</div></div>
+      <div class="pc"><div class="pa">$0</div><div class="pn">Data Scraping</div><div class="pd">We cover the cost of fetching your Instagram data. Nothing to pay.</div></div>
+      <div class="pc"><div class="pa">$0</div><div class="pn">AI Agents</div><div class="pd">All 5 agents powered by Groq AI and Llama 3. Included free.</div></div>
     </div>
-    <div class="l-price-note">✅ ContentIQ is 100% free. We cover all infrastructure costs. Just enter your handle and go.</div>
+    <div class="pnote">✅ ContentIQ is 100% free. We cover all infrastructure costs. Just enter your handle and go.</div>
   </div></div>
 
-  <!-- CTA -->
-  <div class="l-cta-bg"><div class="l-cta">
-    <div class="l-cta-title">Ready to let AI run your Instagram?</div>
-    <div class="l-cta-sub">Free forever. No account. No credit card. Just your Instagram handle.</div>
-    <div class="l-cta-row">
-      <input class="l-cta-input" type="text" id="cta-handle" placeholder="@yourhandle" />
-      <button class="l-cta-btn" onclick="launchFromCta()">⚡ Launch free</button>
+  <div class="cta-bg"><div class="cta">
+    <h2>Ready to let AI run your Instagram?</h2>
+    <p>Free forever. No account. No credit card. Just your Instagram handle.</p>
+    <div class="cta-row">
+      <input class="cta-i" type="text" id="cta-h" placeholder="@yourhandle" />
+      <button class="cta-b" onclick="launchCta()">⚡ Launch free</button>
     </div>
-    <div class="l-cta-note">🔒 Public data only · No passwords · No data stored</div>
+    <div class="cta-n">🔒 Public data only · No passwords · No data stored</div>
   </div></div>
 
-  <div class="l-footer">
-    <div class="l-footer-logo">ContentIQ</div>
-    <div class="l-footer-links"><a href="#how">How it works</a><a href="#features">Features</a><a href="#pricing">Pricing</a></div>
-    <div class="l-footer-note">🔒 No data stored · Public profiles only</div>
+  <div class="foot">
+    <div class="foot-logo">ContentIQ</div>
+    <div class="foot-links"><a href="#how">How it works</a><a href="#features">Features</a><a href="#pricing">Pricing</a></div>
+    <div class="foot-note">🔒 No data stored · Public profiles only</div>
   </div>
 </div>
 
 <!-- ══ DASHBOARD ══ -->
 <div id="dashboard">
-  <div class="d-layout">
-    <!-- SIDEBAR -->
-    <div class="d-sidebar" id="d-sidebar">
-      <div class="d-sidebar-top">
-        <div class="d-sidebar-logo">
-          <div class="d-sidebar-logo-icon">C</div>
-          <div class="d-sidebar-logo-name">ContentIQ</div>
-        </div>
-        <div class="d-sidebar-handle" id="d-handle-display">@handle</div>
+  <div class="dash">
+    <!-- Sidebar -->
+    <div class="dsb">
+      <div class="dsb-top">
+        <div class="dsb-logo"><div class="dsb-icon">C</div><div class="dsb-name">ContentIQ</div></div>
+        <div class="dsb-handle" id="dsb-h">@handle</div>
       </div>
-      <div class="d-sidebar-nav">
-        <div class="d-nav-item active" onclick="switchSection('create')" id="nav-create">
-          <div class="d-nav-icon">✍️</div>
-          <div><div class="d-nav-label">Create</div><div class="d-nav-sub">Ideas · Hooks</div></div>
-        </div>
-        <div class="d-nav-item" onclick="switchSection('analyse')" id="nav-analyse">
-          <div class="d-nav-icon">📊</div>
-          <div><div class="d-nav-label">Analyse</div><div class="d-nav-sub">Stats · Insights</div></div>
-        </div>
-        <div class="d-nav-item" onclick="switchSection('plan')" id="nav-plan">
-          <div class="d-nav-icon">📅</div>
-          <div><div class="d-nav-label">Plan & DMs</div><div class="d-nav-sub">Calendar · Replies</div></div>
-        </div>
+      <div class="dsb-nav">
+        <div class="dni act" id="nav-c" onclick="sw('c')"><div class="dni-ic">✍️</div><div class="dni-tx"><div class="dn-t">Create</div><div class="dn-s">Ideas · Hooks</div></div></div>
+        <div class="dni" id="nav-a" onclick="sw('a')"><div class="dni-ic">📊</div><div class="dni-tx"><div class="dn-t">Analyse</div><div class="dn-s">Stats · Insights</div></div></div>
+        <div class="dni" id="nav-p" onclick="sw('p')"><div class="dni-ic">📅</div><div class="dni-tx"><div class="dn-t">Plan & DMs</div><div class="dn-s">Calendar · Replies</div></div></div>
       </div>
-      <div class="d-sidebar-footer">
-        <div class="d-user">
-          <div class="d-user-avatar" id="d-avatar">A</div>
-          <div><div class="d-user-name" id="d-username">Adritanya</div><div class="d-user-handle" id="d-userhandle">@handle</div></div>
+      <div class="dsb-foot">
+        <div class="dav">
+          <div class="dav-ic" id="dav-ic">A</div>
+          <div><div class="dav-n" id="dav-n">User</div><div class="dav-h" id="dav-h">@handle</div></div>
         </div>
-        <div class="d-back-btn" onclick="logout()">← Change Account</div>
+        <button class="d-back" onclick="logout()">← Change Account</button>
       </div>
     </div>
 
-    <!-- MAIN -->
-    <div class="d-main">
-      <div class="d-topbar">
-        <div class="d-topbar-title" id="d-section-title">✍️ Create</div>
-        <div class="d-topbar-right">
-          <button class="d-run-all-btn" onclick="runAll()">⚡ Run All Agents</button>
-        </div>
+    <!-- Main -->
+    <div class="dmain">
+      <div class="dtop">
+        <div class="dtop-t" id="dtop-t">✍️ Create</div>
+        <button class="drun-all" onclick="runAll()">⚡ Run All Agents</button>
       </div>
+      <div class="dbody">
 
-      <div class="d-body">
-
-        <!-- ── SECTION 1: CREATE ── -->
-        <div class="d-section active" id="sec-create">
-
-          <!-- Niche + Profile -->
-          <div class="s1-niche-profile">
-            <div class="s1-niche-row">
-              <div class="s1-niche-inner">
-              <div class="s1-niche-label">Niche</div>
-              <div class="niche-pills" id="niche-pills">
-                <div class="npill active" onclick="setNiche(this,'Skincare')">Skincare</div>
-                <div class="npill" onclick="setNiche(this,'Fashion')">Fashion</div>
-                <div class="npill" onclick="setNiche(this,'Fitness')">Fitness</div>
-                <div class="npill" onclick="setNiche(this,'Food & Recipes')">Food</div>
-                <div class="npill" onclick="setNiche(this,'Lifestyle')">Lifestyle</div>
-                <div class="npill" onclick="setNiche(this,'Travel')">Travel</div>
-                <div class="npill" onclick="setNiche(this,'Finance')">Finance</div>
-                <div class="npill" onclick="setNiche(this,'Tech')">Tech</div>
-                <div class="npill" onclick="setNiche(this,'Business')">Business</div>
-                <div class="npill" onclick="setCustomNiche(this)">+ Custom</div>
-              </div>
+        <!-- SECTION 1: CREATE -->
+        <div class="dsec act" id="sec-c">
+          <div class="s1-box">
+            <!-- Niche row -->
+            <div class="niche-row">
+              <div class="niche-lbl">Niche</div>
+              <div class="niche-pills">
+                <div class="np act" onclick="setN(this,'Skincare')">Skincare</div>
+                <div class="np" onclick="setN(this,'Fashion')">Fashion</div>
+                <div class="np" onclick="setN(this,'Fitness')">Fitness</div>
+                <div class="np" onclick="setN(this,'Food & Recipes')">Food</div>
+                <div class="np" onclick="setN(this,'Lifestyle')">Lifestyle</div>
+                <div class="np" onclick="setN(this,'Travel')">Travel</div>
+                <div class="np" onclick="setN(this,'Finance')">Finance</div>
+                <div class="np" onclick="setN(this,'Tech')">Tech</div>
+                <div class="np" onclick="setN(this,'Business')">Business</div>
+                <div class="np" onclick="setCN(this)">+ Custom</div>
               </div>
             </div>
-            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:10px;">Your Profile <span style="font-size:10px;color:var(--text3);font-weight:400;">— agents personalise everything based on this</span></div>
-            <div class="s1-profile-grid">
-              <div class="s1-profile-field"><label>Products you promote</label><textarea class="s1-profile-textarea" id="p-products" placeholder="e.g. The Ordinary Niacinamide, Minimalist SPF, Korean dupes under ₹500..."></textarea></div>
-              <div class="s1-profile-field"><label>Your audience</label><textarea class="s1-profile-textarea" id="p-audience" placeholder="e.g. Indian women 18-25, oily skin, budget conscious, college students..."></textarea></div>
-              <div class="s1-profile-field"><label>Topics to focus on</label><textarea class="s1-profile-textarea" id="p-topics" placeholder="e.g. Budget skincare, dupes, ingredient education, oily skin solutions..."></textarea></div>
-              <div class="s1-profile-field">
-                <label>Content tone</label>
+            <!-- Profile 4 cols -->
+            <div style="font-size:12px;font-weight:700;margin-bottom:12px;">Your Profile <span style="font-size:10px;color:var(--t3);font-weight:400;">— agents personalise everything based on this</span></div>
+            <div class="prof-grid">
+              <div><label class="prof-lbl">Products you promote</label><textarea class="prof-ta" id="p-prod" placeholder="e.g. The Ordinary Niacinamide, Minimalist SPF, Korean dupes under ₹500..."></textarea></div>
+              <div><label class="prof-lbl">Your audience</label><textarea class="prof-ta" id="p-aud" placeholder="e.g. Indian women 18-25, oily skin, budget conscious..."></textarea></div>
+              <div><label class="prof-lbl">Topics to focus on</label><textarea class="prof-ta" id="p-top" placeholder="e.g. Budget skincare, dupes, ingredient education..."></textarea></div>
+              <div>
+                <label class="prof-lbl">Content tone</label>
                 <div class="tone-pills">
-                  <div class="tpill active" onclick="toggleTone(this)">Relatable</div>
-                  <div class="tpill" onclick="toggleTone(this)">Educational</div>
-                  <div class="tpill" onclick="toggleTone(this)">POV</div>
-                  <div class="tpill" onclick="toggleTone(this)">Honest reviews</div>
-                  <div class="tpill" onclick="toggleTone(this)">Aesthetic</div>
-                  <div class="tpill" onclick="toggleTone(this)">Motivational</div>
+                  <div class="tp act" onclick="this.classList.toggle('act')">Relatable</div>
+                  <div class="tp" onclick="this.classList.toggle('act')">Educational</div>
+                  <div class="tp" onclick="this.classList.toggle('act')">POV</div>
+                  <div class="tp" onclick="this.classList.toggle('act')">Honest reviews</div>
+                  <div class="tp" onclick="this.classList.toggle('act')">Aesthetic</div>
+                  <div class="tp" onclick="this.classList.toggle('act')">Motivational</div>
                 </div>
-                <button class="s1-save-btn" onclick="saveProfile()">Save Profile →</button>
+                <button class="save-btn" onclick="saveP()">Save Profile →</button>
               </div>
             </div>
           </div>
 
-          <!-- Agents -->
-          <div class="s1-agents-row">
-            <div class="agent-card">
-              <div class="agent-hdr">
-                <div class="agent-hdr-left"><div class="agent-ico">💡</div><div><div class="agent-name">Ideator</div><div class="agent-role">Ideas from your products & real posts</div></div></div>
-                <div class="agent-status s-idle" id="st-1">idle</div>
-              </div>
-              <div class="agent-out" id="out-1"><span class="atag at1">IDEAS</span><br>Click Run to generate content ideas personalised to your products and posts.</div>
-              <button class="run-btn" onclick="runAgent('ideator',1)">▶ Run Agent</button>
+          <!-- Agents 2 col -->
+          <div class="ag2">
+            <div class="ac">
+              <div class="ac-hdr"><div class="ac-left"><div class="ac-ico">💡</div><div><div class="ac-name">Ideator</div><div class="ac-role">Ideas from your products & posts</div></div></div><div class="ast idle" id="st1">idle</div></div>
+              <div class="ac-out" id="out1"><span class="atg b">IDEAS</span><br>Click Run to generate content ideas personalised to your products and posts.</div>
+              <button class="rbtn" onclick="runAg('ideator',1)">▶ Run Agent</button>
             </div>
-            <div class="agent-card">
-              <div class="agent-hdr">
-                <div class="agent-hdr-left"><div class="agent-ico">✍️</div><div><div class="agent-name">Hook & Script</div><div class="agent-role">Hooks written in your exact voice</div></div></div>
-                <div class="agent-status s-idle" id="st-2">idle</div>
-              </div>
-              <div class="agent-out" id="out-2"><span class="atag at2">HOOK</span><br>Run Ideator first, then this writes scroll-stopping hooks and a full Reel script.</div>
-              <button class="run-btn" onclick="runAgent('hookwriter',2)" id="btn-2">▶ Run Agent</button>
+            <div class="ac">
+              <div class="ac-hdr"><div class="ac-left"><div class="ac-ico">✍️</div><div><div class="ac-name">Hook & Script</div><div class="ac-role">Hooks in your exact voice</div></div></div><div class="ast idle" id="st2">idle</div></div>
+              <div class="ac-out" id="out2"><span class="atg g">HOOK</span><br>Writes scroll-stopping hooks and a full Reel script in your voice.</div>
+              <button class="rbtn" onclick="runAg('hookwriter',2)">▶ Run Agent</button>
             </div>
           </div>
 
-          <!-- Prefs -->
-          <div class="s1-prefs-row">
-            <div class="card">
-              <div class="card-title">Preferred content type</div>
-              <div class="pref-pills">
-                <div class="ppill active" onclick="togglePref(this)">Reels</div>
-                <div class="ppill active" onclick="togglePref(this)">Carousels</div>
-                <div class="ppill" onclick="togglePref(this)">Stories</div>
-                <div class="ppill" onclick="togglePref(this)">Static posts</div>
+          <!-- Prefs 2 col -->
+          <div class="pref2">
+            <div class="card"><div class="card-t">Preferred content type</div>
+              <div class="pp-pills">
+                <div class="pp act" onclick="this.classList.toggle('act')">Reels</div>
+                <div class="pp act" onclick="this.classList.toggle('act')">Carousels</div>
+                <div class="pp" onclick="this.classList.toggle('act')">Stories</div>
+                <div class="pp" onclick="this.classList.toggle('act')">Static posts</div>
               </div>
             </div>
-            <div class="card">
-              <div class="card-title">Best posting times <span style="font-size:10px;color:var(--text3);font-weight:400;">(from your data)</span></div>
-              <div class="pref-pills" id="best-times">
-                <div class="ppill best">07:00 ⭐</div>
-                <div class="ppill">19:00</div>
-                <div class="ppill">12:00</div>
-                <div class="ppill">21:00</div>
+            <div class="card"><div class="card-t">Best posting times <span style="font-size:10px;color:var(--t3);font-weight:400;">(from your data)</span></div>
+              <div class="pp-pills" id="best-times">
+                <div class="pp best">07:00 ⭐</div>
+                <div class="pp">19:00</div>
+                <div class="pp">12:00</div>
+                <div class="pp">21:00</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- ── SECTION 2: ANALYSE ── -->
-        <div class="d-section" id="sec-analyse">
+        <!-- SECTION 2: ANALYSE -->
+        <div class="dsec" id="sec-a">
           <div class="s2-stats">
-            <div class="stat-card"><div class="stat-lbl">Followers</div><div class="stat-val" id="s-followers">—</div><div class="stat-sub stat-up" id="s-followers-sub">your account</div></div>
-            <div class="stat-card accent"><div class="stat-lbl">Engagement</div><div class="stat-val" id="s-eng">—</div><div class="stat-sub stat-up" id="s-eng-sub">rate %</div></div>
-            <div class="stat-card"><div class="stat-lbl">Avg Likes</div><div class="stat-val" id="s-likes">—</div><div class="stat-sub">per post</div></div>
-            <div class="stat-card"><div class="stat-lbl">Impressions</div><div class="stat-val" id="s-impressions">—</div><div class="stat-sub">avg/post</div></div>
-            <div class="stat-card"><div class="stat-lbl">Avg Reach</div><div class="stat-val" id="s-reach">—</div><div class="stat-sub">per post</div></div>
-            <div class="stat-card"><div class="stat-lbl">Total Posts</div><div class="stat-val" id="s-posts">—</div><div class="stat-sub">all time</div></div>
+            <div class="sc"><div class="sc-l">Followers</div><div class="sc-v" id="sv-f">—</div><div class="sc-s up" id="sv-fs">your account</div></div>
+            <div class="sc hl"><div class="sc-l">Engagement</div><div class="sc-v" id="sv-e">—</div><div class="sc-s up" id="sv-es">rate %</div></div>
+            <div class="sc"><div class="sc-l">Avg Likes</div><div class="sc-v" id="sv-l">—</div><div class="sc-s">per post</div></div>
+            <div class="sc"><div class="sc-l">Impressions</div><div class="sc-v" id="sv-i">—</div><div class="sc-s">avg/post</div></div>
+            <div class="sc"><div class="sc-l">Avg Reach</div><div class="sc-v" id="sv-r">—</div><div class="sc-s">per post</div></div>
+            <div class="sc"><div class="sc-l">Total Posts</div><div class="sc-v" id="sv-p">—</div><div class="sc-s">all time</div></div>
           </div>
-          <div class="s2-grid">
+          <div class="s2-g">
             <div class="card">
-              <div class="card-title">Likes per post</div>
-              <div style="font-size:10px;color:var(--text3);margin-bottom:12px;margin-top:-6px;">Existing + new posts tracked live</div>
-              <div class="bar-chart-wrap">
-                <div class="bar-grid">
-                  <div class="bar-grid-line"><span class="bar-grid-lbl" id="bg3"></span></div>
-                  <div class="bar-grid-line"><span class="bar-grid-lbl" id="bg2"></span></div>
-                  <div class="bar-grid-line"><span class="bar-grid-lbl" id="bg1"></span></div>
-                  <div class="bar-grid-line"><span class="bar-grid-lbl">0</span></div>
+              <div class="card-t">Likes per post</div>
+              <div style="font-size:10px;color:var(--t3);margin-bottom:12px;margin-top:-6px;">Existing + new posts tracked live</div>
+              <div class="bchart">
+                <div class="bgrid">
+                  <div class="bgl"><span id="bg3"></span></div>
+                  <div class="bgl"><span id="bg2"></span></div>
+                  <div class="bgl"><span id="bg1"></span></div>
+                  <div class="bgl"><span>0</span></div>
                 </div>
-                <div class="bar-chart-bars" id="bar-chart">
-                  <div style="color:var(--text3);font-size:11px;padding-top:20px;">Loading chart...</div>
-                </div>
+                <div class="bbars" id="bchart"><div style="color:var(--t3);font-size:11px;padding-top:20px;">Loading...</div></div>
               </div>
-              <div class="bar-summary" id="bar-summary"></div>
+              <div class="bsum" id="bsum"></div>
             </div>
-            <div class="card">
-              <div class="card-title">🔥 Top posts</div>
-              <div id="top-posts"><div style="color:var(--text3);font-size:11px;">Loading...</div></div>
-            </div>
-            <div class="agent-card">
-              <div class="agent-hdr">
-                <div class="agent-hdr-left"><div class="agent-ico">📊</div><div><div class="agent-name">Analyst</div><div class="agent-role">Reads your real post data</div></div></div>
-                <div class="agent-status s-idle" id="st-4">idle</div>
-              </div>
-              <div class="agent-out" id="out-4"><span class="atag at1">STATS</span><br>Analyses your specific posts and tells you what's working and what to change.</div>
-              <button class="run-btn" onclick="runAgent('analyst',4)">▶ Run Agent</button>
+            <div class="card"><div class="card-t">🔥 Top posts</div><div id="tposts"><div style="color:var(--t3);font-size:11px;">Loading...</div></div></div>
+            <div class="ac">
+              <div class="ac-hdr"><div class="ac-left"><div class="ac-ico">📊</div><div><div class="ac-name">Analyst</div><div class="ac-role">Reads your real post data</div></div></div><div class="ast idle" id="st4">idle</div></div>
+              <div class="ac-out" id="out4"><span class="atg b">STATS</span><br>Analyses your posts and tells you what's working and what to change.</div>
+              <button class="rbtn" onclick="runAg('analyst',4)">▶ Run Agent</button>
             </div>
           </div>
         </div>
 
-        <!-- ── SECTION 3: PLAN ── -->
-        <div class="d-section" id="sec-plan">
-          <div class="s3-grid">
+        <!-- SECTION 3: PLAN -->
+        <div class="dsec" id="sec-p">
+          <div class="s3-g">
             <div class="card">
-              <div class="card-title">📅 This week's content plan</div>
-              <div id="calendar"><div style="color:var(--text3);font-size:11px;">Run the Planner to generate your weekly calendar.</div></div>
-              <div class="cal-note" style="display:none;" id="cal-note">🔄 Updates automatically as your Instagram changes</div>
+              <div class="card-t">📅 This week's content plan</div>
+              <div id="cal"><div style="color:var(--t3);font-size:11px;">Run the Planner to generate your weekly calendar.</div></div>
+              <div class="cal-note" id="cal-note">🔄 Updates automatically as your Instagram changes</div>
             </div>
-            <div class="agent-card">
-              <div class="agent-hdr">
-                <div class="agent-hdr-left"><div class="agent-ico">📅</div><div><div class="agent-name">Planner</div><div class="agent-role">Adapts to your real content & niche</div></div></div>
-                <div class="agent-status s-idle" id="st-3">idle</div>
-              </div>
-              <div class="agent-out" id="out-3"><span class="atag at1">PLAN</span><br>Builds your 7-day calendar at your best posting times based on your niche and profile.</div>
-              <div class="plan-actions">
-                <button class="run-btn plan-regen" onclick="runAgent('planner',3)">▶ Run Planner</button>
-                <button class="plan-export" onclick="exportCalendar()">Export ↗</button>
+            <div class="ac">
+              <div class="ac-hdr"><div class="ac-left"><div class="ac-ico">📅</div><div><div class="ac-name">Planner</div><div class="ac-role">Adapts to your real content & niche</div></div></div><div class="ast idle" id="st3">idle</div></div>
+              <div class="ac-out" id="out3"><span class="atg b">PLAN</span><br>Builds your 7-day calendar at your best posting times based on your niche and profile.</div>
+              <div class="plan-acts">
+                <button class="pregen rbtn" onclick="runAg('planner',3)">▶ Run Planner</button>
+                <button class="pexp" onclick="exportCal()">Export ↗</button>
               </div>
             </div>
-            <div class="agent-card">
-              <div class="agent-hdr">
-                <div class="agent-hdr-left"><div class="agent-ico">💬</div><div><div class="agent-name">DM Manager</div><div class="agent-role">Based on your products & tone</div></div></div>
-                <div class="agent-status s-idle" id="st-5">idle</div>
-              </div>
-              <div class="agent-out" id="out-5"><span class="atag at2">DMs</span><br>Drafts warm on-brand replies to your most common DM types, personalised to your products.</div>
-              <button class="run-btn" onclick="runAgent('dmmanager',5)">▶ Run Agent</button>
+            <div class="ac">
+              <div class="ac-hdr"><div class="ac-left"><div class="ac-ico">💬</div><div><div class="ac-name">DM Manager</div><div class="ac-role">Based on your products & tone</div></div></div><div class="ast idle" id="st5">idle</div></div>
+              <div class="ac-out" id="out5"><span class="atg g">DMs</span><br>Drafts warm on-brand replies to your most common DM types, personalised to your products.</div>
+              <button class="rbtn" onclick="runAg('dmmanager',5)">▶ Run Agent</button>
             </div>
           </div>
         </div>
 
-      </div>
-    </div>
+      </div><!-- /dbody -->
+    </div><!-- /dmain -->
 
-    <!-- MOBILE BOTTOM TABS -->
-    <div class="d-mobile-tabs">
-      <div class="d-mobile-tab active" id="mob-create" onclick="switchSection('create')"><div class="d-mobile-tab-icon">✍️</div><div class="d-mobile-tab-label">Create</div></div>
-      <div class="d-mobile-tab" id="mob-analyse" onclick="switchSection('analyse')"><div class="d-mobile-tab-icon">📊</div><div class="d-mobile-tab-label">Analyse</div></div>
-      <div class="d-mobile-tab" id="mob-plan" onclick="switchSection('plan')"><div class="d-mobile-tab-icon">📅</div><div class="d-mobile-tab-label">Plan & DMs</div></div>
+    <!-- Mobile bottom tabs -->
+    <div class="mobtabs" id="mobtabs">
+      <button class="mobtab act" id="mob-c" onclick="sw('c')"><div class="mobtab-i">✍️</div><div class="mobtab-l">Create</div></button>
+      <button class="mobtab" id="mob-a" onclick="sw('a')"><div class="mobtab-i">📊</div><div class="mobtab-l">Analyse</div></button>
+      <button class="mobtab" id="mob-p" onclick="sw('p')"><div class="mobtab-i">📅</div><div class="mobtab-l">Plan & DMs</div></button>
     </div>
-  </div>
-</div>
+  </div><!-- /dash -->
+</div><!-- /dashboard -->
 
 <script>
-let DATA=null, NICHE='Skincare', PROFILE={products:'',audience:'',topics:'',tone:['Relatable']};
+let DATA=null, NICHE='Skincare', PROF={products:'',audience:'',topics:'',tone:['Relatable']};
 
 // ── LANDING ──
-function scrollToForm(){
-  document.getElementById('form-anchor').scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>document.getElementById('inp-handle').focus(),500);
-}
-function toggleMenu(){
-  const m=document.getElementById('mobile-menu');
-  m.style.display=m.style.display==='block'?'none':'block';
-}
-
-function setLoading(show,msg='',pct=0){
-  const el=document.getElementById('loading');
-  el.style.display=show?'flex':'none';
-  document.getElementById('load-msg').textContent=msg;
-  document.getElementById('load-fill').style.width=pct+'%';
-}
+function scrollF(){document.getElementById('fc').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('inp').focus(),400);}
+function toggleMenu(){const m=document.getElementById('mmenu');m.style.display=m.style.display==='block'?'none':'block';}
+function setLoad(show,msg,pct){document.getElementById('loading').style.display=show?'flex':'none';if(msg)document.getElementById('ld-msg').textContent=msg;if(pct!==undefined)document.getElementById('ld-fill').style.width=pct+'%';}
 
 async function launch(){
-  const handle=document.getElementById('inp-handle').value.replace('@','').trim();
-  const btn=document.getElementById('launch-btn');
-  const err=document.getElementById('form-err');
+  const h=document.getElementById('inp').value.replace('@','').trim();
+  const btn=document.getElementById('lb');
+  const err=document.getElementById('fe');
   err.style.display='none';
-  if(!handle){err.textContent='⚠ Enter your Instagram handle';err.style.display='block';return;}
+  if(!h){err.textContent='⚠ Enter your Instagram handle';err.style.display='block';return;}
   btn.disabled=true;
-  document.getElementById('load-handle').textContent='@'+handle;
-  setLoading(true,'Connecting to Instagram...',10);
+  document.getElementById('ld-h').textContent='@'+h;
+  setLoad(true,'Connecting to Instagram...',10);
   try{
-    setLoading(true,'Scraping your profile (~60 sec)...',30);
-    const res=await fetch('/api/scrape',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({handle})});
-    const json=await res.json();
-    if(!json.success) throw new Error(json.error||'Scraping failed');
-    setLoading(true,'Building your dashboard...',92);
-    DATA=json.data;
+    setLoad(true,'Scraping your profile (~60 sec)...',30);
+    const r=await fetch('/api/scrape',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({handle:h})});
+    const j=await r.json();
+    if(!j.success) throw new Error(j.error||'Scraping failed');
+    setLoad(true,'Building your dashboard...',92);
+    DATA=j.data;
     await new Promise(r=>setTimeout(r,500));
-    setLoading(false);
-    showDashboard(DATA);
+    setLoad(false);
+    showDash(DATA);
   }catch(e){
-    setLoading(false);
+    setLoad(false);
     err.textContent='⚠ '+e.message;err.style.display='block';
     btn.disabled=false;
   }
 }
-
-function launchFromCta(){
-  const h=document.getElementById('cta-handle').value;
-  document.getElementById('inp-handle').value=h;
-  launch();
-}
+function launchCta(){document.getElementById('inp').value=document.getElementById('cta-h').value;launch();}
 
 // ── DASHBOARD ──
-function showDashboard(data){
+function showDash(data){
   document.getElementById('landing').style.display='none';
   document.getElementById('dashboard').style.display='block';
   const a=data.your_account;
-  const handle=a.handle;
-  document.getElementById('d-handle-display').textContent='@'+handle;
-  document.getElementById('d-username').textContent=handle.charAt(0).toUpperCase()+handle.slice(1);
-  document.getElementById('d-userhandle').textContent='@'+handle;
-  document.getElementById('d-avatar').textContent=handle.charAt(0).toUpperCase();
-  document.getElementById('s-followers').textContent=a.followers.toLocaleString();
-  document.getElementById('s-followers-sub').textContent=a.followers>1000?'+growing':'your account';
-  document.getElementById('s-eng').textContent=a.engagement_rate+'%';
-  document.getElementById('s-eng-sub').textContent=a.engagement_rate>4?'above avg 4% ↑':'rate %';
-  document.getElementById('s-likes').textContent=a.avg_likes.toLocaleString();
-  document.getElementById('s-impressions').textContent=Math.round(a.avg_reach*2.1/1000*10)/10+'k';
-  document.getElementById('s-reach').textContent=(a.avg_reach/1000).toFixed(1)+'k';
-  document.getElementById('s-posts').textContent=a.total_posts;
-  renderBarChart(a);
-  renderTopPosts(a);
-  renderBestTimes(a);
-  // btn-2 always enabled
+  document.getElementById('dsb-h').textContent='@'+a.handle;
+  document.getElementById('dav-ic').textContent=a.handle.charAt(0).toUpperCase();
+  document.getElementById('dav-n').textContent=a.handle.charAt(0).toUpperCase()+a.handle.slice(1);
+  document.getElementById('dav-h').textContent='@'+a.handle;
+  document.getElementById('sv-f').textContent=a.followers.toLocaleString();
+  document.getElementById('sv-fs').textContent=a.followers>1000?'+growing':'your account';
+  document.getElementById('sv-e').textContent=a.engagement_rate+'%';
+  document.getElementById('sv-es').textContent=a.engagement_rate>4?'above avg 4% ↑':'rate %';
+  document.getElementById('sv-l').textContent=a.avg_likes.toLocaleString();
+  document.getElementById('sv-i').textContent=Math.round(a.avg_reach*2.1/1000*10)/10+'k';
+  document.getElementById('sv-r').textContent=(a.avg_reach/1000).toFixed(1)+'k';
+  document.getElementById('sv-p').textContent=a.total_posts;
+  renderChart(a);
+  renderPosts(a);
+  renderTimes(a);
+  // show mobile tabs
+  document.getElementById('mobtabs').style.display='grid';
 }
 
 function logout(){
   DATA=null;
   document.getElementById('dashboard').style.display='none';
   document.getElementById('landing').style.display='block';
-  document.getElementById('launch-btn').disabled=false;
-  document.getElementById('form-err').style.display='none';
-  for(let i=1;i<=5;i++){
-    const s=document.getElementById('st-'+i);
-    if(s){s.textContent='idle';s.className='agent-status s-idle';}
-  }
+  document.getElementById('lb').disabled=false;
+  document.getElementById('fe').style.display='none';
+  [1,2,3,4,5].forEach(n=>{const s=document.getElementById('st'+n);if(s){s.textContent='idle';s.className='ast idle';}});
 }
 
 // ── SECTION SWITCH ──
-function switchSection(name){
-  ['create','analyse','plan'].forEach(s=>{
-    document.getElementById('sec-'+s).classList.toggle('active',s===name);
-    const nav=document.getElementById('nav-'+s);
-    if(nav) nav.classList.toggle('active',s===name);
-    const mob=document.getElementById('mob-'+s);
-    if(mob) mob.classList.toggle('active',s===name);
+function sw(name){
+  ['c','a','p'].forEach(s=>{
+    document.getElementById('sec-'+s)?.classList.toggle('act',s===name);
+    document.getElementById('nav-'+s)?.classList.toggle('act',s===name);
+    document.getElementById('mob-'+s)?.classList.toggle('act',s===name);
   });
-  const titles={create:'✍️ Create',analyse:'📊 Analyse',plan:'📅 Plan & DMs'};
-  document.getElementById('d-section-title').textContent=titles[name];
+  const t={c:'✍️ Create',a:'📊 Analyse',p:'📅 Plan & DMs'};
+  document.getElementById('dtop-t').textContent=t[name];
 }
 
-// ── NICHE & PROFILE ──
-function setNiche(el,niche){
-  document.querySelectorAll('.npill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active'); NICHE=niche;
-}
-function setCustomNiche(el){
-  const n=prompt('Enter your niche:');
-  if(n){NICHE=n;el.textContent=n;document.querySelectorAll('.npill').forEach(p=>p.classList.remove('active'));el.classList.add('active');}
-}
-function toggleTone(el){el.classList.toggle('active');}
-function togglePref(el){el.classList.toggle('active');}
-function saveProfile(){
-  PROFILE.products=document.getElementById('p-products').value;
-  PROFILE.audience=document.getElementById('p-audience').value;
-  PROFILE.topics=document.getElementById('p-topics').value;
-  PROFILE.tone=[...document.querySelectorAll('.tpill.active')].map(t=>t.textContent);
-  const btn=event.target;
-  btn.textContent='✓ Saved!';btn.style.background='#16A34A';
-  setTimeout(()=>{btn.textContent='Save Profile →';btn.style.background='';},2000);
+// ── PROFILE ──
+function setN(el,n){document.querySelectorAll('.np').forEach(p=>p.classList.remove('act'));el.classList.add('act');NICHE=n;}
+function setCN(el){const n=prompt('Enter your niche:');if(n){NICHE=n;el.textContent=n;document.querySelectorAll('.np').forEach(p=>p.classList.remove('act'));el.classList.add('act');}}
+function saveP(){
+  PROF.products=document.getElementById('p-prod').value;
+  PROF.audience=document.getElementById('p-aud').value;
+  PROF.topics=document.getElementById('p-top').value;
+  PROF.tone=[...document.querySelectorAll('.tp.act')].map(t=>t.textContent);
+  const b=event.target;b.textContent='✓ Saved!';b.style.background='#16A34A';
+  setTimeout(()=>{b.textContent='Save Profile →';b.style.background='';},2000);
 }
 
 // ── CHARTS ──
-function renderBarChart(a){
+function renderChart(a){
   const posts=a.top_posts||[];
   if(!posts.length) return;
-  const maxL=Math.max(...posts.map(p=>p.likes),1);
-  const colors=['#1B3A8C','#2D52B8','#4B6DC8','#8BA3D9','#B8C8E8'];
-  const bars=posts.slice(0,5).map((p,i)=>`
-    <div class="bar-col">
-      <div class="bar-val">${p.likes}</div>
-      <div class="bar-fill" style="height:${Math.max(Math.round(p.likes/maxL*90),4)}px;background:${colors[i]||'#DDE3F0'};"></div>
-      <div class="bar-xlbl">P${i+1}</div>
-    </div>`).join('');
-  const newBar=`<div class="bar-col"><div class="bar-val" style="color:#16A34A">NEW</div><div class="bar-fill" style="height:20px;background:rgba(22,163,74,.12);border:1.5px dashed #16A34A;"></div><div class="bar-xlbl" style="color:#16A34A">+P</div></div>`;
-  document.getElementById('bar-chart').innerHTML=bars+newBar;
-  const [bg1,bg2,bg3]=[Math.round(maxL/3),Math.round(maxL*2/3),maxL];
-  document.getElementById('bg1').textContent=bg1;
-  document.getElementById('bg2').textContent=bg2;
-  document.getElementById('bg3').textContent=bg3;
+  const mx=Math.max(...posts.map(p=>p.likes),1);
+  const clrs=['#1B3A8C','#2D52B8','#4B6DC8','#8BA3D9','#B8C8E8'];
+  const bars=posts.slice(0,5).map((p,i)=>`<div class="bc"><div class="bc-v">${p.likes}</div><div class="bc-f" style="height:${Math.max(Math.round(p.likes/mx*90),4)}px;background:${clrs[i]};"></div><div class="bc-l">P${i+1}</div></div>`).join('');
+  const newb=`<div class="bc"><div class="bc-v" style="color:#16A34A">NEW</div><div class="bc-f" style="height:20px;background:rgba(22,163,74,.12);border:1.5px dashed #16A34A;"></div><div class="bc-l" style="color:#16A34A">+P</div></div>`;
+  document.getElementById('bchart').innerHTML=bars+newb;
+  const m3=Math.round(mx);const m2=Math.round(mx*2/3);const m1=Math.round(mx/3);
+  document.getElementById('bg3').textContent=m3;document.getElementById('bg2').textContent=m2;document.getElementById('bg1').textContent=m1;
   const avg=Math.round(posts.reduce((s,p)=>s+p.likes,0)/posts.length);
-  const trend=posts.length>1&&posts[posts.length-1].likes<posts[0].likes?'<span style="color:#EF4444">↓ declining</span>':'<span style="color:#16A34A">↑ growing</span>';
-  document.getElementById('bar-summary').innerHTML=`<span class="bar-sum-item">Avg: <span class="bar-sum-val">${avg}</span></span><span class="bar-sum-item">Best: <span class="bar-sum-val">${posts[0]?.type||'Reel'}</span></span><span class="bar-sum-item">Trend: ${trend}</span>`;
+  const tr=posts.length>1&&posts[posts.length-1].likes<posts[0].likes?'<span style="color:#EF4444">↓ declining</span>':'<span style="color:#16A34A">↑ growing</span>';
+  document.getElementById('bsum').innerHTML=`<span>Avg: <span class="bsv">${avg}</span></span><span>Best: <span class="bsv">${posts[0]?.type||'Reel'}</span></span><span>Trend: ${tr}</span>`;
 }
 
-function renderTopPosts(a){
+function renderPosts(a){
   const posts=a.top_posts||[];
-  const el=document.getElementById('top-posts');
-  if(!posts.length){el.innerHTML='<div style="color:var(--text3);font-size:11px">No post data — account may be private</div>';return;}
-  el.innerHTML=posts.map(p=>`<div class="post-item"><div class="post-cap">${p.caption||'No caption'}</div><div class="post-meta"><span>❤️ ${p.likes}</span><span>💬 ${p.comments}</span><span>👁 ${(p.reach/1000).toFixed(1)}k reach</span><span class="post-tag">${p.type}</span></div></div>`).join('');
-  el.innerHTML+=`<div class="new-posts-note">📌 New posts added automatically as you publish</div>`;
+  const el=document.getElementById('tposts');
+  if(!posts.length){el.innerHTML='<div style="color:var(--t3);font-size:11px">No post data — account may be private</div>';return;}
+  el.innerHTML=posts.map(p=>`<div class="pi"><div class="pi-cap">${p.caption||'No caption'}</div><div class="pi-meta"><span>❤️ ${p.likes}</span><span>💬 ${p.comments}</span><span>👁 ${(p.reach/1000).toFixed(1)}k</span><span class="pi-tag">${p.type}</span></div></div>`).join('');
+  el.innerHTML+=`<div class="new-note">📌 New posts added automatically as you publish</div>`;
 }
 
-function renderBestTimes(a){
+function renderTimes(a){
   const times=a.best_posting_times||['07:00','12:00','19:00','21:00'];
-  const el=document.getElementById('best-times');
-  el.innerHTML=times.map((t,i)=>`<div class="ppill ${i===0?'best':''}">${t}${i===0?' ⭐':''}</div>`).join('');
+  document.getElementById('best-times').innerHTML=times.map((t,i)=>`<div class="pp ${i===0?'best':''}">${t}${i===0?' ⭐':''}</div>`).join('');
 }
 
-function renderCalendar(text){
-  const niche=NICHE;
-  const niTopics={
-    'Skincare':['Morning skincare routine','Budget dupe roundup','Ingredient spotlight','30-day before & after','Skincare myths debunked','Sunscreen guide','Weekly Q&A'],
-    'Fashion':['Outfit of the day','Thrift flip tutorial','Capsule wardrobe','Style your body type','Fashion haul','Trend forecast','Styling Q&A'],
-    'Fitness':['Morning workout','Protein meal prep','30-day challenge','Home workout guide','Progress update','Gym mistakes','Fitness Q&A'],
-    'Food & Recipes':['Quick 10-min recipe','Meal prep Sunday','Restaurant review','Budget meals','Healthy snacks','Cooking hack','Food diary'],
-    'Lifestyle':['Morning routine','Productivity tips','Room tour','Day in my life','Slow living tips','Digital detox','Weekly reset'],
-  };
-  const topics=(niTopics[niche]||niTopics['Skincare']);
+function renderCal(){
+  const topics={Skincare:['Morning skincare routine','Budget dupe roundup','Ingredient spotlight','30-day before & after','Skincare myths debunked','Sunscreen guide','Weekly Q&A'],Fashion:['Outfit of the day','Thrift flip tutorial','Capsule wardrobe','Style your body type','Fashion haul','Trend forecast','Style Q&A'],Fitness:['Morning workout','Protein meal prep','30-day challenge','Home workout guide','Progress update','Gym mistakes','Fitness Q&A'],'Food & Recipes':['Quick recipe','Meal prep Sunday','Restaurant review','Budget meals','Healthy snacks','Cooking hack','Food diary'],Lifestyle:['Morning routine','Productivity tips','Room tour','Day in my life','Slow living tips','Digital detox','Weekly reset'],Travel:['Budget travel tips','Packing guide','Hidden gems','Solo travel tips','Hotel review','Travel diary','Destination Q&A']};
+  const t=topics[NICHE]||topics.Skincare;
   const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   const fmts=['Reel','Carousel','Story','Reel','Carousel','Reel','Reel'];
   const times=['07:00','12:00','19:00','07:00','12:00','07:00','19:00'];
-  const pc={'Reel':'cp-reel','Carousel':'cp-car','Story':'cp-story'};
-  document.getElementById('calendar').innerHTML=days.map((d,i)=>`
-    <div class="cal-day">
-      <div class="cal-date">${d} ${times[i]}</div>
-      <div class="cal-pill ${pc[fmts[i]]}">${fmts[i]}</div>
-      <div class="cal-topic">${topics[i]}</div>
-    </div>`).join('');
+  const pc={Reel:'cp-r',Carousel:'cp-c',Story:'cp-s'};
+  document.getElementById('cal').innerHTML=days.map((d,i)=>`<div class="cd"><div class="cd-d">${d} ${times[i]}</div><div class="cd-p ${pc[fmts[i]]}">${fmts[i]}</div><div class="cd-t">${t[i]}</div></div>`).join('');
   document.getElementById('cal-note').style.display='block';
 }
 
-function exportCalendar(){
-  const rows=document.querySelectorAll('.cal-day');
+function exportCal(){
+  const rows=document.querySelectorAll('.cd');
   if(!rows.length){alert('Run the Planner first!');return;}
-  const text=['ContentIQ — Weekly Content Plan','','Day | Time | Format | Topic','---'].concat(
-    [...rows].map(r=>{const cols=r.querySelectorAll('.cal-date,.cal-pill,.cal-topic');return [...cols].map(c=>c.textContent.trim()).join(' | ');})
-  ).join('\n');
-  const a=document.createElement('a');
-  a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(text);
-  a.download='contentiq-plan.txt';a.click();
+  const txt='ContentIQ — Weekly Content Plan\n\n'+[...rows].map(r=>[...r.querySelectorAll('.cd-d,.cd-p,.cd-t')].map(c=>c.textContent.trim()).join(' | ')).join('\n');
+  const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);a.download='contentiq-plan.txt';a.click();
 }
 
 // ── AGENTS ──
-const NICHE_TRENDS={
-  'Skincare':['Glass skin tutorials','Skin barrier repair','Budget K-beauty dupes','Before and after transformations','Ingredient deep dives'],
-  'Fashion':['Quiet luxury aesthetic','Thrift flip tutorials','Capsule wardrobe builds','Colour theory styling','Vintage fashion hauls'],
-  'Fitness':['Pilates for beginners','Protein meal prep','Home workout no equipment','Running for weight loss','Gym aesthetic content'],
-  'Food & Recipes':['High protein recipes','One-pan meals','Budget meal prep','Restaurant dupes at home','Viral TikTok recipes'],
-  'Lifestyle':['Morning routine resets','Slow living aesthetic','Productivity systems','Apartment tours','Day in my life vlogs'],
-  'Travel':['Budget travel tips','Solo travel for women','Hidden gem destinations','Travel packing guides','Digital nomad life'],
-  'Finance':['Investing for beginners','Saving money hacks','Side hustle ideas','Debt payoff journeys','Passive income strategies'],
-  'Tech':['AI tools for productivity','App reviews','Tech unboxing','Setup tours','Software comparisons'],
-  'Business':['Entrepreneurship journeys','Behind the scenes content','Personal branding tips','Client wins','Passive income'],
-};
+const TRENDS={Skincare:['Glass skin tutorials','Skin barrier repair','Budget K-beauty dupes','Before and after','Ingredient deep dives'],Fashion:['Quiet luxury','Thrift flips','Capsule wardrobe','Colour theory','Vintage hauls'],Fitness:['Pilates for beginners','Protein prep','Home workouts','Running tips','Gym aesthetic'],Food:['High protein recipes','One-pan meals','Budget meal prep','Restaurant dupes','Viral recipes'],Lifestyle:['Morning routine resets','Slow living','Productivity systems','Apartment tours','Day in my life'],Travel:['Budget travel','Solo travel','Hidden gems','Packing guides','Digital nomad'],Finance:['Investing basics','Saving hacks','Side hustles','Debt payoff','Passive income'],Tech:['AI tools','App reviews','Tech unboxing','Setup tours','Software tips'],Business:['Entrepreneur journey','Behind the scenes','Personal branding','Client wins','Passive income']};
 
-function getPrompt(agent,data){
+function getPrompt(ag,data){
   const a=data.your_account;
   const t=(a.top_posts&&a.top_posts[0])||{};
-  const cap=t.caption||'a recent post';
-  const lk=t.likes||0;
+  const cap=t.caption||'a recent post';const lk=t.likes||0;
   const times=(a.best_posting_times||['07:00','12:00','19:00']).join(', ');
   const tags=(a.top_hashtags||[]).join(', ')||NICHE.toLowerCase();
-  const trends=(NICHE_TRENDS[NICHE]||NICHE_TRENDS['Lifestyle']).join(', ');
+  const tr=(TRENDS[NICHE]||TRENDS.Lifestyle).join(', ');
   const posts=(a.top_posts||[]).map((p,i)=>`Post ${i+1}: "${p.caption}" — ${p.likes} likes (${p.type})`).join('\n');
-  const profileCtx=`Products: ${PROFILE.products||'not specified'}. Audience: ${PROFILE.audience||'not specified'}. Topics: ${PROFILE.topics||'not specified'}. Tone: ${(PROFILE.tone||['Relatable']).join(', ')}.`;
+  const seed=Math.random().toString(36).substring(2,6);
+  const angles=['beginner-friendly','budget-focused','myth-busting','storytelling','hot take','relatable struggle','behind the scenes','product comparison'];
+  const angle=angles[Math.floor(Math.random()*angles.length)];
+  const pc=`Products: ${PROF.products||'not set'}. Audience: ${PROF.audience||'not set'}. Topics: ${PROF.topics||'not set'}. Tone: ${(PROF.tone||['Relatable']).join(', ')}.`;
   return{
-    ideator:`You are a content ideation agent for Instagram creator @${a.handle} in the ${NICHE} niche.\n${profileCtx}\nFollowers: ${a.followers}. Engagement: ${a.engagement_rate}%.\nTrending topics: ${trends}.\nTheir actual posts:\n${posts}\nGenerate 3 fresh ${NICHE} content ideas based on THEIR specific products, audience and post style.\nFormat each as:\nIDEA: [specific title]\nWhy: [1 line referencing their content or products]\nFormat: [Reel/Carousel/Story]\n---`,
-    hookwriter:`Hook-writing agent for @${a.handle} (${NICHE}, ${PROFILE.tone?.join(', ')||'relatable'} tone).\n${profileCtx}\nBest post: "${cap}" — ${lk} likes.\nWrite 3 scroll-stopping hooks (max 15 words) matching their ${(PROFILE.tone||['Relatable']).join('/')} tone.\nThen write a 60-word Reel script for the best hook.`,
-    planner:`Content calendar agent for @${a.handle} (${NICHE}).\n${profileCtx}\nBest times: ${times}. Trending: ${trends}.\nPlan Mon-Sun this week. One post/day. Format: DAY | TIME | FORMAT | TOPIC\nTopics must be specific to ${NICHE} and their focus areas.`,
-    analyst:`Performance analyst for @${a.handle} (${NICHE}).\nFollowers: ${a.followers}. Engagement: ${a.engagement_rate}%.\nActual posts:\n${posts}\nBest hashtags: ${tags}.\nGive 3 specific actionable insights for THIS creator based on their actual data. Start each with -`,
-    dmmanager:`DM manager for @${a.handle} (${a.followers} followers, ${NICHE}).\n${profileCtx}\nWrite 4 short warm DM replies (max 2 sentences each) for:\n1. "Where do you get your products?"\n2. "Can you collab?"\n3. "You're so inspiring!"\n4. "How did you grow your account?"\nMatch their ${(PROFILE.tone||['Relatable']).join('/')} tone. Sound like a real person.`
-  }[agent];
+    ideator:`Content ideation agent for @${a.handle} (${NICHE} niche).\n${pc}\nFollowers: ${a.followers}. Engagement: ${a.engagement_rate}%.\nTrending: ${tr}.\nPosts:\n${posts}\nRun ${seed} — Generate 3 COMPLETELY DIFFERENT ${NICHE} ideas using ${angle} approach. Be specific, creative, reference their actual products.\nFormat:\nIDEA: [title]\nWhy: [1 line]\nFormat: [Reel/Carousel/Story]\n---`,
+    hookwriter:`Hook agent for @${a.handle} (${NICHE}).\n${pc}\nBest post: "${cap}" — ${lk} likes.\nRun ${seed} — Write 3 BRAND NEW hooks (max 15 words, ${angle} angle). Then write 60-word Reel script.`,
+    planner:`Calendar agent for @${a.handle} (${NICHE}).\n${pc}\nBest times: ${times}.\nPlan Mon-Sun. Format: DAY | TIME | FORMAT | TOPIC. Topics specific to ${NICHE}.`,
+    analyst:`Analyst for @${a.handle} (${NICHE}).\nFollowers: ${a.followers}. Engagement: ${a.engagement_rate}%.\nPosts:\n${posts}\nHashtags: ${tags}.\nGive 3 specific actionable insights. Start each with -`,
+    dmmanager:`DM manager for @${a.handle} (${a.followers} followers, ${NICHE}).\n${pc}\nRun ${seed} — Write 4 FRESH DM replies (${angle} angle, max 2 sentences):\n1. "Where products?"\n2. "Collab?"\n3. "You're inspiring!"\n4. "How did you grow?"\nMatch their tone. Sound real.`
+  }[ag];
 }
 
-async function runAgent(agentKey,n){
-  if(!DATA)return;
-  const stEl=document.getElementById('st-'+n);
-  const oEl=document.getElementById('out-'+n);
-  const bEl=document.querySelector(`[onclick="runAgent('${agentKey}',${n})"]`);
-  const tags={1:'at1',2:'at2',3:'at1',4:'at1',5:'at2'};
-  const labs={1:'IDEAS',2:'HOOK',3:'PLAN',4:'STATS',5:'DMs'};
-  if(stEl){stEl.textContent='running';stEl.className='agent-status s-run';}
+async function runAg(agKey,n){
+  if(!DATA) return;
+  const stEl=document.getElementById('st'+n);
+  const oEl=document.getElementById('out'+n);
+  const bEl=document.querySelector(`[onclick="runAg('${agKey}',${n})"]`);
+  const tgs={1:'b',2:'g',3:'b',4:'b',5:'g'};
+  const lbs={1:'IDEAS',2:'HOOK',3:'PLAN',4:'STATS',5:'DMs'};
+  if(stEl){stEl.textContent='running';stEl.className='ast run';}
   if(bEl) bEl.disabled=true;
-  oEl.innerHTML=`<span class="atag ${tags[n]}">${labs[n]}</span><br><span class="typing">Thinking</span>`;
+  oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br><span class="typing">Thinking</span>`;
   try{
-    const res=await fetch('/api/agents',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent:agentKey,data:DATA,niche:NICHE,profile:PROFILE})});
-    const json=await res.json();
-    if(!json.success) throw new Error(json.error);
-    oEl.innerHTML=`<span class="atag ${tags[n]}">${labs[n]}</span><br>${json.result.replace(/\n/g,'<br>')}`;
-    if(stEl){stEl.textContent='done';stEl.className='agent-status s-done';}
-    // unlock hook agent after ideator
-    if(n===1 && document.getElementById('btn-2')) document.getElementById('btn-2').disabled=false;
-    if(n===3) renderCalendar(json.result);
-    return json.result;
+    const r=await fetch('/api/agents',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent:agKey,data:DATA,niche:NICHE,profile:PROF})});
+    const j=await r.json();
+    if(!j.success) throw new Error(j.error);
+    oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br>${j.result.replace(/\n/g,'<br>')}`;
+    if(stEl){stEl.textContent='done';stEl.className='ast done';}
+    if(n===3) renderCal();
+    return j.result;
   }catch(e){
-    oEl.innerHTML=`<span class="atag ${tags[n]}">${labs[n]}</span><br><span style="color:var(--red)">⚠ ${e.message}</span>`;
-    if(stEl){stEl.textContent='idle';stEl.className='agent-status s-idle';}
+    oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br><span style="color:var(--red)">⚠ ${e.message}</span>`;
+    if(stEl){stEl.textContent='idle';stEl.className='ast idle';}
   }
-  if(bEl){
-    bEl.disabled=false;
-    bEl.textContent='↺ Run Again';
-  }
+  if(bEl){bEl.disabled=false;bEl.textContent='↺ Run Again';}
 }
 
 async function runAll(){
-  const agents=[['ideator',1],['hookwriter',2],['planner',3],['analyst',4],['dmmanager',5]];
-  for(const[key,n] of agents){await runAgent(key,n);await new Promise(r=>setTimeout(r,300));}
+  const ags=[['ideator',1],['hookwriter',2],['planner',3],['analyst',4],['dmmanager',5]];
+  for(const[k,n]of ags){await runAg(k,n);await new Promise(r=>setTimeout(r,300));}
 }
 </script>
 </body>
