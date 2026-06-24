@@ -146,7 +146,7 @@ body{background:#F8F9FF;color:#111827;}
 .drun-all:hover{background:var(--blue2);}
 .vault-btn{background:var(--bg2);color:var(--t2);font-size:12px;font-weight:600;padding:7px 12px;border-radius:7px;cursor:pointer;border:1px solid var(--bdr);white-space:nowrap;font-family:'Inter',sans-serif;transition:all .2s;}
 .vault-btn:hover{border-color:var(--blue);color:var(--blue);}
-.dbody{padding:20px;flex:1;}
+.dbody{padding:20px;flex:1;overflow-x:hidden;}
 .mobtabs{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bdr);z-index:100;grid-template-columns:repeat(5,1fr);}
 .mobtab{display:flex;flex-direction:column;align-items:center;padding:8px 0;cursor:pointer;border:none;background:none;}
 .mobtab-i{font-size:18px;}
@@ -883,7 +883,7 @@ function launchCta(){document.getElementById('inp').value=document.getElementByI
 function showDash(data){
   document.getElementById('landing').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  document.getElementById('mobtabs').style.display='grid';
+  // CSS handles mobile tabs visibility via media query
   const a=data.your_account;
   const H=a.handle;
   const ini=H.charAt(0).toUpperCase();
@@ -923,7 +923,7 @@ function logout(){
   document.getElementById('landing').style.display='block';
   document.getElementById('lb').disabled=false;
   document.getElementById('fe').style.display='none';
-  document.getElementById('mobtabs').style.display='none';
+  // mobtabs visibility handled by CSS
   [1,2,3,4,5].forEach(n=>{const s=document.getElementById('st'+n);if(s){s.textContent='idle';s.className='ast idle';}});
 }
 
