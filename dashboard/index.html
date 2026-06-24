@@ -3,28 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ContentIQ — AI Agents for Instagram Creators</title>
+<title>ContentIQ — AI Creator Operating System</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;font-family:'Inter',sans-serif;font-size:14px;}
 body{background:#F8F9FF;color:#111827;}
-
-/* ─── VARS ─── */
 :root{
   --blue:#1B3A8C;--blue2:#2D52B8;--blue3:#EEF2FF;--blue4:#C7D2FE;
   --white:#fff;--bg:#F8F9FF;--bg2:#F4F6FB;
   --text:#111827;--t2:#6B7280;--t3:#9CA3AF;
   --bdr:#E5E7EB;--bdr2:#C7D2FE;
-  --green:#16A34A;--green2:#DCFCE7;--red:#EF4444;
+  --green:#16A34A;--green2:#DCFCE7;--red:#EF4444;--amber:#F59E0B;
   --sw:220px;
 }
-
-/* ─── LANDING ─── */
 #landing{display:block;}
 #dashboard{display:none;}
 
-/* NAV */
+/* ── LANDING (unchanged) ── */
 .ln{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 40px;}
 .ln-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
 .ln-icon{width:28px;height:28px;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--blue);}
@@ -38,8 +34,6 @@ body{background:#F8F9FF;color:#111827;}
 .mmenu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--blue);z-index:99;padding:16px;border-bottom:1px solid rgba(255,255,255,.1);}
 .mmenu a{display:block;padding:10px 0;color:rgba(255,255,255,.8);text-decoration:none;font-size:14px;border-bottom:1px solid rgba(255,255,255,.08);}
 .mmenu .mc{display:block;margin-top:12px;background:#fff;color:var(--blue);font-size:14px;font-weight:700;padding:12px;border-radius:8px;text-align:center;text-decoration:none;}
-
-/* HERO */
 .hero{padding:100px 40px 60px;background:linear-gradient(135deg,#EEF2FF 0%,#fff 70%);}
 .hero-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;}
 .badge{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--bdr2);padding:5px 12px;border-radius:20px;margin-bottom:18px;font-size:11px;color:var(--blue);font-weight:600;}
@@ -58,8 +52,6 @@ body{background:#F8F9FF;color:#111827;}
 .hs:first-child{padding-left:0;border-left:none;}
 .hs-v{font-size:20px;font-weight:800;color:var(--blue);}
 .hs-l{font-size:11px;color:var(--t3);margin-top:2px;}
-
-/* FORM CARD */
 .fc{background:#fff;border-radius:14px;padding:24px;border:1px solid var(--bdr);box-shadow:0 4px 32px rgba(27,58,140,.1);}
 .fc h3{font-size:15px;font-weight:700;margin-bottom:3px;}
 .fc-sub{font-size:12px;color:var(--t3);margin-bottom:18px;}
@@ -75,15 +67,11 @@ body{background:#F8F9FF;color:#111827;}
 .fp{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid var(--bdr);text-align:center;}
 .fp-v{font-size:14px;font-weight:800;color:var(--blue);}
 .fp-l{font-size:9px;color:var(--t3);margin-top:1px;}
-
-/* TRUST */
 .trust{background:var(--bg2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:12px 40px;}
 .trust-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
 .tl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;white-space:nowrap;}
 .ts{width:1px;height:12px;background:var(--bdr);}
 .ti{font-size:11px;font-weight:700;color:var(--t3);letter-spacing:.04em;}
-
-/* SECTIONS */
 .sec{max-width:1100px;margin:0 auto;padding:60px 40px;}
 .sec-lbl{font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
 .sec-title{font-size:clamp(22px,3vw,36px);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:40px;}
@@ -119,7 +107,7 @@ body{background:#F8F9FF;color:#111827;}
 .foot-links a{font-size:12px;color:var(--t3);text-decoration:none;}
 .foot-note{font-size:11px;color:var(--t3);}
 
-/* ─── LOADING ─── */
+/* ── LOADING ── */
 #loading{display:none;position:fixed;inset:0;background:rgba(255,255,255,.97);z-index:500;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
 .ld-logo{font-size:18px;font-weight:800;color:var(--blue);}
 .ld-h{font-size:13px;color:var(--t3);}
@@ -127,11 +115,8 @@ body{background:#F8F9FF;color:#111827;}
 .ld-fill{height:100%;background:var(--blue);border-radius:2px;width:0;transition:width .6s ease;}
 .ld-msg{font-size:12px;color:var(--t2);}
 
-/* ─── DASHBOARD ─── */
-/* Full page layout */
+/* ── DASHBOARD (same structure, expanded) ── */
 .dash{display:flex;min-height:100vh;width:100%;}
-
-/* Sidebar — desktop only */
 .dsb{width:var(--sw);flex-shrink:0;background:var(--blue);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;}
 .dsb-top{padding:20px 16px;border-bottom:1px solid rgba(255,255,255,.1);}
 .dsb-logo{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
@@ -139,6 +124,7 @@ body{background:#F8F9FF;color:#111827;}
 .dsb-name{font-size:15px;font-weight:800;color:#fff;}
 .dsb-handle{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;}
 .dsb-nav{padding:12px 8px;flex:1;}
+.dsb-section-lbl{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;font-weight:600;padding:8px 12px 4px;}
 .dni{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:all .2s;margin-bottom:2px;}
 .dni:hover{background:rgba(255,255,255,.1);}
 .dni.act{background:rgba(255,255,255,.18);}
@@ -152,62 +138,30 @@ body{background:#F8F9FF;color:#111827;}
 .dav-h{font-size:10px;color:rgba(255,255,255,.45);}
 .d-back{display:block;margin-top:10px;font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.15);text-align:center;background:none;width:100%;font-family:'Inter',sans-serif;transition:all .2s;}
 .d-back:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);}
-
-/* Main content area */
 .dmain{margin-left:var(--sw);flex:1;min-height:100vh;display:flex;flex-direction:column;}
-.dtop{background:#fff;border-bottom:1px solid var(--bdr);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;}
+.dtop{background:#fff;border-bottom:1px solid var(--bdr);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-shrink:0;gap:12px;}
 .dtop-t{font-size:15px;font-weight:700;white-space:nowrap;}
-.drun-all{background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:7px 16px;border-radius:7px;cursor:pointer;border:none;white-space:nowrap;font-family:'Inter',sans-serif;}
+.dtop-r{display:flex;align-items:center;gap:8px;}
+.drun-all{background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:7px 16px;border-radius:7px;cursor:pointer;border:none;white-space:nowrap;font-family:'Inter',sans-serif;transition:all .2s;}
+.drun-all:hover{background:var(--blue2);}
+.vault-btn{background:var(--bg2);color:var(--t2);font-size:12px;font-weight:600;padding:7px 12px;border-radius:7px;cursor:pointer;border:1px solid var(--bdr);white-space:nowrap;font-family:'Inter',sans-serif;transition:all .2s;}
+.vault-btn:hover{border-color:var(--blue);color:var(--blue);}
 .dbody{padding:20px;flex:1;}
-
-/* Mobile bottom tabs */
-.mobtabs{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bdr);z-index:100;display:none;grid-template-columns:repeat(3,1fr);}
+.mobtabs{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bdr);z-index:100;grid-template-columns:repeat(5,1fr);}
 .mobtab{display:flex;flex-direction:column;align-items:center;padding:8px 0;cursor:pointer;border:none;background:none;}
-.mobtab-i{font-size:20px;}
-.mobtab-l{font-size:10px;color:var(--t3);margin-top:2px;}
+.mobtab-i{font-size:18px;}
+.mobtab-l{font-size:9px;color:var(--t3);margin-top:2px;}
 .mobtab.act .mobtab-l{color:var(--blue);font-weight:600;}
-
-/* Sections */
 .dsec{display:none;}
 .dsec.act{display:block;}
 
-/* Cards */
+/* ── SHARED COMPONENTS ── */
 .card{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:16px;}
 .card-t{font-size:12px;font-weight:700;margin-bottom:12px;}
-
-/* ── SECTION 1 ── */
-.s1-box{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:20px;margin-bottom:16px;}
-
-/* Niche row */
-.niche-row{display:flex;align-items:center;gap:16px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--bdr);}
-.niche-lbl{font-size:12px;font-weight:700;color:var(--text);flex-shrink:0;}
-.niche-pills{display:flex;flex-wrap:wrap;gap:6px;}
-.np{font-size:11px;padding:5px 13px;border-radius:20px;border:1px solid var(--bdr);color:var(--t2);cursor:pointer;background:#fff;white-space:nowrap;transition:all .2s;}
-.np:hover{border-color:var(--blue);color:var(--blue);}
-.np.act{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
-
-/* Profile 4 cols */
-.prof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-.prof-lbl{font-size:10px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;display:block;}
-.prof-ta{width:100%;background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;padding:8px 10px;font-size:12px;color:var(--text);line-height:1.5;height:80px;font-family:'Inter',sans-serif;resize:none;}
-.prof-ta:focus{outline:none;border-color:var(--blue);background:#fff;}
-.prof-ta::placeholder{color:var(--t3);}
-.tone-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
-.tp{font-size:10px;padding:4px 9px;border-radius:20px;border:1px solid var(--bdr);color:var(--t2);cursor:pointer;background:#fff;transition:all .2s;}
-.tp.act{background:var(--blue);color:#fff;border-color:var(--blue);}
-.save-btn{width:100%;padding:8px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;border-radius:7px;cursor:pointer;border:none;font-family:'Inter',sans-serif;}
-
-/* Agents 2 col */
-.ag2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
-
-/* Prefs 2 col */
-.pref2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.pp-pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
-.pp{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--bdr);color:var(--t2);cursor:pointer;background:#fff;transition:all .2s;}
-.pp.act{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
-.pp.best{background:var(--green2);color:var(--green);border-color:#86EFAC;font-weight:600;}
-
-/* Agent card */
+.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.card-hdr-t{font-size:12px;font-weight:700;}
+.regen-btn{font-size:11px;color:var(--t2);background:var(--bg2);border:1px solid var(--bdr);padding:4px 10px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap;}
+.regen-btn:hover{border-color:var(--blue);color:var(--blue);}
 .ac{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:14px;}
 .ac-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .ac-left{display:flex;align-items:center;gap:8px;}
@@ -222,13 +176,123 @@ body{background:#F8F9FF;color:#111827;}
 .atg{display:inline-block;font-size:9px;padding:2px 7px;border-radius:4px;margin-bottom:4px;font-weight:600;text-transform:uppercase;}
 .atg.b{background:var(--blue3);color:var(--blue);}
 .atg.g{background:#F3F4F6;color:#374151;}
+.atg.a{background:var(--green2);color:var(--green);}
 .rbtn{margin-top:10px;width:100%;padding:7px;border-radius:7px;border:1px solid var(--bdr);background:#fff;color:var(--t2);font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;}
 .rbtn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue3);}
 .rbtn:disabled{opacity:.35;cursor:not-allowed;}
 .typing::after{content:'▋';animation:blink .8s step-end infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.action-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.action-chip{font-size:10px;padding:4px 9px;border-radius:6px;border:1px solid var(--bdr);background:#fff;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;}
+.action-chip:hover{border-color:var(--blue);color:var(--blue);background:var(--blue3);}
 
-/* ── SECTION 2 ── */
+/* ── SEC 1: INTELLIGENCE HUB ── */
+.hub-grid{display:grid;grid-template-columns:280px 1fr;gap:16px;margin-bottom:16px;}
+.profile-card{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:20px;}
+.profile-av{width:52px;height:52px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;margin-bottom:12px;}
+.profile-name{font-size:14px;font-weight:800;margin-bottom:2px;}
+.profile-handle{font-size:11px;color:var(--t3);margin-bottom:14px;}
+.profile-stats{display:flex;flex-direction:column;gap:8px;}
+.ps-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--bdr);}
+.ps-row:last-child{border-bottom:none;}
+.ps-lbl{font-size:11px;color:var(--t2);}
+.ps-val{font-size:12px;font-weight:700;color:var(--text);}
+.ps-val.up{color:var(--green);}
+.ps-val.hl{color:var(--blue);}
+.hub-right{display:flex;flex-direction:column;gap:16px;}
+.audit-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.audit-card{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:14px;}
+.audit-card.str{border-left:3px solid var(--green);}
+.audit-card.wk{border-left:3px solid var(--red);}
+.audit-card.opp{border-left:3px solid var(--blue);}
+.audit-card.act-card{border-left:3px solid var(--amber);}
+.audit-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.audit-label.str{color:var(--green);}
+.audit-label.wk{color:var(--red);}
+.audit-label.opp{color:var(--blue);}
+.audit-label.act-card{color:var(--amber);}
+.audit-items{display:flex;flex-direction:column;gap:5px;}
+.audit-item{font-size:11px;color:var(--t2);line-height:1.5;padding-left:10px;position:relative;}
+.audit-item::before{content:'';position:absolute;left:0;top:6px;width:4px;height:4px;border-radius:50%;background:var(--bdr2);}
+.audit-item.str::before{background:var(--green);}
+.audit-item.wk::before{background:var(--red);}
+.audit-item.opp::before{background:var(--blue);}
+.audit-item.act-item::before{background:var(--amber);}
+.opp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.opp-card{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:14px;}
+.opp-card-t{font-size:11px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.opp-item{font-size:11px;color:var(--t2);line-height:1.6;padding:5px 0;border-bottom:1px solid var(--bdr);}
+.opp-item:last-child{border-bottom:none;}
+.ideas-feed{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
+.idea-card{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:14px;transition:all .2s;}
+.idea-card:hover{border-color:var(--bdr2);}
+.idea-type{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:6px;}
+.idea-title{font-size:12px;font-weight:700;margin-bottom:5px;line-height:1.4;}
+.idea-hook{font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:8px;}
+.idea-actions{display:flex;gap:5px;}
+.idea-btn{font-size:10px;padding:3px 8px;border-radius:5px;border:1px solid var(--bdr);background:#fff;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;}
+.idea-btn:hover{border-color:var(--blue);color:var(--blue);}
+.idea-btn.save{background:var(--green2);color:var(--green);border-color:#86EFAC;}
+
+/* ── SEC 2: CREATE (same as before + upgrades) ── */
+.s1-box{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:20px;margin-bottom:16px;}
+.niche-row{display:flex;align-items:center;gap:16px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--bdr);}
+.niche-lbl{font-size:12px;font-weight:700;color:var(--text);flex-shrink:0;}
+.niche-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.np{font-size:11px;padding:5px 13px;border-radius:20px;border:1px solid var(--bdr);color:var(--t2);cursor:pointer;background:#fff;white-space:nowrap;transition:all .2s;}
+.np:hover{border-color:var(--blue);color:var(--blue);}
+.np.act{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
+.prof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.prof-lbl{font-size:10px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;display:block;}
+.prof-ta{width:100%;background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;padding:8px 10px;font-size:12px;color:var(--text);line-height:1.5;height:80px;font-family:'Inter',sans-serif;resize:none;}
+.prof-ta:focus{outline:none;border-color:var(--blue);background:#fff;}
+.prof-ta::placeholder{color:var(--t3);}
+.tone-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
+.tp{font-size:10px;padding:4px 9px;border-radius:20px;border:1px solid var(--bdr);color:var(--t2);cursor:pointer;background:#fff;transition:all .2s;}
+.tp.act{background:var(--blue);color:#fff;border-color:var(--blue);}
+.save-btn{width:100%;padding:8px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;border-radius:7px;cursor:pointer;border:none;font-family:'Inter',sans-serif;}
+.ag2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.pref2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.pp-pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.pp{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--bdr);color:var(--t2);cursor:pointer;background:#fff;transition:all .2s;}
+.pp.act{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
+.pp.best{background:var(--green2);color:var(--green);border-color:#86EFAC;font-weight:600;}
+
+/* ── SEC 3: AI CONTENT LAB ── */
+.lab-grid{display:grid;grid-template-columns:220px 1fr;gap:16px;height:calc(100vh - 120px);min-height:500px;}
+.lab-agents{display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
+.lab-agent-btn{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#fff;border:1px solid var(--bdr);border-radius:9px;cursor:pointer;transition:all .2s;text-align:left;width:100%;font-family:'Inter',sans-serif;}
+.lab-agent-btn:hover{border-color:var(--bdr2);}
+.lab-agent-btn.act{border-color:var(--blue);background:var(--blue3);}
+.lab-agent-ico{font-size:18px;flex-shrink:0;}
+.lab-agent-name{font-size:12px;font-weight:700;color:var(--text);}
+.lab-agent-desc{font-size:10px;color:var(--t3);}
+.lab-workspace{display:flex;flex-direction:column;background:#fff;border-radius:10px;border:1px solid var(--bdr);overflow:hidden;}
+.lab-ws-top{padding:14px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.lab-ws-title{font-size:13px;font-weight:700;}
+.lab-ws-actions{display:flex;gap:6px;}
+.lab-action{font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid var(--bdr);background:#fff;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;}
+.lab-action:hover{border-color:var(--blue);color:var(--blue);}
+.lab-chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:300px;}
+.chat-msg{max-width:85%;padding:10px 14px;border-radius:10px;font-size:12px;line-height:1.7;}
+.chat-msg.ai{background:var(--bg2);border:1px solid var(--bdr);color:var(--text);align-self:flex-start;border-radius:4px 10px 10px 10px;}
+.chat-msg.user{background:var(--blue);color:#fff;align-self:flex-end;border-radius:10px 4px 10px 10px;}
+.chat-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--t3);text-align:center;padding:40px;}
+.chat-empty-icon{font-size:32px;margin-bottom:12px;}
+.chat-empty-t{font-size:13px;font-weight:600;margin-bottom:6px;}
+.chat-empty-s{font-size:11px;}
+.chat-suggestions{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 12px;}
+.chat-sug{font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid var(--bdr);background:#fff;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;}
+.chat-sug:hover{border-color:var(--blue);color:var(--blue);background:var(--blue3);}
+.chat-input-row{padding:12px 16px;border-top:1px solid var(--bdr);display:flex;gap:8px;align-items:flex-end;}
+.chat-inp{flex:1;padding:10px 14px;background:var(--bg2);border:1.5px solid var(--bdr);border-radius:8px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;resize:none;max-height:120px;min-height:42px;}
+.chat-inp:focus{outline:none;border-color:var(--blue);background:#fff;}
+.chat-inp::placeholder{color:var(--t3);}
+.chat-send{padding:10px 16px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;transition:all .2s;flex-shrink:0;}
+.chat-send:hover{background:var(--blue2);}
+.chat-send:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ── SEC 4: ANALYSE ── */
 .s2-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px;}
 .sc{background:#fff;border-radius:10px;border:1px solid var(--bdr);padding:14px;text-align:center;}
 .sc.hl{background:var(--blue3);border-color:var(--bdr2);}
@@ -239,8 +303,6 @@ body{background:#F8F9FF;color:#111827;}
 .sc-s{font-size:10px;color:var(--t3);margin-top:2px;}
 .sc-s.up{color:var(--green);}
 .s2-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-
-/* Bar chart */
 .bchart{position:relative;height:120px;margin-bottom:8px;padding-left:32px;}
 .bgrid{position:absolute;top:0;left:0;right:0;bottom:20px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;}
 .bgl{border-top:1px dashed var(--bdr);position:relative;}
@@ -252,8 +314,6 @@ body{background:#F8F9FF;color:#111827;}
 .bc-l{font-size:9px;color:var(--t3);}
 .bsum{display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--bdr);font-size:10px;color:var(--t2);}
 .bsv{font-weight:600;color:var(--blue);}
-
-/* Top posts */
 .pi{padding:8px 0;border-bottom:1px solid var(--bdr);}
 .pi:last-child{border-bottom:none;}
 .pi-cap{font-size:11px;color:var(--text);margin-bottom:4px;line-height:1.5;}
@@ -261,7 +321,7 @@ body{background:#F8F9FF;color:#111827;}
 .pi-tag{background:var(--blue3);color:var(--blue);padding:1px 6px;border-radius:10px;font-size:9px;font-weight:600;}
 .new-note{margin-top:8px;font-size:10px;color:var(--green);background:#F0FDF4;padding:6px 8px;border-radius:6px;border:1px solid #BBF7D0;}
 
-/* ── SECTION 3 ── */
+/* ── SEC 5: PLAN ── */
 .s3-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 .cd{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--bdr);}
 .cd:last-child{border-bottom:none;}
@@ -276,15 +336,58 @@ body{background:#F8F9FF;color:#111827;}
 .pregen{padding:7px;border-radius:7px;border:1px solid var(--bdr);background:#fff;color:var(--t2);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;}
 .pexp{padding:7px;border-radius:7px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:'Inter',sans-serif;}
 
-/* ─── RESPONSIVE ─── */
+/* ── VAULT MODAL ── */
+.vault-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;align-items:center;justify-content:center;}
+.vault-modal{background:#fff;border-radius:14px;width:90%;max-width:600px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;}
+.vault-hdr{padding:20px 24px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.vault-hdr h3{font-size:15px;font-weight:700;}
+.vault-close{font-size:20px;cursor:pointer;color:var(--t3);background:none;border:none;padding:0 4px;}
+.vault-body{flex:1;overflow-y:auto;padding:16px 24px;}
+.vault-empty{text-align:center;padding:40px;color:var(--t3);font-size:13px;}
+.vault-item{background:var(--bg2);border-radius:8px;padding:12px;margin-bottom:8px;border:1px solid var(--bdr);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.vault-item-content{flex:1;}
+.vault-item-type{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);margin-bottom:4px;}
+.vault-item-text{font-size:11px;color:var(--text);line-height:1.5;}
+.vault-item-del{font-size:14px;cursor:pointer;color:var(--t3);flex-shrink:0;background:none;border:none;padding:0;}
+.vault-item-del:hover{color:var(--red);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .prof-grid{grid-template-columns:1fr 1fr;}
+  .hub-grid{grid-template-columns:1fr;}
+  .opp-grid{grid-template-columns:1fr 1fr;}
+  .ideas-feed{grid-template-columns:1fr 1fr;}
+  .lab-grid{grid-template-columns:1fr;height:auto;}
+  .lab-agents{flex-direction:row;flex-wrap:wrap;overflow:visible;}
+  .lab-agent-btn{width:auto;flex:1;min-width:120px;}
+  .lab-workspace{height:600px;}
+}
 @media(max-width:768px){
-  /* Landing */
+  .dsb{display:none;}
+  .dmain{margin-left:0;width:100%;}
+  .mobtabs{display:grid;}
+  .dbody{padding:12px 12px 80px;}
+  .dtop{padding:0 12px;}
+  .dtop-t{font-size:13px;}
+  .s1-box{padding:14px;}
+  .niche-row{flex-direction:column;align-items:flex-start;gap:8px;}
+  .prof-grid{grid-template-columns:1fr;}
+  .ag2{grid-template-columns:1fr;}
+  .pref2{grid-template-columns:1fr;}
+  .s2-stats{grid-template-columns:1fr 1fr;}
+  .s2-g{grid-template-columns:1fr;}
+  .s3-g{grid-template-columns:1fr;}
+  .hub-grid{grid-template-columns:1fr;}
+  .opp-grid{grid-template-columns:1fr;}
+  .ideas-feed{grid-template-columns:1fr;}
+  .audit-grid{grid-template-columns:1fr;}
+  .drun-all{font-size:11px;padding:6px 10px;}
+  .vault-btn{display:none;}
   .ln{padding:0 16px;}
   .ln-links,.ln-cta{display:none;}
   .burger{display:flex;}
   .hero{padding:80px 16px 40px;}
   .hero-in{grid-template-columns:1fr;}
-  .hero p{max-width:100%;}
   .trust{padding:12px 16px;}
   .trust-in{flex-wrap:wrap;gap:10px;}
   .sec{padding:36px 16px;}
@@ -297,30 +400,11 @@ body{background:#F8F9FF;color:#111827;}
   .cta-b{border-radius:0 0 8px 8px;text-align:center;}
   .foot{flex-direction:column;gap:8px;text-align:center;padding:16px;}
   .foot-links{justify-content:center;}
-  /* Dashboard */
-  .dsb{display:none;}
-  .dmain{margin-left:0;width:100%;}
-  .mobtabs{display:grid;}
-  .dbody{padding:12px 12px 80px;}
-  .dtop{padding:0 12px;}
-  .dtop-t{font-size:13px;}
-  /* Section 1 */
-  .s1-box{padding:14px;}
-  .niche-row{flex-direction:column;align-items:flex-start;gap:8px;}
-  .prof-grid{grid-template-columns:1fr;}
-  .ag2{grid-template-columns:1fr;}
-  .pref2{grid-template-columns:1fr;}
-  /* Section 2 */
-  .s2-stats{grid-template-columns:1fr 1fr;}
-  .s2-g{grid-template-columns:1fr;}
-  /* Section 3 */
-  .s3-g{grid-template-columns:1fr;}
 }
 @media(max-width:480px){
   .hero h1{font-size:24px;}
   .steps{grid-template-columns:1fr;}
   .agents-g{grid-template-columns:1fr;}
-  .drun-all{font-size:11px;padding:6px 10px;}
 }
 </style>
 </head>
@@ -332,6 +416,14 @@ body{background:#F8F9FF;color:#111827;}
   <div class="ld-h" id="ld-h"></div>
   <div class="ld-bar"><div class="ld-fill" id="ld-fill"></div></div>
   <div class="ld-msg" id="ld-msg">Starting...</div>
+</div>
+
+<!-- VAULT MODAL -->
+<div class="vault-overlay" id="vault-overlay" onclick="if(event.target===this)toggleVault()">
+  <div class="vault-modal">
+    <div class="vault-hdr"><h3>💾 Idea Vault</h3><button class="vault-close" onclick="toggleVault()">×</button></div>
+    <div class="vault-body" id="vault-body"><div class="vault-empty">No saved ideas yet. Hit Save on any idea or agent output!</div></div>
+  </div>
 </div>
 
 <!-- ══ LANDING ══ -->
@@ -348,13 +440,12 @@ body{background:#F8F9FF;color:#111827;}
     <a href="#pricing" onclick="toggleMenu()">Pricing</a>
     <a class="mc" href="#" onclick="scrollF();toggleMenu()">⚡ Try free →</a>
   </div>
-
   <div class="hero">
     <div class="hero-in">
       <div>
-        <div class="badge"><div class="bdot"></div>5 AI Agents · Instagram Native · Free</div>
+        <div class="badge"><div class="bdot"></div>AI Creator Operating System · Free</div>
         <h1>Your Instagram<br>Content Team,<br><span>Powered by AI.</span></h1>
-        <p>Enter your handle. 5 AI agents instantly generate ideas, write hooks, plan your calendar, analyse your stats, and draft your DMs — all from your real Instagram data.</p>
+        <p>Enter your handle. Get a full AI-powered creator dashboard — insights, ideas, scripts, calendar and DMs — all from your real Instagram data.</p>
         <div class="hero-btns">
           <button class="btn-p" onclick="scrollF()">⚡ Launch free →</button>
           <button class="btn-s" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it works</button>
@@ -370,19 +461,18 @@ body{background:#F8F9FF;color:#111827;}
         <h3>Launch your dashboard</h3>
         <div class="fc-sub">No password. No account. Just your handle.</div>
         <label class="fl">Instagram Handle</label>
-        <input class="fi" type="text" id="inp" placeholder="@yourhandle" />
+        <input class="fi" type="text" id="inp" placeholder="@yourhandle" onkeydown="if(event.key==='Enter')launch()" />
         <button class="fb" onclick="launch()" id="lb">⚡ Launch free →</button>
         <div class="fn">🔒 Public data only · No passwords · Free forever</div>
         <div class="fe" id="fe"></div>
         <div class="fp">
-          <div><div class="fp-v">$0</div><div class="fp-l">ContentIQ</div></div>
+          <div><div class="fp-v">$0</div><div class="fp-l">Platform</div></div>
           <div style="border-left:1px solid var(--bdr);border-right:1px solid var(--bdr);"><div class="fp-v">$0</div><div class="fp-l">Scraping</div></div>
           <div><div class="fp-v">$0</div><div class="fp-l">AI Agents</div></div>
         </div>
       </div>
     </div>
   </div>
-
   <div class="trust"><div class="trust-in">
     <span class="tl">Powered by</span>
     <div class="ts"></div><span class="ti">GROQ AI</span>
@@ -390,41 +480,37 @@ body{background:#F8F9FF;color:#111827;}
     <div class="ts"></div><span class="ti">LLAMA 3</span>
     <div class="ts"></div><span class="ti">INSTAGRAM</span>
   </div></div>
-
   <div id="how"><div class="sec">
     <div class="sec-lbl">How it works</div>
     <div class="sec-title">From handle to dashboard in 60 seconds.</div>
     <div class="steps">
-      <div><div class="step-n">1</div><div class="step-t">Enter your handle</div><div class="step-d">Just your Instagram username. No password, no login, no account needed.</div></div>
-      <div><div class="step-n">2</div><div class="step-t">We scrape your data</div><div class="step-d">Our servers fetch your public posts, likes, reach and follower stats automatically.</div></div>
-      <div><div class="step-n">3</div><div class="step-t">AI reads your profile</div><div class="step-d">5 specialised AI agents analyse your data, your niche, and trending topics.</div></div>
-      <div><div class="step-n">4</div><div class="step-t">Dashboard ready</div><div class="step-d">Ideas, hooks, calendar, insights, DM replies — all personalised to you.</div></div>
+      <div><div class="step-n">1</div><div class="step-t">Enter your handle</div><div class="step-d">Just your Instagram username. No password, no login needed.</div></div>
+      <div><div class="step-n">2</div><div class="step-t">We scrape your data</div><div class="step-d">Posts, likes, reach and follower stats fetched automatically.</div></div>
+      <div><div class="step-n">3</div><div class="step-t">AI reads your profile</div><div class="step-d">5 AI agents analyse your data, niche and trending topics.</div></div>
+      <div><div class="step-n">4</div><div class="step-t">Dashboard ready</div><div class="step-d">Ideas, hooks, calendar, insights, DMs — all personalised.</div></div>
     </div>
   </div></div>
-
   <div class="sec-bg" id="features"><div class="sec">
-    <div class="sec-lbl">The 5 agents</div>
-    <div class="sec-title">Every agent has one job. Together they run your content.</div>
+    <div class="sec-lbl">The platform</div>
+    <div class="sec-title">Everything a creator needs. One dashboard.</div>
     <div class="agents-g">
-      <div class="ag"><div class="ag-i">💡</div><div class="ag-n">Ideator</div><div class="ag-d">Scouts trends and your own post history to surface your next viral idea.</div></div>
-      <div class="ag"><div class="ag-i">✍️</div><div class="ag-n">Hook & Script</div><div class="ag-d">Writes scroll-stopping hooks and full Reel scripts in your exact voice.</div></div>
-      <div class="ag"><div class="ag-i">📅</div><div class="ag-n">Planner</div><div class="ag-d">Builds your 7-day content calendar at your best posting times.</div></div>
-      <div class="ag"><div class="ag-i">📊</div><div class="ag-n">Analyst</div><div class="ag-d">Tells you what's working, what isn't, and what to do next.</div></div>
-      <div class="ag"><div class="ag-i">💬</div><div class="ag-n">DM Manager</div><div class="ag-d">Drafts warm on-brand replies for your most common DM types.</div></div>
+      <div class="ag"><div class="ag-i">🧠</div><div class="ag-n">Intelligence Hub</div><div class="ag-d">AI audit, opportunities, and your next best actions.</div></div>
+      <div class="ag"><div class="ag-i">💡</div><div class="ag-n">Ideation Studio</div><div class="ag-d">Unlimited fresh content ideas personalised to your niche.</div></div>
+      <div class="ag"><div class="ag-i">⚗️</div><div class="ag-n">AI Content Lab</div><div class="ag-d">Chat with AI agents to refine and expand any content.</div></div>
+      <div class="ag"><div class="ag-i">📊</div><div class="ag-n">Deep Analysis</div><div class="ag-d">Stats, top posts, and what's working for your account.</div></div>
+      <div class="ag"><div class="ag-i">📅</div><div class="ag-n">Plan & DMs</div><div class="ag-d">Weekly calendar, planner agent and DM reply templates.</div></div>
     </div>
   </div></div>
-
   <div id="pricing"><div class="sec">
     <div class="sec-lbl">Pricing</div>
     <div class="sec-title">Completely free. No hidden costs ever.</div>
     <div class="price-g">
-      <div class="pc"><div class="pa">$0</div><div class="pn">ContentIQ Platform</div><div class="pd">The dashboard, all 5 agents, every feature. Free forever.</div></div>
-      <div class="pc"><div class="pa">$0</div><div class="pn">Data Scraping</div><div class="pd">We cover the cost of fetching your Instagram data. Nothing to pay.</div></div>
-      <div class="pc"><div class="pa">$0</div><div class="pn">AI Agents</div><div class="pd">All 5 agents powered by Groq AI and Llama 3. Included free.</div></div>
+      <div class="pc"><div class="pa">$0</div><div class="pn">ContentIQ Platform</div><div class="pd">The full AI Creator OS, all agents, every feature. Free forever.</div></div>
+      <div class="pc"><div class="pa">$0</div><div class="pn">Data Scraping</div><div class="pd">We cover the cost of fetching your Instagram data via Apify.</div></div>
+      <div class="pc"><div class="pa">$0</div><div class="pn">AI Generation</div><div class="pd">All AI agents powered by Groq AI and Llama 3. Always free.</div></div>
     </div>
-    <div class="pnote">✅ ContentIQ is 100% free. We cover all infrastructure costs. Just enter your handle and go.</div>
+    <div class="pnote">✅ ContentIQ is 100% free. Just enter your handle and go.</div>
   </div></div>
-
   <div class="cta-bg"><div class="cta">
     <h2>Ready to let AI run your Instagram?</h2>
     <p>Free forever. No account. No credit card. Just your Instagram handle.</p>
@@ -434,7 +520,6 @@ body{background:#F8F9FF;color:#111827;}
     </div>
     <div class="cta-n">🔒 Public data only · No passwords · No data stored</div>
   </div></div>
-
   <div class="foot">
     <div class="foot-logo">ContentIQ</div>
     <div class="foot-links"><a href="#how">How it works</a><a href="#features">Features</a><a href="#pricing">Pricing</a></div>
@@ -445,14 +530,19 @@ body{background:#F8F9FF;color:#111827;}
 <!-- ══ DASHBOARD ══ -->
 <div id="dashboard">
   <div class="dash">
-    <!-- Sidebar -->
+    <!-- SIDEBAR -->
     <div class="dsb">
       <div class="dsb-top">
         <div class="dsb-logo"><div class="dsb-icon">C</div><div class="dsb-name">ContentIQ</div></div>
         <div class="dsb-handle" id="dsb-h">@handle</div>
       </div>
       <div class="dsb-nav">
-        <div class="dni act" id="nav-c" onclick="sw('c')"><div class="dni-ic">✍️</div><div class="dni-tx"><div class="dn-t">Create</div><div class="dn-s">Ideas · Hooks</div></div></div>
+        <div class="dsb-section-lbl">Intelligence</div>
+        <div class="dni act" id="nav-h" onclick="sw('h')"><div class="dni-ic">🧠</div><div class="dni-tx"><div class="dn-t">Hub</div><div class="dn-s">Audit · Opportunities</div></div></div>
+        <div class="dsb-section-lbl">Content</div>
+        <div class="dni" id="nav-c" onclick="sw('c')"><div class="dni-ic">✍️</div><div class="dni-tx"><div class="dn-t">Create</div><div class="dn-s">Ideas · Hooks</div></div></div>
+        <div class="dni" id="nav-l" onclick="sw('l')"><div class="dni-ic">⚗️</div><div class="dni-tx"><div class="dn-t">AI Lab</div><div class="dn-s">Chat with agents</div></div></div>
+        <div class="dsb-section-lbl">Analytics</div>
         <div class="dni" id="nav-a" onclick="sw('a')"><div class="dni-ic">📊</div><div class="dni-tx"><div class="dn-t">Analyse</div><div class="dn-s">Stats · Insights</div></div></div>
         <div class="dni" id="nav-p" onclick="sw('p')"><div class="dni-ic">📅</div><div class="dni-tx"><div class="dn-t">Plan & DMs</div><div class="dn-s">Calendar · Replies</div></div></div>
       </div>
@@ -465,18 +555,91 @@ body{background:#F8F9FF;color:#111827;}
       </div>
     </div>
 
-    <!-- Main -->
+    <!-- MAIN -->
     <div class="dmain">
       <div class="dtop">
-        <div class="dtop-t" id="dtop-t">✍️ Create</div>
-        <button class="drun-all" onclick="runAll()">⚡ Run All Agents</button>
+        <div class="dtop-t" id="dtop-t">🧠 Intelligence Hub</div>
+        <div class="dtop-r">
+          <button class="vault-btn" onclick="toggleVault()">💾 Vault</button>
+          <button class="drun-all" onclick="runAll()">⚡ Run All</button>
+        </div>
       </div>
       <div class="dbody">
 
-        <!-- SECTION 1: CREATE -->
-        <div class="dsec act" id="sec-c">
+        <!-- ── SEC 1: INTELLIGENCE HUB ── -->
+        <div class="dsec act" id="sec-h">
+          <!-- Profile + Audit -->
+          <div class="hub-grid">
+            <div class="profile-card">
+              <div class="profile-av" id="hub-av">A</div>
+              <div class="profile-name" id="hub-name">@handle</div>
+              <div class="profile-handle" id="hub-handle">Instagram Creator</div>
+              <div class="profile-stats">
+                <div class="ps-row"><span class="ps-lbl">Followers</span><span class="ps-val hl" id="h-fol">—</span></div>
+                <div class="ps-row"><span class="ps-lbl">Following</span><span class="ps-val" id="h-fng">—</span></div>
+                <div class="ps-row"><span class="ps-lbl">Total Posts</span><span class="ps-val" id="h-posts">—</span></div>
+                <div class="ps-row"><span class="ps-lbl">Avg Likes</span><span class="ps-val" id="h-likes">—</span></div>
+                <div class="ps-row"><span class="ps-lbl">Avg Comments</span><span class="ps-val" id="h-coms">—</span></div>
+                <div class="ps-row"><span class="ps-lbl">Avg Reach</span><span class="ps-val" id="h-reach">—</span></div>
+                <div class="ps-row"><span class="ps-lbl">Engagement Rate</span><span class="ps-val up" id="h-eng">—</span></div>
+              </div>
+            </div>
+            <div class="hub-right">
+              <!-- AI Audit -->
+              <div class="card">
+                <div class="card-hdr">
+                  <div class="card-hdr-t">🔍 AI Creator Audit</div>
+                  <button class="regen-btn" onclick="runHubAgent('audit')">↺ Re-audit</button>
+                </div>
+                <div id="hub-audit">
+                  <div class="audit-grid">
+                    <div class="audit-card str"><div class="audit-label str">Strengths</div><div class="audit-items" id="audit-str"><div class="audit-item">Run audit to see your strengths</div></div></div>
+                    <div class="audit-card wk"><div class="audit-label wk">Weaknesses</div><div class="audit-items" id="audit-wk"><div class="audit-item">Run audit to see areas to improve</div></div></div>
+                    <div class="audit-card opp"><div class="audit-label opp">Growth Opportunities</div><div class="audit-items" id="audit-opp"><div class="audit-item">Run audit to see opportunities</div></div></div>
+                    <div class="audit-card act-card"><div class="audit-label act-card">Next Best Actions</div><div class="audit-items" id="audit-act"><div class="audit-item">Run audit to get your action plan</div></div></div>
+                  </div>
+                  <button class="rbtn" style="margin-top:12px;" onclick="runHubAgent('audit')" id="audit-btn">▶ Run AI Audit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Opportunities -->
+          <div class="card" style="margin-bottom:16px;">
+            <div class="card-hdr">
+              <div class="card-hdr-t">🎯 Opportunity Dashboard</div>
+              <button class="regen-btn" onclick="runHubAgent('opportunities')">↺ Refresh</button>
+            </div>
+            <div id="hub-opp">
+              <div class="opp-grid">
+                <div class="opp-card"><div class="opp-card-t">🔥 Trending Opportunities</div><div id="opp-trending"><div class="opp-item" style="color:var(--t3)">Run to see trending opportunities</div></div></div>
+                <div class="opp-card"><div class="opp-card-t">🕳️ Content Gaps</div><div id="opp-gaps"><div class="opp-item" style="color:var(--t3)">Run to see content gaps</div></div></div>
+                <div class="opp-card"><div class="opp-card-t">💡 Series Ideas</div><div id="opp-series"><div class="opp-item" style="color:var(--t3)">Run to see series ideas</div></div></div>
+              </div>
+              <button class="rbtn" style="margin-top:12px;" onclick="runHubAgent('opportunities')" id="opp-btn">▶ Generate Opportunities</button>
+            </div>
+          </div>
+
+          <!-- Ideas Feed -->
+          <div class="card">
+            <div class="card-hdr">
+              <div class="card-hdr-t">✨ AI Ideas Feed</div>
+              <button class="regen-btn" onclick="runHubAgent('ideas_feed')">↺ Fresh Ideas</button>
+            </div>
+            <div class="ideas-feed" id="ideas-feed">
+              <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--t3);">
+                <div style="font-size:24px;margin-bottom:8px;">✨</div>
+                <div style="font-size:13px;font-weight:600;margin-bottom:4px;">No ideas yet</div>
+                <div style="font-size:11px;">Click Generate to get fresh content ideas</div>
+              </div>
+            </div>
+            <button class="rbtn" style="margin-top:12px;" onclick="runHubAgent('ideas_feed')" id="ideas-btn">▶ Generate Ideas</button>
+          </div>
+        </div>
+
+        <!-- ── SEC 2: CREATE ── -->
+        <div class="dsec" id="sec-c">
           <div class="s1-box">
-            <!-- Niche row -->
             <div class="niche-row">
               <div class="niche-lbl">Niche</div>
               <div class="niche-pills">
@@ -492,12 +655,11 @@ body{background:#F8F9FF;color:#111827;}
                 <div class="np" onclick="setCN(this)">+ Custom</div>
               </div>
             </div>
-            <!-- Profile 4 cols -->
             <div style="font-size:12px;font-weight:700;margin-bottom:12px;">Your Profile <span style="font-size:10px;color:var(--t3);font-weight:400;">— agents personalise everything based on this</span></div>
             <div class="prof-grid">
-              <div><label class="prof-lbl">Products you promote</label><textarea class="prof-ta" id="p-prod" placeholder="e.g. The Ordinary Niacinamide, Minimalist SPF, Korean dupes under ₹500..."></textarea></div>
+              <div><label class="prof-lbl">Products you promote</label><textarea class="prof-ta" id="p-prod" placeholder="e.g. The Ordinary Niacinamide, Minimalist SPF..."></textarea></div>
               <div><label class="prof-lbl">Your audience</label><textarea class="prof-ta" id="p-aud" placeholder="e.g. Indian women 18-25, oily skin, budget conscious..."></textarea></div>
-              <div><label class="prof-lbl">Topics to focus on</label><textarea class="prof-ta" id="p-top" placeholder="e.g. Budget skincare, dupes, ingredient education..."></textarea></div>
+              <div><label class="prof-lbl">Topics to focus on</label><textarea class="prof-ta" id="p-top" placeholder="e.g. Budget skincare, dupes, ingredients..."></textarea></div>
               <div>
                 <label class="prof-lbl">Content tone</label>
                 <div class="tone-pills">
@@ -512,22 +674,26 @@ body{background:#F8F9FF;color:#111827;}
               </div>
             </div>
           </div>
-
-          <!-- Agents 2 col -->
           <div class="ag2">
             <div class="ac">
               <div class="ac-hdr"><div class="ac-left"><div class="ac-ico">💡</div><div><div class="ac-name">Ideator</div><div class="ac-role">Ideas from your products & posts</div></div></div><div class="ast idle" id="st1">idle</div></div>
-              <div class="ac-out" id="out1"><span class="atg b">IDEAS</span><br>Click Run to generate content ideas personalised to your products and posts.</div>
-              <button class="rbtn" onclick="runAg('ideator',1)">▶ Run Agent</button>
+              <div class="ac-out" id="out1"><span class="atg b">IDEAS</span><br>Generate content ideas personalised to your products and posts.</div>
+              <div class="action-row">
+                <button class="action-chip" onclick="runAg('ideator',1)">▶ Run</button>
+                <button class="action-chip" onclick="saveToVault('out1','Idea')">💾 Save</button>
+                <button class="action-chip" onclick="sendToLab('out1','ideator')">⚗️ Refine in Lab</button>
+              </div>
             </div>
             <div class="ac">
               <div class="ac-hdr"><div class="ac-left"><div class="ac-ico">✍️</div><div><div class="ac-name">Hook & Script</div><div class="ac-role">Hooks in your exact voice</div></div></div><div class="ast idle" id="st2">idle</div></div>
-              <div class="ac-out" id="out2"><span class="atg g">HOOK</span><br>Writes scroll-stopping hooks and a full Reel script in your voice.</div>
-              <button class="rbtn" onclick="runAg('hookwriter',2)">▶ Run Agent</button>
+              <div class="ac-out" id="out2"><span class="atg g">HOOK</span><br>Writes scroll-stopping hooks and a full Reel script.</div>
+              <div class="action-row">
+                <button class="action-chip" onclick="runAg('hookwriter',2)">▶ Run</button>
+                <button class="action-chip" onclick="saveToVault('out2','Hook')">💾 Save</button>
+                <button class="action-chip" onclick="sendToLab('out2','hookwriter')">⚗️ Refine in Lab</button>
+              </div>
             </div>
           </div>
-
-          <!-- Prefs 2 col -->
           <div class="pref2">
             <div class="card"><div class="card-t">Preferred content type</div>
               <div class="pp-pills">
@@ -537,18 +703,65 @@ body{background:#F8F9FF;color:#111827;}
                 <div class="pp" onclick="this.classList.toggle('act')">Static posts</div>
               </div>
             </div>
-            <div class="card"><div class="card-t">Best posting times <span style="font-size:10px;color:var(--t3);font-weight:400;">(from your data)</span></div>
-              <div class="pp-pills" id="best-times">
-                <div class="pp best">07:00 ⭐</div>
-                <div class="pp">19:00</div>
-                <div class="pp">12:00</div>
-                <div class="pp">21:00</div>
+            <div class="card"><div class="card-t">Next Best Actions</div>
+              <div id="next-actions" style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+                <div style="font-size:11px;color:var(--t3);">Run the AI Audit to get personalised action recommendations.</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- SECTION 2: ANALYSE -->
+        <!-- ── SEC 3: AI LAB ── -->
+        <div class="dsec" id="sec-l">
+          <div class="lab-grid">
+            <div class="lab-agents">
+              <div class="lab-agent-btn act" id="lab-btn-ideator" onclick="selectLabAgent('ideator','💡 Ideator','Generate fresh content ideas')">
+                <div class="lab-agent-ico">💡</div><div><div class="lab-agent-name">Ideator</div><div class="lab-agent-desc">Content ideas</div></div>
+              </div>
+              <div class="lab-agent-btn" id="lab-btn-hookwriter" onclick="selectLabAgent('hookwriter','✍️ Hook & Script','Write hooks and Reel scripts')">
+                <div class="lab-agent-ico">✍️</div><div><div class="lab-agent-name">Hook & Script</div><div class="lab-agent-desc">Hooks & scripts</div></div>
+              </div>
+              <div class="lab-agent-btn" id="lab-btn-planner" onclick="selectLabAgent('planner','📅 Planner','Build content calendar')">
+                <div class="lab-agent-ico">📅</div><div><div class="lab-agent-name">Planner</div><div class="lab-agent-desc">Content calendar</div></div>
+              </div>
+              <div class="lab-agent-btn" id="lab-btn-analyst" onclick="selectLabAgent('analyst','📊 Analyst','Analyse your performance')">
+                <div class="lab-agent-ico">📊</div><div><div class="lab-agent-name">Analyst</div><div class="lab-agent-desc">Performance</div></div>
+              </div>
+              <div class="lab-agent-btn" id="lab-btn-dmmanager" onclick="selectLabAgent('dmmanager','💬 DM Manager','Draft DM replies')">
+                <div class="lab-agent-ico">💬</div><div><div class="lab-agent-name">DM Manager</div><div class="lab-agent-desc">DM replies</div></div>
+              </div>
+            </div>
+            <div class="lab-workspace" id="lab-workspace">
+              <div class="lab-ws-top">
+                <div class="lab-ws-title" id="lab-title">💡 Ideator</div>
+                <div class="lab-ws-actions">
+                  <button class="lab-action" onclick="clearChat()">Clear</button>
+                  <button class="lab-action" onclick="saveToVault('lab-last','Lab Output')">💾 Save</button>
+                  <button class="lab-action" onclick="labRegen()">↺ Regen</button>
+                </div>
+              </div>
+              <div class="lab-chat" id="lab-chat">
+                <div class="chat-empty">
+                  <div class="chat-empty-icon">⚗️</div>
+                  <div class="chat-empty-t">AI Content Lab</div>
+                  <div class="chat-empty-s">Select an agent and start chatting.<br>AI remembers your conversation.</div>
+                </div>
+              </div>
+              <div class="chat-suggestions" id="chat-sugs">
+                <div class="chat-sug" onclick="sendSug(this)">Generate 3 ideas for my niche</div>
+                <div class="chat-sug" onclick="sendSug(this)">Write a viral hook</div>
+                <div class="chat-sug" onclick="sendSug(this)">Make it more emotional</div>
+                <div class="chat-sug" onclick="sendSug(this)">Add a stronger CTA</div>
+              </div>
+              <div class="chat-input-row">
+                <textarea class="chat-inp" id="chat-inp" placeholder="Ask anything... 'Make this more viral', 'Write a hook', 'Expand this idea'" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
+                <button class="chat-send" id="chat-send" onclick="sendChat()">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SEC 4: ANALYSE ── -->
         <div class="dsec" id="sec-a">
           <div class="s2-stats">
             <div class="sc"><div class="sc-l">Followers</div><div class="sc-v" id="sv-f">—</div><div class="sc-s up" id="sv-fs">your account</div></div>
@@ -563,12 +776,7 @@ body{background:#F8F9FF;color:#111827;}
               <div class="card-t">Likes per post</div>
               <div style="font-size:10px;color:var(--t3);margin-bottom:12px;margin-top:-6px;">Existing + new posts tracked live</div>
               <div class="bchart">
-                <div class="bgrid">
-                  <div class="bgl"><span id="bg3"></span></div>
-                  <div class="bgl"><span id="bg2"></span></div>
-                  <div class="bgl"><span id="bg1"></span></div>
-                  <div class="bgl"><span>0</span></div>
-                </div>
+                <div class="bgrid"><div class="bgl"><span id="bg3"></span></div><div class="bgl"><span id="bg2"></span></div><div class="bgl"><span id="bg1"></span></div><div class="bgl"><span>0</span></div></div>
                 <div class="bbars" id="bchart"><div style="color:var(--t3);font-size:11px;padding-top:20px;">Loading...</div></div>
               </div>
               <div class="bsum" id="bsum"></div>
@@ -577,12 +785,16 @@ body{background:#F8F9FF;color:#111827;}
             <div class="ac">
               <div class="ac-hdr"><div class="ac-left"><div class="ac-ico">📊</div><div><div class="ac-name">Analyst</div><div class="ac-role">Reads your real post data</div></div></div><div class="ast idle" id="st4">idle</div></div>
               <div class="ac-out" id="out4"><span class="atg b">STATS</span><br>Analyses your posts and tells you what's working and what to change.</div>
-              <button class="rbtn" onclick="runAg('analyst',4)">▶ Run Agent</button>
+              <div class="action-row">
+                <button class="action-chip" onclick="runAg('analyst',4)">▶ Run</button>
+                <button class="action-chip" onclick="saveToVault('out4','Analysis')">💾 Save</button>
+                <button class="action-chip" onclick="sendToLab('out4','analyst')">⚗️ Deep dive in Lab</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- SECTION 3: PLAN -->
+        <!-- ── SEC 5: PLAN ── -->
         <div class="dsec" id="sec-p">
           <div class="s3-g">
             <div class="card">
@@ -597,11 +809,19 @@ body{background:#F8F9FF;color:#111827;}
                 <button class="pregen rbtn" onclick="runAg('planner',3)">▶ Run Planner</button>
                 <button class="pexp" onclick="exportCal()">Export ↗</button>
               </div>
+              <div class="action-row" style="margin-top:6px;">
+                <button class="action-chip" onclick="sendToLab('out3','planner')">⚗️ Refine in Lab</button>
+                <button class="action-chip" onclick="saveToVault('out3','Plan')">💾 Save</button>
+              </div>
             </div>
             <div class="ac">
               <div class="ac-hdr"><div class="ac-left"><div class="ac-ico">💬</div><div><div class="ac-name">DM Manager</div><div class="ac-role">Based on your products & tone</div></div></div><div class="ast idle" id="st5">idle</div></div>
-              <div class="ac-out" id="out5"><span class="atg g">DMs</span><br>Drafts warm on-brand replies to your most common DM types, personalised to your products.</div>
-              <button class="rbtn" onclick="runAg('dmmanager',5)">▶ Run Agent</button>
+              <div class="ac-out" id="out5"><span class="atg g">DMs</span><br>Drafts warm on-brand replies to your most common DM types.</div>
+              <div class="action-row">
+                <button class="action-chip" onclick="runAg('dmmanager',5)">▶ Run</button>
+                <button class="action-chip" onclick="saveToVault('out5','DM Templates')">💾 Save</button>
+                <button class="action-chip" onclick="sendToLab('out5','dmmanager')">⚗️ Refine in Lab</button>
+              </div>
             </div>
           </div>
         </div>
@@ -609,27 +829,33 @@ body{background:#F8F9FF;color:#111827;}
       </div><!-- /dbody -->
     </div><!-- /dmain -->
 
-    <!-- Mobile bottom tabs -->
-    <div class="mobtabs" id="mobtabs">
-      <button class="mobtab act" id="mob-c" onclick="sw('c')"><div class="mobtab-i">✍️</div><div class="mobtab-l">Create</div></button>
+    <!-- MOBILE TABS -->
+    <div class="mobtabs" id="mobtabs" style="display:none;">
+      <button class="mobtab act" id="mob-h" onclick="sw('h')"><div class="mobtab-i">🧠</div><div class="mobtab-l">Hub</div></button>
+      <button class="mobtab" id="mob-c" onclick="sw('c')"><div class="mobtab-i">✍️</div><div class="mobtab-l">Create</div></button>
+      <button class="mobtab" id="mob-l" onclick="sw('l')"><div class="mobtab-i">⚗️</div><div class="mobtab-l">Lab</div></button>
       <button class="mobtab" id="mob-a" onclick="sw('a')"><div class="mobtab-i">📊</div><div class="mobtab-l">Analyse</div></button>
-      <button class="mobtab" id="mob-p" onclick="sw('p')"><div class="mobtab-i">📅</div><div class="mobtab-l">Plan & DMs</div></button>
+      <button class="mobtab" id="mob-p" onclick="sw('p')"><div class="mobtab-i">📅</div><div class="mobtab-l">Plan</div></button>
     </div>
-  </div><!-- /dash -->
-</div><!-- /dashboard -->
+  </div>
+</div>
 
 <script>
 let DATA=null, NICHE='Skincare', PROF={products:'',audience:'',topics:'',tone:['Relatable']};
+let VAULT=[], LAB_MSGS=[], LAB_AGENT='ideator', LAB_LAST='';
 
 // ── LANDING ──
 function scrollF(){document.getElementById('fc').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('inp').focus(),400);}
 function toggleMenu(){const m=document.getElementById('mmenu');m.style.display=m.style.display==='block'?'none':'block';}
-function setLoad(show,msg,pct){document.getElementById('loading').style.display=show?'flex':'none';if(msg)document.getElementById('ld-msg').textContent=msg;if(pct!==undefined)document.getElementById('ld-fill').style.width=pct+'%';}
+function setLoad(show,msg,pct){
+  document.getElementById('loading').style.display=show?'flex':'none';
+  if(msg)document.getElementById('ld-msg').textContent=msg;
+  if(pct!==undefined)document.getElementById('ld-fill').style.width=pct+'%';
+}
 
 async function launch(){
   const h=document.getElementById('inp').value.replace('@','').trim();
-  const btn=document.getElementById('lb');
-  const err=document.getElementById('fe');
+  const btn=document.getElementById('lb');const err=document.getElementById('fe');
   err.style.display='none';
   if(!h){err.textContent='⚠ Enter your Instagram handle';err.style.display='block';return;}
   btn.disabled=true;
@@ -657,11 +883,27 @@ function launchCta(){document.getElementById('inp').value=document.getElementByI
 function showDash(data){
   document.getElementById('landing').style.display='none';
   document.getElementById('dashboard').style.display='block';
+  document.getElementById('mobtabs').style.display='grid';
   const a=data.your_account;
-  document.getElementById('dsb-h').textContent='@'+a.handle;
-  document.getElementById('dav-ic').textContent=a.handle.charAt(0).toUpperCase();
-  document.getElementById('dav-n').textContent=a.handle.charAt(0).toUpperCase()+a.handle.slice(1);
-  document.getElementById('dav-h').textContent='@'+a.handle;
+  const H=a.handle;
+  const ini=H.charAt(0).toUpperCase();
+  // Sidebar
+  document.getElementById('dsb-h').textContent='@'+H;
+  document.getElementById('dav-ic').textContent=ini;
+  document.getElementById('dav-n').textContent=H.charAt(0).toUpperCase()+H.slice(1);
+  document.getElementById('dav-h').textContent='@'+H;
+  // Hub profile
+  document.getElementById('hub-av').textContent=ini;
+  document.getElementById('hub-name').textContent='@'+H;
+  document.getElementById('hub-handle').textContent=NICHE+' Creator';
+  document.getElementById('h-fol').textContent=a.followers.toLocaleString();
+  document.getElementById('h-fng').textContent=a.following.toLocaleString();
+  document.getElementById('h-posts').textContent=a.total_posts;
+  document.getElementById('h-likes').textContent=a.avg_likes.toLocaleString();
+  document.getElementById('h-coms').textContent=a.avg_comments.toLocaleString();
+  document.getElementById('h-reach').textContent=(a.avg_reach/1000).toFixed(1)+'k';
+  document.getElementById('h-eng').textContent=a.engagement_rate+'%';
+  // Analyse stats
   document.getElementById('sv-f').textContent=a.followers.toLocaleString();
   document.getElementById('sv-fs').textContent=a.followers>1000?'+growing':'your account';
   document.getElementById('sv-e').textContent=a.engagement_rate+'%';
@@ -670,35 +912,34 @@ function showDash(data){
   document.getElementById('sv-i').textContent=Math.round(a.avg_reach*2.1/1000*10)/10+'k';
   document.getElementById('sv-r').textContent=(a.avg_reach/1000).toFixed(1)+'k';
   document.getElementById('sv-p').textContent=a.total_posts;
-  renderChart(a);
-  renderPosts(a);
-  renderTimes(a);
-  // show mobile tabs
-  document.getElementById('mobtabs').style.display='grid';
+  renderChart(a);renderPosts(a);
+  // Auto-run audit after a moment
+  setTimeout(()=>runHubAgent('audit'),1500);
 }
 
 function logout(){
-  DATA=null;
+  DATA=null;LAB_MSGS=[];LAB_LAST='';
   document.getElementById('dashboard').style.display='none';
   document.getElementById('landing').style.display='block';
   document.getElementById('lb').disabled=false;
   document.getElementById('fe').style.display='none';
+  document.getElementById('mobtabs').style.display='none';
   [1,2,3,4,5].forEach(n=>{const s=document.getElementById('st'+n);if(s){s.textContent='idle';s.className='ast idle';}});
 }
 
 // ── SECTION SWITCH ──
 function sw(name){
-  ['c','a','p'].forEach(s=>{
+  ['h','c','l','a','p'].forEach(s=>{
     document.getElementById('sec-'+s)?.classList.toggle('act',s===name);
     document.getElementById('nav-'+s)?.classList.toggle('act',s===name);
     document.getElementById('mob-'+s)?.classList.toggle('act',s===name);
   });
-  const t={c:'✍️ Create',a:'📊 Analyse',p:'📅 Plan & DMs'};
+  const t={h:'🧠 Intelligence Hub',c:'✍️ Create',l:'⚗️ AI Content Lab',a:'📊 Analyse',p:'📅 Plan & DMs'};
   document.getElementById('dtop-t').textContent=t[name];
 }
 
 // ── PROFILE ──
-function setN(el,n){document.querySelectorAll('.np').forEach(p=>p.classList.remove('act'));el.classList.add('act');NICHE=n;}
+function setN(el,n){document.querySelectorAll('.np').forEach(p=>p.classList.remove('act'));el.classList.add('act');NICHE=n;document.getElementById('hub-handle').textContent=n+' Creator';}
 function setCN(el){const n=prompt('Enter your niche:');if(n){NICHE=n;el.textContent=n;document.querySelectorAll('.np').forEach(p=>p.classList.remove('act'));el.classList.add('act');}}
 function saveP(){
   PROF.products=document.getElementById('p-prod').value;
@@ -711,8 +952,7 @@ function saveP(){
 
 // ── CHARTS ──
 function renderChart(a){
-  const posts=a.top_posts||[];
-  if(!posts.length) return;
+  const posts=a.top_posts||[];if(!posts.length)return;
   const mx=Math.max(...posts.map(p=>p.likes),1);
   const clrs=['#1B3A8C','#2D52B8','#4B6DC8','#8BA3D9','#B8C8E8'];
   const bars=posts.slice(0,5).map((p,i)=>`<div class="bc"><div class="bc-v">${p.likes}</div><div class="bc-f" style="height:${Math.max(Math.round(p.likes/mx*90),4)}px;background:${clrs[i]};"></div><div class="bc-l">P${i+1}</div></div>`).join('');
@@ -726,20 +966,14 @@ function renderChart(a){
 }
 
 function renderPosts(a){
-  const posts=a.top_posts||[];
-  const el=document.getElementById('tposts');
+  const posts=a.top_posts||[];const el=document.getElementById('tposts');
   if(!posts.length){el.innerHTML='<div style="color:var(--t3);font-size:11px">No post data — account may be private</div>';return;}
   el.innerHTML=posts.map(p=>`<div class="pi"><div class="pi-cap">${p.caption||'No caption'}</div><div class="pi-meta"><span>❤️ ${p.likes}</span><span>💬 ${p.comments}</span><span>👁 ${(p.reach/1000).toFixed(1)}k</span><span class="pi-tag">${p.type}</span></div></div>`).join('');
   el.innerHTML+=`<div class="new-note">📌 New posts added automatically as you publish</div>`;
 }
 
-function renderTimes(a){
-  const times=a.best_posting_times||['07:00','12:00','19:00','21:00'];
-  document.getElementById('best-times').innerHTML=times.map((t,i)=>`<div class="pp ${i===0?'best':''}">${t}${i===0?' ⭐':''}</div>`).join('');
-}
-
 function renderCal(){
-  const topics={Skincare:['Morning skincare routine','Budget dupe roundup','Ingredient spotlight','30-day before & after','Skincare myths debunked','Sunscreen guide','Weekly Q&A'],Fashion:['Outfit of the day','Thrift flip tutorial','Capsule wardrobe','Style your body type','Fashion haul','Trend forecast','Style Q&A'],Fitness:['Morning workout','Protein meal prep','30-day challenge','Home workout guide','Progress update','Gym mistakes','Fitness Q&A'],'Food & Recipes':['Quick recipe','Meal prep Sunday','Restaurant review','Budget meals','Healthy snacks','Cooking hack','Food diary'],Lifestyle:['Morning routine','Productivity tips','Room tour','Day in my life','Slow living tips','Digital detox','Weekly reset'],Travel:['Budget travel tips','Packing guide','Hidden gems','Solo travel tips','Hotel review','Travel diary','Destination Q&A']};
+  const topics={Skincare:['Morning skincare routine','Budget dupe roundup','Ingredient spotlight','30-day before & after','Skincare myths debunked','Sunscreen guide','Weekly Q&A'],Fashion:['Outfit of the day','Thrift flip tutorial','Capsule wardrobe','Style your body type','Fashion haul','Trend forecast','Style Q&A'],Fitness:['Morning workout','Protein meal prep','30-day challenge','Home workout guide','Progress update','Gym mistakes','Fitness Q&A'],'Food & Recipes':['Quick recipe','Meal prep Sunday','Restaurant review','Budget meals','Healthy snacks','Cooking hack','Food diary'],Lifestyle:['Morning routine','Productivity tips','Room tour','Day in my life','Slow living tips','Digital detox','Weekly reset']};
   const t=topics[NICHE]||topics.Skincare;
   const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   const fmts=['Reel','Carousel','Story','Reel','Carousel','Reel','Reel'];
@@ -750,65 +984,221 @@ function renderCal(){
 }
 
 function exportCal(){
-  const rows=document.querySelectorAll('.cd');
-  if(!rows.length){alert('Run the Planner first!');return;}
+  const rows=document.querySelectorAll('.cd');if(!rows.length){alert('Run the Planner first!');return;}
   const txt='ContentIQ — Weekly Content Plan\n\n'+[...rows].map(r=>[...r.querySelectorAll('.cd-d,.cd-p,.cd-t')].map(c=>c.textContent.trim()).join(' | ')).join('\n');
   const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);a.download='contentiq-plan.txt';a.click();
 }
 
-// ── AGENTS ──
-const TRENDS={Skincare:['Glass skin tutorials','Skin barrier repair','Budget K-beauty dupes','Before and after','Ingredient deep dives'],Fashion:['Quiet luxury','Thrift flips','Capsule wardrobe','Colour theory','Vintage hauls'],Fitness:['Pilates for beginners','Protein prep','Home workouts','Running tips','Gym aesthetic'],Food:['High protein recipes','One-pan meals','Budget meal prep','Restaurant dupes','Viral recipes'],Lifestyle:['Morning routine resets','Slow living','Productivity systems','Apartment tours','Day in my life'],Travel:['Budget travel','Solo travel','Hidden gems','Packing guides','Digital nomad'],Finance:['Investing basics','Saving hacks','Side hustles','Debt payoff','Passive income'],Tech:['AI tools','App reviews','Tech unboxing','Setup tours','Software tips'],Business:['Entrepreneur journey','Behind the scenes','Personal branding','Client wins','Passive income']};
+// ── API CALL ──
+const TRENDS={Skincare:['Glass skin','Skin barrier repair','Budget K-beauty dupes','Before/after','Ingredient dives'],Fashion:['Quiet luxury','Thrift flips','Capsule wardrobe','Colour theory','Vintage hauls'],Fitness:['Pilates','Protein prep','Home workouts','Running','Gym aesthetic'],Food:['High protein recipes','One-pan meals','Budget prep','Restaurant dupes','Viral recipes'],Lifestyle:['Morning resets','Slow living','Productivity','Apartment tours','Day in my life'],Travel:['Budget travel','Solo travel','Hidden gems','Packing guides','Digital nomad'],Finance:['Investing basics','Saving hacks','Side hustles','Debt payoff','Passive income'],Tech:['AI tools','App reviews','Tech unboxing','Setup tours','Software tips'],Business:['Entrepreneur journey','Behind scenes','Personal branding','Client wins','Passive income']};
 
-function getPrompt(ag,data){
-  const a=data.your_account;
-  const t=(a.top_posts&&a.top_posts[0])||{};
-  const cap=t.caption||'a recent post';const lk=t.likes||0;
-  const times=(a.best_posting_times||['07:00','12:00','19:00']).join(', ');
-  const tags=(a.top_hashtags||[]).join(', ')||NICHE.toLowerCase();
-  const tr=(TRENDS[NICHE]||TRENDS.Lifestyle).join(', ');
-  const posts=(a.top_posts||[]).map((p,i)=>`Post ${i+1}: "${p.caption}" — ${p.likes} likes (${p.type})`).join('\n');
-  const seed=Math.random().toString(36).substring(2,6);
-  const angles=['beginner-friendly','budget-focused','myth-busting','storytelling','hot take','relatable struggle','behind the scenes','product comparison'];
-  const angle=angles[Math.floor(Math.random()*angles.length)];
-  const pc=`Products: ${PROF.products||'not set'}. Audience: ${PROF.audience||'not set'}. Topics: ${PROF.topics||'not set'}. Tone: ${(PROF.tone||['Relatable']).join(', ')}.`;
-  return{
-    ideator:`Content ideation agent for @${a.handle} (${NICHE} niche).\n${pc}\nFollowers: ${a.followers}. Engagement: ${a.engagement_rate}%.\nTrending: ${tr}.\nPosts:\n${posts}\nRun ${seed} — Generate 3 COMPLETELY DIFFERENT ${NICHE} ideas using ${angle} approach. Be specific, creative, reference their actual products.\nFormat:\nIDEA: [title]\nWhy: [1 line]\nFormat: [Reel/Carousel/Story]\n---`,
-    hookwriter:`Hook agent for @${a.handle} (${NICHE}).\n${pc}\nBest post: "${cap}" — ${lk} likes.\nRun ${seed} — Write 3 BRAND NEW hooks (max 15 words, ${angle} angle). Then write 60-word Reel script.`,
-    planner:`Calendar agent for @${a.handle} (${NICHE}).\n${pc}\nBest times: ${times}.\nPlan Mon-Sun. Format: DAY | TIME | FORMAT | TOPIC. Topics specific to ${NICHE}.`,
-    analyst:`Analyst for @${a.handle} (${NICHE}).\nFollowers: ${a.followers}. Engagement: ${a.engagement_rate}%.\nPosts:\n${posts}\nHashtags: ${tags}.\nGive 3 specific actionable insights. Start each with -`,
-    dmmanager:`DM manager for @${a.handle} (${a.followers} followers, ${NICHE}).\n${pc}\nRun ${seed} — Write 4 FRESH DM replies (${angle} angle, max 2 sentences):\n1. "Where products?"\n2. "Collab?"\n3. "You're inspiring!"\n4. "How did you grow?"\nMatch their tone. Sound real.`
-  }[ag];
+async function callAPI(payload){
+  const r=await fetch('/api/agents',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const j=await r.json();
+  if(!j.success) throw new Error(j.error);
+  return j.result;
 }
 
-async function runAg(agKey,n){
+// ── HUB AGENTS ──
+async function runHubAgent(type){
   if(!DATA) return;
-  const stEl=document.getElementById('st'+n);
-  const oEl=document.getElementById('out'+n);
-  const bEl=document.querySelector(`[onclick="runAg('${agKey}',${n})"]`);
-  const tgs={1:'b',2:'g',3:'b',4:'b',5:'g'};
-  const lbs={1:'IDEAS',2:'HOOK',3:'PLAN',4:'STATS',5:'DMs'};
+  const btns={audit:'audit-btn',opportunities:'opp-btn',ideas_feed:'ideas-btn'};
+  const btn=document.getElementById(btns[type]);
+  if(btn){btn.disabled=true;btn.textContent='Running...';}
+  try{
+    const result=await callAPI({agent:type,data:DATA,niche:NICHE,profile:PROF});
+    if(type==='audit') parseAudit(result);
+    else if(type==='opportunities') parseOpportunities(result);
+    else if(type==='ideas_feed') parseIdeas(result);
+  }catch(e){console.error(e);}
+  if(btn){btn.disabled=false;btn.textContent=type==='audit'?'↺ Re-audit':type==='opportunities'?'↺ Refresh Opportunities':'↺ Generate More Ideas';}
+}
+
+function parseAudit(text){
+  const lines=text.split('\n').filter(l=>l.trim());
+  let str=[],wk=[],opp=[],act=[];let cur=null;
+  lines.forEach(l=>{
+    const lt=l.toLowerCase();
+    if(lt.includes('strength'))cur='str';
+    else if(lt.includes('weakness')||lt.includes('improve'))cur='wk';
+    else if(lt.includes('opportunit'))cur='opp';
+    else if(lt.includes('action')||lt.includes('next'))cur='act';
+    else if(l.trim().startsWith('-')||l.trim().match(/^\d\./)){
+      const clean=l.replace(/^[-\d\.\s]+/,'').trim();
+      if(cur==='str')str.push(clean);
+      else if(cur==='wk')wk.push(clean);
+      else if(cur==='opp')opp.push(clean);
+      else if(cur==='act')act.push(clean);
+    }
+  });
+  // If parsing didn't work, use full text split into sections
+  if(!str.length&&!wk.length){
+    const chunks=text.split(/\n\n/).filter(c=>c.trim().length>10).slice(0,4);
+    str=[chunks[0]||text.substring(0,150)];
+    wk=[chunks[1]||'Keep analysing your content patterns.'];
+    opp=[chunks[2]||'Consistent posting can unlock growth.'];
+    act=[chunks[3]||'Post 3x this week and engage with comments.'];
+  }
+  const render=(id,items,cls)=>{
+    document.getElementById(id).innerHTML=items.slice(0,3).map(i=>`<div class="audit-item ${cls}">${i}</div>`).join('')||`<div class="audit-item">No data found</div>`;
+  };
+  render('audit-str',str,'str');render('audit-wk',wk,'wk');render('audit-opp',opp,'opp');render('audit-act',act,'act-item');
+  // Also update Next Best Actions in Create tab
+  document.getElementById('next-actions').innerHTML=act.slice(0,3).map(a=>`<div style="display:flex;align-items:flex-start;gap:6px;padding:5px 0;border-bottom:1px solid var(--bdr);font-size:11px;color:var(--t2);"><span style="color:var(--amber);flex-shrink:0;">→</span>${a}</div>`).join('')||'<div style="font-size:11px;color:var(--t3);">Run audit to get action recommendations.</div>';
+  document.getElementById('audit-btn').textContent='↺ Re-audit';
+}
+
+function parseOpportunities(text){
+  const sections=text.split(/\n\n+/);
+  let trending=[],gaps=[],series=[];let cur=null;
+  text.split('\n').forEach(l=>{
+    const lt=l.toLowerCase();
+    if(lt.includes('trending'))cur='t';
+    else if(lt.includes('gap'))cur='g';
+    else if(lt.includes('series')||lt.includes('pain'))cur='s';
+    else if(l.trim().startsWith('-')||l.trim().match(/^\d\./)){
+      const clean=l.replace(/^[-\d\.\s]+/,'').trim();
+      if(cur==='t')trending.push(clean);
+      else if(cur==='g')gaps.push(clean);
+      else if(cur==='s')series.push(clean);
+    }
+  });
+  if(!trending.length){const chunks=sections.filter(s=>s.trim().length>20).slice(0,3);trending=[chunks[0]||'Post trend-based content'];gaps=[chunks[1]||'Explore untapped angles'];series=[chunks[2]||'Start a content series'];}
+  const ri=(id,items)=>document.getElementById(id).innerHTML=items.slice(0,3).map(i=>`<div class="opp-item">${i}</div>`).join('');
+  ri('opp-trending',trending);ri('opp-gaps',gaps);ri('opp-series',series);
+}
+
+function parseIdeas(text){
+  const cards=[];const lines=text.split('\n');
+  let cur={};
+  lines.forEach(l=>{
+    if(l.startsWith('TITLE:'))cur.title=l.replace('TITLE:','').trim();
+    else if(l.startsWith('TYPE:'))cur.type=l.replace('TYPE:','').trim();
+    else if(l.startsWith('HOOK:'))cur.hook=l.replace('HOOK:','').trim();
+    else if(l.startsWith('WHY:'))cur.why=l.replace('WHY:','').trim();
+    if(cur.title&&cur.hook&&l.startsWith('WHY:')){cards.push({...cur});cur={};}
+  });
+  if(!cards.length){
+    const chunks=text.split(/\n\n/).filter(c=>c.trim().length>20).slice(0,6);
+    chunks.forEach(c=>cards.push({title:c.split('\n')[0].replace(/^[-\d\.\*]+/,'').trim().substring(0,60),type:'Reel',hook:c.split('\n')[1]?.replace(/^[-\d\.\*]+/,'').trim()||c.substring(0,80),why:'High engagement potential'}));
+  }
+  const el=document.getElementById('ideas-feed');
+  if(!cards.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--t3);">No ideas generated. Try again!</div>';return;}
+  el.innerHTML=cards.slice(0,6).map((c,i)=>`
+    <div class="idea-card">
+      <div class="idea-type">${c.type||'Reel'}</div>
+      <div class="idea-title">${c.title}</div>
+      <div class="idea-hook">${c.hook||''}</div>
+      <div class="idea-actions">
+        <button class="idea-btn save" onclick='saveItem("Idea","${(c.title||'').replace(/'/g,"")}")'>💾 Save</button>
+        <button class="idea-btn" onclick='sendIdeaToLab("${(c.title||'').replace(/'/g,"")}","${(c.hook||'').replace(/'/g,"")}")'>⚗️ Expand</button>
+      </div>
+    </div>`).join('');
+  document.getElementById('ideas-btn').textContent='↺ Generate More Ideas';
+}
+
+// ── STANDARD AGENTS ──
+async function runAg(agKey,n){
+  if(!DATA)return;
+  const stEl=document.getElementById('st'+n);const oEl=document.getElementById('out'+n);
+  const tgs={1:'b',2:'g',3:'b',4:'b',5:'g'};const lbs={1:'IDEAS',2:'HOOK',3:'PLAN',4:'STATS',5:'DMs'};
   if(stEl){stEl.textContent='running';stEl.className='ast run';}
-  if(bEl) bEl.disabled=true;
   oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br><span class="typing">Thinking</span>`;
   try{
-    const r=await fetch('/api/agents',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent:agKey,data:DATA,niche:NICHE,profile:PROF})});
-    const j=await r.json();
-    if(!j.success) throw new Error(j.error);
-    oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br>${j.result.replace(/\n/g,'<br>')}`;
+    const r=await callAPI({agent:agKey,data:DATA,niche:NICHE,profile:PROF});
+    oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br>${r.replace(/\n/g,'<br>')}`;
     if(stEl){stEl.textContent='done';stEl.className='ast done';}
-    if(n===3) renderCal();
-    return j.result;
+    if(n===3)renderCal();
   }catch(e){
     oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br><span style="color:var(--red)">⚠ ${e.message}</span>`;
     if(stEl){stEl.textContent='idle';stEl.className='ast idle';}
   }
-  if(bEl){bEl.disabled=false;bEl.textContent='↺ Run Again';}
 }
 
 async function runAll(){
+  if(!DATA)return;
+  await runHubAgent('audit');
   const ags=[['ideator',1],['hookwriter',2],['planner',3],['analyst',4],['dmmanager',5]];
   for(const[k,n]of ags){await runAg(k,n);await new Promise(r=>setTimeout(r,300));}
 }
+
+// ── AI LAB ──
+function selectLabAgent(key,name,desc){
+  LAB_AGENT=key;LAB_MSGS=[];
+  document.querySelectorAll('.lab-agent-btn').forEach(b=>b.classList.remove('act'));
+  document.getElementById('lab-btn-'+key)?.classList.add('act');
+  document.getElementById('lab-title').textContent=name;
+  document.getElementById('lab-chat').innerHTML=`<div class="chat-empty"><div class="chat-empty-icon">${name.split(' ')[0]}</div><div class="chat-empty-t">${name}</div><div class="chat-empty-s">${desc}<br>Ask me anything or use a suggestion below.</div></div>`;
+  const sugs={ideator:['Generate 3 ideas for my niche','Give me a viral reel idea','What should I post this week?'],hookwriter:['Write a hook for my best post','Give me 5 different hooks','Make a hook more emotional'],planner:['Plan my content for next week','What should I post Monday?','Give me a 30-day content plan'],analyst:['What is my best content type?','Why is my engagement low?','What should I post more of?'],dmmanager:['Write a collab reply','How to reply to "you\'re inspiring"?','Write a product question reply']};
+  document.getElementById('chat-sugs').innerHTML=(sugs[key]||[]).map(s=>`<div class="chat-sug" onclick="sendSug(this)">${s}</div>`).join('');
+}
+
+function sendSug(el){document.getElementById('chat-inp').value=el.textContent;sendChat();}
+
+async function sendChat(){
+  if(!DATA){alert('Please launch your dashboard first by entering your Instagram handle.');return;}
+  const inp=document.getElementById('chat-inp');const txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  const chat=document.getElementById('lab-chat');
+  // Clear empty state
+  if(chat.querySelector('.chat-empty')) chat.innerHTML='';
+  // Add user message
+  LAB_MSGS.push({role:'user',content:txt});
+  chat.innerHTML+=`<div class="chat-msg user">${txt}</div>`;
+  chat.scrollTop=chat.scrollHeight;
+  // AI response
+  const aiDiv=document.createElement('div');aiDiv.className='chat-msg ai';aiDiv.innerHTML='<span class="typing">Thinking</span>';
+  chat.appendChild(aiDiv);chat.scrollTop=chat.scrollHeight;
+  document.getElementById('chat-send').disabled=true;
+  try{
+    const result=await callAPI({messages:LAB_MSGS,data:DATA,niche:NICHE,profile:PROF,agent:LAB_AGENT});
+    LAB_MSGS.push({role:'assistant',content:result});
+    LAB_LAST=result;
+    aiDiv.innerHTML=result.replace(/\n/g,'<br>');
+  }catch(e){aiDiv.innerHTML=`<span style="color:var(--red)">⚠ ${e.message}</span>`;}
+  document.getElementById('chat-send').disabled=false;
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function clearChat(){LAB_MSGS=[];LAB_LAST='';selectLabAgent(LAB_AGENT,document.getElementById('lab-title').textContent,'Start a new conversation');}
+function labRegen(){if(LAB_MSGS.length>0){LAB_MSGS=[];const lastUser=LAB_MSGS[LAB_MSGS.length-2]?.content||'Regenerate';document.getElementById('chat-inp').value=lastUser;sendChat();}else{document.getElementById('chat-inp').value='Generate something new';sendChat();}}
+
+function sendToLab(outId,agentKey){
+  const txt=document.getElementById(outId)?.innerText?.replace(/^(IDEAS|HOOK|PLAN|STATS|DMs)\s*/,'').trim();
+  if(!txt||txt.includes('Click Run')||txt.includes('Writes scroll')||txt.includes('Builds your')){alert('Run the agent first to generate content.');return;}
+  selectLabAgent(agentKey,document.getElementById('lab-title').textContent||'AI Lab','Continue refining');
+  LAB_MSGS=[{role:'assistant',content:txt}];
+  const chat=document.getElementById('lab-chat');
+  chat.innerHTML=`<div class="chat-msg ai">${txt.replace(/\n/g,'<br>')}<br><br><em style="font-size:10px;color:var(--t3)">— imported from ${outId}. Ask me to improve, expand, or rewrite.</em></div>`;
+  sw('l');
+}
+
+function sendIdeaToLab(title,hook){
+  selectLabAgent('ideator','💡 Ideator','Expanding your idea');
+  LAB_MSGS=[{role:'assistant',content:`Here's the idea: "${title}"\nHook: "${hook}"`}];
+  const chat=document.getElementById('lab-chat');
+  chat.innerHTML=`<div class="chat-msg ai"><strong>${title}</strong><br>${hook}<br><br><em style="font-size:10px;color:var(--t3)">Ask me to expand this into a full script, add a hook, write captions, or anything else.</em></div>`;
+  document.getElementById('chat-inp').value='Expand this into a full Reel script with hook, script and caption';
+  sw('l');
+}
+
+// ── VAULT ──
+function toggleVault(){const v=document.getElementById('vault-overlay');v.style.display=v.style.display==='flex'?'none':'flex';renderVault();}
+function saveToVault(outId,type){
+  const el=document.getElementById(outId);
+  let txt=outId==='lab-last'?LAB_LAST:(el?.innerText||'').replace(/^(IDEAS|HOOK|PLAN|STATS|DMs)\s*/,'').trim();
+  if(!txt||txt.includes('Click Run')||txt.includes('Generate')||txt.includes('Run the')){alert('Generate some content first!');return;}
+  VAULT.unshift({type,text:txt.substring(0,300),id:Date.now()});
+  const btn=event?.target;if(btn){const ot=btn.textContent;btn.textContent='✓ Saved!';btn.style.background='var(--green2)';btn.style.color='var(--green)';setTimeout(()=>{btn.textContent=ot;btn.style.background='';btn.style.color='';},2000);}
+}
+function saveItem(type,text){VAULT.unshift({type,text:text.substring(0,300),id:Date.now()});alert('Saved to vault!');}
+function renderVault(){
+  const b=document.getElementById('vault-body');
+  if(!VAULT.length){b.innerHTML='<div class="vault-empty">No saved ideas yet. Hit Save on any idea or agent output!</div>';return;}
+  b.innerHTML=VAULT.map(v=>`<div class="vault-item"><div class="vault-item-content"><div class="vault-item-type">${v.type}</div><div class="vault-item-text">${v.text}</div></div><button class="vault-item-del" onclick="delVault(${v.id})">🗑</button></div>`).join('');
+}
+function delVault(id){VAULT=VAULT.filter(v=>v.id!==id);renderVault();}
 </script>
 </body>
 </html>
