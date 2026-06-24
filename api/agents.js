@@ -23,6 +23,9 @@ export default async function handler(req, res) {
     'Business':['Entrepreneurship journeys','Behind the scenes','Personal branding tips','Client wins','Passive income'],
   };
 
+  const seed = Math.random().toString(36).substring(2,6);
+  const angles = ['beginner-friendly','advanced tips','myth-busting','budget-focused','luxury take','quick wins','deep dive','storytelling angle','hot take','relatable struggle','behind the scenes','product comparison'];
+  const angle = angles[Math.floor(Math.random()*angles.length)];
   const a = data.your_account;
   const t = (a.top_posts && a.top_posts[0]) || {};
   const cap = t.caption || 'a recent post';
@@ -35,7 +38,7 @@ export default async function handler(req, res) {
   const profileCtx = `Creator profile — Products: ${prof.products||'not specified'}. Audience: ${prof.audience||'not specified'}. Topics to focus on: ${prof.topics||'not specified'}. Content tone: ${(prof.tone||['Relatable']).join(', ')}.`;
 
   const prompts = {
-    ideator: `You are a content ideation agent for Instagram creator @${a.handle} in the ${niche} niche.\n${profileCtx}\nFollowers: ${a.followers}. Engagement: ${a.engagement_rate}%.\nTrending topics in ${niche}: ${trends}.\nTheir actual posts:\n${posts}\nGenerate 3 fresh ${niche} content ideas based on THEIR specific products, audience and post style. Do not suggest generic ideas.\nFormat each as:\nIDEA: [specific title]\nWhy: [1 line referencing their content or products]\nFormat: [Reel/Carousel/Story]\n---`,
+    ideator: `Content ideation agent for @${a.handle} (${niche} niche).\n${profileCtx}\nFollowers: ${a.followers}. Engagement: ${a.engagement_rate}%.\nTrending: ${trends}.\nTheir posts:\n${posts}\nRun ID: ${seed}. Generate 3 COMPLETELY DIFFERENT ${niche} ideas using a ${angle} approach. Be specific, creative, never repeat previous ideas.\nFormat:\nIDEA: [title]\nWhy: [1 line]\nFormat: [Reel/Carousel/Story]\n---`,
     hookwriter: `Hook-writing agent for @${a.handle} (${niche} creator).\n${profileCtx}\nBest post: "${cap}" — ${lk} likes.\nWrite 3 scroll-stopping hooks (max 15 words each) that match their ${(prof.tone||['Relatable']).join('/')} tone and ${niche} niche.\nThen write a 60-word Reel script for the best hook in their voice.`,
     planner: `Content calendar agent for @${a.handle} (${niche}).\n${profileCtx}\nBest times: ${times}. Trending: ${trends}.\nPlan Mon-Sun this week. One post per day.\nFormat: DAY | TIME | FORMAT | TOPIC\nAll topics must be specific to ${niche} and their profile focus areas.`,
     analyst: `Performance analyst for @${a.handle} (${niche} creator).\nFollowers: ${a.followers}. Engagement: ${a.engagement_rate}% (avg ~4%).\nActual post performance:\n${posts}\nBest hashtags: ${tags}.\nGive 3 specific actionable insights based on THIS creator's actual data. Start each with -`,
