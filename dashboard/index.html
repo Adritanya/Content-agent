@@ -895,7 +895,7 @@ function showDash(data){
   // Hub profile
   document.getElementById('hub-av').textContent=ini;
   document.getElementById('hub-name').textContent='@'+H;
-  document.getElementById('hub-handle').textContent=NICHE+' Creator';
+  // niche label updated by AI detection
   document.getElementById('h-fol').textContent=a.followers.toLocaleString();
   document.getElementById('h-fng').textContent=a.following.toLocaleString();
   document.getElementById('h-posts').textContent=a.total_posts;
@@ -1007,14 +1007,15 @@ async function runHubAgent(type){
   if(btn){btn.disabled=true;btn.textContent='Running...';}
   try{
     const result=await callAPI({agent:type,data:DATA,niche:NICHE,profile:PROF});
-    if(type==='audit') parseAudit(result);
+    if(type==='audit'){parseAudit(result);const label=extractNicheLabel(result);document.getElementById('hub-handle').textContent=label;}
     else if(type==='opportunities') parseOpportunities(result);
     else if(type==='ideas_feed') parseIdeas(result);
   }catch(e){console.error(e);}
   if(btn){btn.disabled=false;btn.textContent=type==='audit'?'↺ Re-audit':type==='opportunities'?'↺ Refresh Opportunities':'↺ Generate More Ideas';}
 }
 
-function parseAudit(text){
+function parseAudit(rawText){
+  const text=cleanAI(rawText);
   const lines=text.split('\n').filter(l=>l.trim());
   let str=[],wk=[],opp=[],act=[];let cur=null;
   lines.forEach(l=>{
@@ -1048,7 +1049,8 @@ function parseAudit(text){
   document.getElementById('audit-btn').textContent='↺ Re-audit';
 }
 
-function parseOpportunities(text){
+function parseOpportunities(rawText){
+  const text=cleanAI(rawText);
   const sections=text.split(/\n\n+/);
   let trending=[],gaps=[],series=[];let cur=null;
   text.split('\n').forEach(l=>{
@@ -1068,7 +1070,8 @@ function parseOpportunities(text){
   ri('opp-trending',trending);ri('opp-gaps',gaps);ri('opp-series',series);
 }
 
-function parseIdeas(text){
+function parseIdeas(rawText){
+  const text=cleanAI(rawText);
   const cards=[];const lines=text.split('\n');
   let cur={};
   lines.forEach(l=>{
@@ -1106,7 +1109,8 @@ async function runAg(agKey,n){
   oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br><span class="typing">Thinking</span>`;
   try{
     const r=await callAPI({agent:agKey,data:DATA,niche:NICHE,profile:PROF});
-    oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br>${r.replace(/\n/g,'<br>')}`;
+    const cleaned=cleanAI(r);
+    oEl.innerHTML=`<span class="atg ${tgs[n]}">${lbs[n]}</span><br>${cleaned.replace(/\n/g,'<br>')}`;
     if(stEl){stEl.textContent='done';stEl.className='ast done';}
     if(n===3)renderCal();
   }catch(e){
@@ -1153,9 +1157,10 @@ async function sendChat(){
   document.getElementById('chat-send').disabled=true;
   try{
     const result=await callAPI({messages:LAB_MSGS,data:DATA,niche:NICHE,profile:PROF,agent:LAB_AGENT});
-    LAB_MSGS.push({role:'assistant',content:result});
-    LAB_LAST=result;
-    aiDiv.innerHTML=result.replace(/\n/g,'<br>');
+    const cleanedResult=cleanAI(result);
+    LAB_MSGS.push({role:'assistant',content:cleanedResult});
+    LAB_LAST=cleanedResult;
+    aiDiv.innerHTML=cleanedResult.replace(/\n/g,'<br>');
   }catch(e){aiDiv.innerHTML=`<span style="color:var(--red)">⚠ ${e.message}</span>`;}
   document.getElementById('chat-send').disabled=false;
   chat.scrollTop=chat.scrollHeight;
@@ -1199,6 +1204,58 @@ function renderVault(){
   b.innerHTML=VAULT.map(v=>`<div class="vault-item"><div class="vault-item-content"><div class="vault-item-type">${v.type}</div><div class="vault-item-text">${v.text}</div></div><button class="vault-item-del" onclick="delVault(${v.id})">🗑</button></div>`).join('');
 }
 function delVault(id){VAULT=VAULT.filter(v=>v.id!==id);renderVault();}
+
+// ── CLEAN AI OUTPUT (remove markdown) ──
+function cleanAI(text){
+  if(!text) return '';
+  var t = text;
+  // Remove double asterisk bold
+  t = t.split('**').join('');
+  // Remove single asterisk italic (only standalone markers)
+  t = t.split('* ').join('');
+  t = t.split(' *').join('');
+  // Remove heading hashes at start of lines
+  var lines = t.split('\n');
+  lines = lines.map(function(l){
+    var stripped = l.replace(/^#{1,6}\s+/, '');
+    // Remove numbered list "1. " "2. " etc
+    stripped = stripped.replace(/^\d+\.\s+/, '');
+    // Remove dash bullets "- "
+    if(stripped.match(/^-\s/)) stripped = stripped.replace(/^-\s+/, '');
+    return stripped;
+  });
+  t = lines.join('\n');
+  // Remove backtick code markers
+  t = t.replace(/`/g, '');
+  // Collapse excess blank lines
+  while(t.indexOf('\n\n\n') !== -1) t = t.split('\n\n\n').join('\n\n');
+  return t.trim();
+}
+// ── DETECT NICHE LABEL FROM AI RESPONSE ──
+function extractNicheLabel(text){
+  const lower=text.toLowerCase();
+  const niches=[
+    ['comedy','Comedy Creator'],['humor','Comedy Creator'],['funny','Comedy Creator'],
+    ['fitness','Fitness Creator'],['gym','Fitness Creator'],['workout','Fitness Creator'],['health','Fitness Creator'],
+    ['food','Food Creator'],['recipe','Food Creator'],['cooking','Food Creator'],['chef','Food Creator'],
+    ['travel','Travel Creator'],['adventure','Travel Creator'],['explore','Travel Creator'],
+    ['fashion','Fashion Creator'],['style','Fashion Creator'],['outfit','Fashion Creator'],['ootd','Fashion Creator'],
+    ['skincare','Skincare Creator'],['beauty','Beauty Creator'],['makeup','Makeup Creator'],
+    ['business','Business Creator'],['entrepreneur','Business Creator'],['startup','Business Creator'],
+    ['finance','Finance Creator'],['money','Finance Creator'],['invest','Finance Creator'],
+    ['tech','Tech Creator'],['technology','Tech Creator'],['coding','Tech Creator'],['software','Tech Creator'],
+    ['lifestyle','Lifestyle Creator'],['vlog','Lifestyle Creator'],['daily','Lifestyle Creator'],
+    ['marketing','Marketing Creator'],['brand','Personal Brand Creator'],['content creator','Content Creator'],
+    ['motivat','Motivational Creator'],['inspir','Inspirational Creator'],
+    ['art','Art Creator'],['design','Design Creator'],['photography','Photography Creator'],
+    ['music','Music Creator'],['dance','Dance Creator'],['entertainment','Entertainment Creator'],
+    ['education','Educational Creator'],['teach','Educational Creator'],['learn','Educational Creator'],
+  ];
+  for(const[kw,label]of niches){
+    if(lower.includes(kw)) return label;
+  }
+  return 'Multi-Niche Creator';
+}
 </script>
 </body>
 </html>
